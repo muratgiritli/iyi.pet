@@ -57,17 +57,24 @@ export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/40 z-40"
+        style={{ animation: "fade-in 0.2s ease" }}
         onClick={onClose}
         data-testid="overlay-review-modal"
       />
 
       <div
-        className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl max-h-[92vh] overflow-y-auto"
+        className="fixed bottom-0 left-0 right-0 z-50 flex flex-col bg-white rounded-t-2xl shadow-2xl max-h-[78vh] sm:max-h-[82vh]"
+        style={{ animation: "slide-up 0.28s cubic-bezier(0.32,0.72,0,1)" }}
         data-testid="modal-review"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-white border-b border-gray-100 px-5 py-4 flex items-center justify-between rounded-t-2xl">
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
+          <div className="w-10 h-1 bg-gray-300 rounded-full" />
+        </div>
+
+        <div className="sticky top-0 bg-white px-5 py-3 flex items-center justify-between flex-shrink-0">
           <h2 className="text-base font-bold text-gray-900">Yorum Yaz</h2>
           <button
             onClick={onClose}
@@ -79,7 +86,7 @@ export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
         </div>
 
         {submitted ? (
-          <div className="flex flex-col items-center justify-center py-14 px-5 gap-3">
+          <div className="flex flex-col items-center justify-center py-14 px-5 gap-3 overflow-y-auto">
             <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
               <Check size={28} className="text-green-600" />
             </div>
@@ -87,7 +94,7 @@ export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
             <p className="text-sm text-gray-500 text-center">İnceleme sürecinden sonra yayınlanacaktır.</p>
           </div>
         ) : (
-          <div className="px-5 py-5 space-y-5">
+          <div className="px-5 py-4 space-y-4 overflow-y-auto flex-1">
             {/* Personal info */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
