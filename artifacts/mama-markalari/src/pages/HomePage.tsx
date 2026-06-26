@@ -96,15 +96,20 @@ function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
       <RankBadge rank={rank} />
       <BrandLogo brand={brand} />
       <div className="flex-1 min-w-0">
-        <span className="font-semibold text-gray-900 text-sm">{brand.name}</span>
+        <span className="font-semibold text-gray-900 text-sm block truncate">{brand.name}</span>
+        <div className="flex items-center gap-1.5 mt-0.5 sm:hidden">
+          <StarRating rating={brand.rating} size={13} />
+          <span className="text-gray-900 font-bold text-xs">{brand.rating.toFixed(1)}</span>
+          <span className="text-gray-400 text-xs">({brand.reviewCount.toLocaleString("tr-TR")})</span>
+        </div>
       </div>
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
         <StarRating rating={brand.rating} size={15} />
         <span className="text-gray-900 font-bold text-sm w-7 text-right">
           {brand.rating.toFixed(1)}
         </span>
       </div>
-      <div className="text-gray-400 text-sm w-16 text-right flex-shrink-0">
+      <div className="hidden sm:block text-gray-400 text-sm w-16 text-right flex-shrink-0">
         ({brand.reviewCount.toLocaleString("tr-TR")})
       </div>
       <ChevronRight
@@ -187,10 +192,10 @@ export function HomePage() {
             <div className="flex-1">
               <span className="text-xs font-semibold text-gray-400">Marka</span>
             </div>
-            <div className="flex-shrink-0 pr-7">
+            <div className="hidden sm:block flex-shrink-0 pr-7">
               <span className="text-xs font-semibold text-gray-400">Puan</span>
             </div>
-            <div className="w-16 text-right flex-shrink-0">
+            <div className="hidden sm:block w-16 text-right flex-shrink-0">
               <span className="text-xs font-semibold text-gray-400">Yorum (Toplam)</span>
             </div>
           </div>
