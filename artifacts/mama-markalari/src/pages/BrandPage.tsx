@@ -4,6 +4,7 @@ import { ChevronRight, Globe, Package, PenLine, ThumbsUp, MoreVertical, ChevronL
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
 import { BrandLogo } from "@/components/BrandLogo";
+import { ReviewModal } from "@/components/ReviewModal";
 import { brands } from "@/data/brands";
 import { getReviewsByBrandId, getRatingDistribution, Review } from "@/data/reviews";
 
@@ -172,6 +173,7 @@ export function BrandPage() {
   const allReviews = brand ? getReviewsByBrandId(brand.id) : [];
   const distribution = brand ? getRatingDistribution(brand.id) : {};
 
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [starFilter, setStarFilter] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = useState(1);
@@ -225,17 +227,18 @@ export function BrandPage() {
         </nav>
 
         {/* Brand card */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 mb-5">
-          <div className="flex gap-4">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-5">
+          {/* Top row: logo + name + rating */}
+          <div className="flex items-start gap-3 mb-3">
             <div
-              className="w-28 h-24 rounded-lg border border-gray-100 flex items-center justify-center flex-shrink-0"
+              className="w-20 h-16 rounded-lg border border-gray-100 flex items-center justify-center flex-shrink-0"
               style={{ backgroundColor: brand.logoBg }}
             >
               <span
-                className="font-bold text-center leading-tight px-2"
+                className="font-bold text-center leading-tight px-1"
                 style={{
                   color: brand.logoColor,
-                  fontSize: brand.logoText.length > 8 ? "12px" : "15px",
+                  fontSize: brand.logoText.length > 8 ? "10px" : "13px",
                 }}
               >
                 {brand.logoText}
@@ -243,39 +246,46 @@ export function BrandPage() {
             </div>
 
             <div className="flex-1 min-w-0">
-              <h1 className="text-xl font-bold text-gray-900 mb-1">{brand.name}</h1>
-              <p className="text-sm text-gray-500 leading-relaxed mb-3">
-                {getBrandDescription(brand.name)}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-gray-500">
-                <button className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-website">
-                  <Globe size={13} />
-                  <span>Web Sitesi</span>
-                </button>
-                <span className="text-gray-300">|</span>
-                <button className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-products">
-                  <Package size={13} />
-                  <span>Tüm Ürünleri</span>
-                </button>
+              <h1 className="text-lg font-bold text-gray-900 leading-tight">{brand.name}</h1>
+              <div className="mt-1">
+                <span className="text-2xl font-bold text-gray-900">
+                  {brand.rating.toFixed(1)}
+                </span>
+                <span className="text-sm font-normal text-gray-400"> / 5</span>
+              </div>
+              <div className="flex items-center gap-2 mt-0.5">
+                <StarRating rating={brand.rating} size={16} />
+                <span className="text-xs text-gray-400">({totalReviews.toLocaleString("tr-TR")} yorum)</span>
               </div>
             </div>
+          </div>
 
-            <div className="flex flex-col items-end gap-2 flex-shrink-0">
-              <div className="text-right">
-                <div className="text-3xl font-bold text-gray-900">
-                  {brand.rating.toFixed(1)}<span className="text-lg font-normal text-gray-400"> / 5</span>
-                </div>
-                <StarRating rating={brand.rating} size={20} />
-                <p className="text-xs text-gray-400 mt-1">({totalReviews.toLocaleString("tr-TR")} yorum)</p>
-              </div>
-              <button
-                className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors w-full justify-center"
-                data-testid="button-write-review"
-              >
-                <PenLine size={14} />
-                Yorum Yaz
+          {/* Description */}
+          <p className="text-sm text-gray-500 leading-relaxed mb-3">
+            {getBrandDescription(brand.name)}
+          </p>
+
+          {/* Links + button */}
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-3 text-sm text-gray-500">
+              <button className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-website">
+                <Globe size={13} />
+                <span>Web Sitesi</span>
+              </button>
+              <span className="text-gray-300">|</span>
+              <button className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-products">
+                <Package size={13} />
+                <span>Tüm Ürünleri</span>
               </button>
             </div>
+            <button
+              onClick={() => setShowReviewModal(true)}
+              className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+              data-testid="button-write-review"
+            >
+              <PenLine size={14} />
+              Yorum Yaz
+            </button>
           </div>
         </div>
 
@@ -331,6 +341,13 @@ export function BrandPage() {
           )}
         </div>
       </main>
+
+      {showReviewModal && (
+        <ReviewModal
+          brandName={brand.name}
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
     </div>
   );
 }
