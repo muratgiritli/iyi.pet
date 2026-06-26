@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Link } from "wouter";
 import { ChevronDown, ChevronRight, Info } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
@@ -87,7 +88,8 @@ function FilterDropdown({
 
 function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
   return (
-    <div
+    <Link
+      href={`/marka/${brand.slug}`}
       className="flex items-center gap-3 px-4 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer group"
       data-testid={`row-brand-${brand.id}`}
     >
@@ -109,7 +111,7 @@ function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
         size={16}
         className="text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0"
       />
-    </div>
+    </Link>
   );
 }
 
