@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { X, Star, ImageIcon, ChevronDown, Check } from "lucide-react";
+import { X, Star, ImageIcon, ChevronDown, Check, ShieldCheck } from "lucide-react";
 
 interface ReviewModalProps {
   brandName: string;
@@ -17,6 +17,9 @@ const petTypes = [
 ];
 
 export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [title, setTitle] = useState("");
@@ -41,7 +44,7 @@ export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
     if (file) setPhotoName(file.name);
   };
 
-  const canSubmit = rating > 0 && comment.trim().length > 0 && accepted;
+  const canSubmit = firstName.trim().length > 0 && lastName.trim().length > 0 && phone.trim().length > 0 && rating > 0 && comment.trim().length > 0 && accepted;
 
   const handleSubmit = () => {
     if (!canSubmit) return;
@@ -85,6 +88,58 @@ export function ReviewModal({ brandName, onClose }: ReviewModalProps) {
           </div>
         ) : (
           <div className="px-5 py-5 space-y-5">
+            {/* Personal info */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-sm font-semibold text-gray-800">Kişisel Bilgiler</label>
+              </div>
+              <div className="flex items-start gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 mb-3">
+                <ShieldCheck size={14} className="text-blue-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-blue-700 leading-relaxed">
+                  Kişisel bilgileriniz <span className="font-semibold">kimse ile paylaşılmayacaktır.</span> Yalnızca yorum doğrulama amacıyla kullanılır.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <div>
+                  <label className="text-xs font-medium text-gray-600 block mb-1">Ad <span className="text-red-400">*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Adınız"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all placeholder:text-gray-400"
+                    data-testid="input-first-name"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-600 block mb-1">Soyad <span className="text-red-400">*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Soyadınız"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all placeholder:text-gray-400"
+                    data-testid="input-last-name"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-600 block mb-1">Telefon <span className="text-red-400">*</span></label>
+                <input
+                  type="tel"
+                  placeholder="05XX XXX XX XX"
+                  value={phone}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/[^\d\s+()-]/g, "");
+                    setPhone(val);
+                  }}
+                  maxLength={15}
+                  className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all placeholder:text-gray-400"
+                  data-testid="input-phone"
+                />
+              </div>
+            </div>
+
             {/* Star rating */}
             <div>
               <div className="flex items-center justify-between mb-2">
