@@ -10,6 +10,7 @@ import { AdminReviewsPage } from "@/pages/admin/AdminReviewsPage";
 import { AdminBrandsPage } from "@/pages/admin/AdminBrandsPage";
 import { AdminSettingsPage } from "@/pages/admin/AdminSettingsPage";
 import { AdminAuthProvider, useAdminAuth } from "@/contexts/AdminAuthContext";
+import { DataProvider } from "@/contexts/DataContext";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -47,11 +48,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <AdminAuthProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-        </AdminAuthProvider>
+        <DataProvider>
+          <AdminAuthProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+          </AdminAuthProvider>
+        </DataProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

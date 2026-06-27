@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { dataStore } from "@/store/dataStore";
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -7,9 +8,6 @@ interface AdminAuthContextType {
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | null>(null);
-
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "admin123";
 const STORAGE_KEY = "iyipet_admin_auth";
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
@@ -18,7 +16,8 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   });
 
   const login = (username: string, password: string) => {
-    if (username === ADMIN_USER && password === ADMIN_PASS) {
+    const settings = dataStore.getSettings();
+    if (username === "admin" && password === settings.adminPassword) {
       localStorage.setItem(STORAGE_KEY, "true");
       setIsAuthenticated(true);
       return true;
