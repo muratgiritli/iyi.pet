@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronRight, Info } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, Globe, MapPin } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
 import { BrandLogo } from "@/components/BrandLogo";
@@ -51,11 +51,11 @@ function FilterDropdown({
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors font-medium text-gray-700"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors font-medium text-gray-700 whitespace-nowrap"
         data-testid="button-filter"
       >
         <span>{current?.label}</span>
-        <ChevronDown size={14} className="text-gray-500" />
+        <ChevronDown size={12} className="text-gray-500 flex-shrink-0" />
       </button>
       {open && (
         <>
@@ -63,7 +63,7 @@ function FilterDropdown({
             className="fixed inset-0 z-10"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute top-full mt-1 left-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 min-w-[200px]">
+          <div className="absolute top-full mt-1 left-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 min-w-[160px]">
             {options.map((opt) => (
               <button
                 key={opt.value}
@@ -71,7 +71,7 @@ function FilterDropdown({
                   onChange(opt.value);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors first:rounded-t-lg last:rounded-b-lg ${
+                className={`w-full text-left px-3 py-2 text-xs hover:bg-gray-50 transition-colors first:rounded-t-lg last:rounded-b-lg ${
                   opt.value === value ? "text-green-700 font-semibold bg-green-50" : "text-gray-700"
                 }`}
                 data-testid={`option-filter-${opt.value}`}
@@ -120,13 +120,19 @@ function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
   );
 }
 
+type OriginTab = "all" | "global" | "local";
+
 export function HomePage() {
+  const [originTab, setOriginTab] = useState<OriginTab>("all");
   const [category, setCategory] = useState("all");
   const [sortBy, setSortBy] = useState("rating_desc");
   const [showAll, setShowAll] = useState(false);
 
   const filtered = useMemo(() => {
     let list = [...brands];
+    if (originTab !== "all") {
+      list = list.filter((b) => b.origin === originTab);
+    }
     if (category !== "all") {
       list = list.filter((b) => b.category === category);
     }
@@ -145,24 +151,53 @@ export function HomePage() {
       }
     });
     return list;
-  }, [category, sortBy]);
+  }, [originTab, category, sortBy]);
 
   const displayed = showAll ? filtered : filtered.slice(0, 10);
+
+  const originTabs: { value: OriginTab; label: string; icon: React.ReactNode }[] = [
+    { value: "all", label: "Tümü", icon: null },
+    { value: "global", label: "Global Markalar", icon: <Globe size={14} className="flex-shrink-0" /> },
+    { value: "local", label: "Yerel Markalar", icon: <MapPin size={14} className="flex-shrink-0" /> },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
 
       <main className="max-w-3xl mx-auto px-4 py-6">
-        <div className="mb-5">
+        <div className="mb-4">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Mama Markaları</h1>
           <p className="text-sm text-gray-500">
             Gerçek pet sahiplerinin yorumlarına göre en iyi mama markaları sıralaması.
           </p>
         </div>
 
-        <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
-          <div className="flex items-center gap-2 flex-wrap">
+        {/* Origin tabs */}
+        <div className="flex items-center gap-2 mb-4">
+          {originTabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => {
+                setOriginTab(tab.value);
+                setShowAll(false);
+              }}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all border ${
+                originTab === tab.value
+                  ? "bg-green-600 text-white border-green-600 shadow-sm"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+              }`}
+              data-testid={`tab-origin-${tab.value}`}
+            >
+              {tab.icon}
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Filter row */}
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <div className="flex items-center gap-2">
             <FilterDropdown
               value={category}
               onChange={setCategory}
@@ -175,11 +210,11 @@ export function HomePage() {
             />
           </div>
           <button
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
             data-testid="button-ranking-info"
           >
-            <Info size={13} />
-            <span>Sıralama nasıl belirlenir?</span>
+            <Info size={12} />
+            <span className="hidden sm:inline">Sıralama nasıl belirlenir?</span>
           </button>
         </div>
 
@@ -200,9 +235,15 @@ export function HomePage() {
             </div>
           </div>
 
-          {displayed.map((brand, index) => (
-            <BrandRow key={brand.id} brand={brand} rank={index + 1} />
-          ))}
+          {displayed.length === 0 ? (
+            <div className="py-12 flex flex-col items-center gap-2 text-gray-400">
+              <span className="text-sm">Bu kategoride marka bulunamadı.</span>
+            </div>
+          ) : (
+            displayed.map((brand, index) => (
+              <BrandRow key={brand.id} brand={brand} rank={index + 1} />
+            ))
+          )}
         </div>
 
         {!showAll && filtered.length > 10 && (
