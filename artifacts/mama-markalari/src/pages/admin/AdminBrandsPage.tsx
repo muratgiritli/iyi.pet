@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { Plus, Search, ExternalLink, Pencil, Trash2, BadgeCheck, X, Save } from "lucide-react";
+import { Plus, Search, ExternalLink, Pencil, Trash2, BadgeCheck, X, Save, Pin } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "./AdminLayout";
 import { StarRating } from "@/components/StarRating";
-import { useData, FullBrand } from "@/contexts/DataContext";
-import { CustomBrand } from "@/store/dataStore";
+import { useData } from "@/contexts/DataContext";
+import {
+  useCreateBrand,
+  useUpdateBrand,
+  useDeleteBrand,
+  getListBrandsQueryKey,
+  getGetStatsQueryKey,
+  type Brand,
+  type BrandInput,
+} from "@workspace/api-client-react";
 
 interface BrandFormData {
   name: string;
@@ -29,15 +38,17 @@ function slugify(s: string) {
   return s.toLowerCase().replace(/ğ/g, "g").replace(/ü/g, "u").replace(/ş/g, "s").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ç/g, "c").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-function BrandModal({ brand, onClose, onSave }: {
-  brand: FullBrand | null;
+function BrandModal({ brand, onClose, onSave, saving }: {
+  brand: Brand | null;
   onClose: () => void;
   onSave: (data: BrandFormData) => void;
+  saving: boolean;
 }) {
   const isEdit = !!brand;
   const [form, setForm] = useState<BrandFormData>(brand ? {
     name: brand.name, slug: brand.slug, category: brand.category,
-    origin: brand.origin, logoText: brand.logoText, logoColor: brand.logoColor,
+    origin: (brand.origin === "local" ? "local" : "global"),
+    logoText: brand.logoText, logoColor: brand.logoColor,
     logoBg: brand.logoBg, websiteUrl: brand.websiteUrl || "", productsUrl: brand.productsUrl || "",
     verified: brand.verified, description: brand.description || "",
   } : empty);
@@ -153,7 +164,7 @@ function BrandModal({ brand, onClose, onSave }: {
           </div>
           <div className="flex gap-3 px-5 pb-5">
             <button onClick={onClose} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50">İptal</button>
-            <button onClick={() => canSave && onSave(form)} disabled={!canSave}
+            <button onClick={() => canSave && onSave(form)} disabled={!canSave || saving}
               className="flex-1 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-gray-200 disabled:text-gray-400 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-1.5">
               <Save size={14} />{isEdit ? "Kaydet" : "Marka Ekle"}
             </button>
@@ -165,45 +176,53 @@ function BrandModal({ brand, onClose, onSave }: {
 }
 
 export function AdminBrandsPage() {
-  const { brands, updateBrandMeta, addCustomBrand, updateCustomBrand, deleteCustomBrand } = useData();
+  const { brands } = useData();
+  const queryClient = useQueryClient();
+  const createBrand = useCreateBrand();
+  const updateBrand = useUpdateBrand();
+  const deleteBrand = useDeleteBrand();
+
   const [search, setSearch] = useState("");
-  const [editBrand, setEditBrand] = useState<FullBrand | null | "new">(null);
+  const [editBrand, setEditBrand] = useState<Brand | null | "new">(null);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
 
-  const filtered = brands.filter((b) => b.name.toLowerCase().includes(search.toLowerCase()));
-
-  function handleSave(data: BrandFormData) {
-    if (editBrand === "new") {
-      addCustomBrand({
-        name: data.name, slug: data.slug, category: data.category,
-        origin: data.origin, logoText: data.logoText, logoColor: data.logoColor,
-        logoBg: data.logoBg, websiteUrl: data.websiteUrl, productsUrl: data.productsUrl,
-        verified: data.verified, description: data.description,
-        rating: 0, reviewCount: 0,
-      } as Omit<CustomBrand, "id">);
-    } else if (editBrand) {
-      if (editBrand.isCustom) {
-        updateCustomBrand(editBrand.id, {
-          name: data.name, slug: data.slug, category: data.category,
-          origin: data.origin, logoText: data.logoText, logoColor: data.logoColor,
-          logoBg: data.logoBg, websiteUrl: data.websiteUrl, productsUrl: data.productsUrl,
-          verified: data.verified, description: data.description,
-        });
-      } else {
-        updateBrandMeta(editBrand.id, {
-          verified: data.verified,
-          websiteUrl: data.websiteUrl,
-          productsUrl: data.productsUrl,
-        });
-      }
-    }
-    setEditBrand(null);
+  function invalidate() {
+    queryClient.invalidateQueries({ queryKey: getListBrandsQueryKey() });
+    queryClient.invalidateQueries({ queryKey: getGetStatsQueryKey() });
   }
 
-  function handleDelete(brand: FullBrand) {
-    if (!brand.isCustom) return;
+  const sorted = [...brands].sort((a, b) => {
+    if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+    if (a.pinned && b.pinned) return a.pinnedRank - b.pinnedRank;
+    return b.rating - a.rating;
+  });
+  const filtered = sorted.filter((b) => b.name.toLowerCase().includes(search.toLowerCase()));
+  const maxRank = brands.reduce((m, b) => (b.pinned ? Math.max(m, b.pinnedRank) : m), 0);
+
+  function handleSave(data: BrandFormData) {
+    const body: BrandInput = {
+      name: data.name, slug: data.slug, category: data.category,
+      origin: data.origin, logoText: data.logoText, logoColor: data.logoColor,
+      logoBg: data.logoBg, websiteUrl: data.websiteUrl, productsUrl: data.productsUrl,
+      verified: data.verified, description: data.description,
+    };
+    if (editBrand === "new") {
+      createBrand.mutate({ data: body }, { onSuccess: () => { invalidate(); setEditBrand(null); } });
+    } else if (editBrand) {
+      updateBrand.mutate({ id: editBrand.id, data: body }, { onSuccess: () => { invalidate(); setEditBrand(null); } });
+    }
+  }
+
+  function togglePin(brand: Brand) {
+    const next: BrandInput = brand.pinned
+      ? { name: brand.name, slug: brand.slug, logoText: brand.logoText, pinned: false, pinnedRank: 0 }
+      : { name: brand.name, slug: brand.slug, logoText: brand.logoText, pinned: true, pinnedRank: maxRank + 1 };
+    updateBrand.mutate({ id: brand.id, data: next }, { onSettled: invalidate });
+  }
+
+  function handleDelete(brand: Brand) {
     if (deleteConfirm === brand.id) {
-      deleteCustomBrand(brand.id);
+      deleteBrand.mutate({ id: brand.id }, { onSettled: invalidate });
       setDeleteConfirm(null);
     } else {
       setDeleteConfirm(brand.id);
@@ -216,7 +235,7 @@ export function AdminBrandsPage() {
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
             <h1 className="text-xl font-bold text-gray-900">Markalar</h1>
-            <p className="text-sm text-gray-500 mt-0.5">Tüm mama markalarını yönetin.</p>
+            <p className="text-sm text-gray-500 mt-0.5">Tüm mama markalarını yönetin. Sabitlenen markalar ana sayfada en üstte gösterilir.</p>
           </div>
           <button onClick={() => setEditBrand("new")}
             className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
@@ -247,7 +266,7 @@ export function AdminBrandsPage() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm font-semibold text-gray-900">{brand.name}</span>
                     {brand.verified && <BadgeCheck size={14} className="text-green-600 flex-shrink-0" />}
-                    {brand.isCustom && <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">Özel</span>}
+                    {brand.pinned && <span className="flex items-center gap-0.5 text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-medium"><Pin size={9} /> Sabit</span>}
                   </div>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <StarRating rating={brand.rating} size={11} />
@@ -259,6 +278,12 @@ export function AdminBrandsPage() {
                   {brand.category === "premium" ? "Premium" : brand.category === "veterinary" ? "Veteriner" : "Standart"}
                 </span>
                 <div className="flex items-center gap-1 flex-shrink-0">
+                  <button onClick={() => togglePin(brand)}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${brand.pinned ? "bg-amber-100 text-amber-600 hover:bg-amber-200" : "hover:bg-gray-100 text-gray-400 hover:text-amber-600"}`}
+                    title={brand.pinned ? "Sabiti kaldır" : "Sabitle"}
+                    data-testid={`button-pin-${brand.id}`}>
+                    <Pin size={13} fill={brand.pinned ? "currentColor" : "none"} />
+                  </button>
                   <a href={`/marka/${brand.slug}`} target="_blank" rel="noreferrer"
                     className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600"
                     data-testid={`button-view-${brand.id}`}>
@@ -269,14 +294,12 @@ export function AdminBrandsPage() {
                     data-testid={`button-edit-${brand.id}`}>
                     <Pencil size={13} />
                   </button>
-                  {brand.isCustom && (
-                    <button onClick={() => handleDelete(brand)}
-                      className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${deleteConfirm === brand.id ? "bg-red-600 text-white" : "hover:bg-red-50 text-gray-400 hover:text-red-600"}`}
-                      title={deleteConfirm === brand.id ? "Tekrar tıkla" : "Sil"}
-                      data-testid={`button-delete-${brand.id}`}>
-                      <Trash2 size={13} />
-                    </button>
-                  )}
+                  <button onClick={() => handleDelete(brand)}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${deleteConfirm === brand.id ? "bg-red-600 text-white" : "hover:bg-red-50 text-gray-400 hover:text-red-600"}`}
+                    title={deleteConfirm === brand.id ? "Tekrar tıkla" : "Sil"}
+                    data-testid={`button-delete-${brand.id}`}>
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </div>
             ))}
@@ -289,6 +312,7 @@ export function AdminBrandsPage() {
           brand={editBrand === "new" ? null : editBrand}
           onClose={() => setEditBrand(null)}
           onSave={handleSave}
+          saving={createBrand.isPending || updateBrand.isPending}
         />
       )}
     </AdminLayout>

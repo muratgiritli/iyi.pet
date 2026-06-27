@@ -1,0 +1,1 @@
+- [Orval codegen mutation/cache conventions](codegen-mutations.md) — generated hooks don't auto-invalidate; body-only `{data}` vs path `{id,data}`; brand update is partial PATCH (safe).

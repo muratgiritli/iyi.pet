@@ -4,7 +4,8 @@ import { ChevronDown, ChevronRight, Info, Globe, MapPin } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
 import { BrandLogo } from "@/components/BrandLogo";
-import { useData, FullBrand } from "@/contexts/DataContext";
+import { useData } from "@/contexts/DataContext";
+import type { Brand } from "@workspace/api-client-react";
 import { categories, sortOptions } from "@/data/brands";
 
 function RankBadge({ rank }: { rank: number }) {
@@ -46,7 +47,7 @@ function FilterDropdown({ value, onChange, options }: { value: string; onChange:
   );
 }
 
-function BrandRow({ brand, rank }: { brand: FullBrand; rank: number }) {
+function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
   return (
     <Link
       href={`/marka/${brand.slug}`}
@@ -104,6 +105,8 @@ export function HomePage() {
       return true;
     });
     list.sort((a, b) => {
+      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+      if (a.pinned && b.pinned) return a.pinnedRank - b.pinnedRank;
       switch (sortBy) {
         case "rating_desc": return b.rating - a.rating;
         case "rating_asc": return a.rating - b.rating;

@@ -1,9 +1,9 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { dataStore } from "@/store/dataStore";
+import { useAdminLogin } from "@workspace/api-client-react";
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
-  login: (username: string, password: string) => boolean;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -14,15 +14,20 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem(STORAGE_KEY) === "true";
   });
+  const loginMutation = useAdminLogin();
 
-  const login = (username: string, password: string) => {
-    const settings = dataStore.getSettings();
-    if (username === "admin" && password === settings.adminPassword) {
-      localStorage.setItem(STORAGE_KEY, "true");
-      setIsAuthenticated(true);
-      return true;
+  const login = async (username: string, password: string) => {
+    try {
+      const res = await loginMutation.mutateAsync({ data: { username, password } });
+      if (res.success) {
+        localStorage.setItem(STORAGE_KEY, "true");
+        setIsAuthenticated(true);
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
     }
-    return false;
   };
 
   const logout = () => {

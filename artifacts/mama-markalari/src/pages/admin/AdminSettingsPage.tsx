@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { ShieldCheck, Save, Eye, EyeOff } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "./AdminLayout";
-import { useData } from "@/contexts/DataContext";
+import {
+  useGetSettings,
+  useUpdateSettings,
+  useChangeAdminPassword,
+  getGetSettingsQueryKey,
+} from "@workspace/api-client-react";
+import { getApiErrorMessage } from "@/lib/apiError";
 
 function ToggleRow({ label, desc, checked, onChange, testId }: {
   label: string; desc: string; checked: boolean; onChange: (v: boolean) => void; testId: string;
@@ -22,9 +29,13 @@ function ToggleRow({ label, desc, checked, onChange, testId }: {
 }
 
 export function AdminSettingsPage() {
-  const { settings, saveSettings } = useData();
+  const queryClient = useQueryClient();
+  const { data: settings } = useGetSettings();
+  const updateSettings = useUpdateSettings();
+  const changePassword = useChangeAdminPassword();
 
-  const [requireApproval, setRequireApproval] = useState(settings.requireApproval);
+  const [requireApproval, setRequireApproval] = useState(settings?.requireApproval ?? true);
+  const [touched, setTouched] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,19 +44,29 @@ export function AdminSettingsPage() {
   const [pwError, setPwError] = useState("");
   const [pwSuccess, setPwSuccess] = useState(false);
 
-  function handleSave() {
-    saveSettings({ ...settings, requireApproval });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const effectiveApproval = touched ? requireApproval : (settings?.requireApproval ?? true);
+
+  function setApproval(v: boolean) {
+    setTouched(true);
+    setRequireApproval(v);
   }
 
-  function handlePasswordChange() {
+  function handleSave() {
+    updateSettings.mutate(
+      { data: { requireApproval: effectiveApproval } },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: getGetSettingsQueryKey() });
+          setSaved(true);
+          setTimeout(() => setSaved(false), 2000);
+        },
+      },
+    );
+  }
+
+  async function handlePasswordChange() {
     setPwError("");
     setPwSuccess(false);
-    if (currentPassword !== settings.adminPassword) {
-      setPwError("Mevcut şifre yanlış.");
-      return;
-    }
     if (newPassword.length < 6) {
       setPwError("Yeni şifre en az 6 karakter olmalıdır.");
       return;
@@ -54,12 +75,16 @@ export function AdminSettingsPage() {
       setPwError("Yeni şifreler eşleşmiyor.");
       return;
     }
-    saveSettings({ ...settings, adminPassword: newPassword });
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setPwSuccess(true);
-    setTimeout(() => setPwSuccess(false), 3000);
+    try {
+      await changePassword.mutateAsync({ data: { currentPassword, newPassword } });
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setPwSuccess(true);
+      setTimeout(() => setPwSuccess(false), 3000);
+    } catch (err) {
+      setPwError(getApiErrorMessage(err, "Şifre değiştirilemedi. Mevcut şifrenizi kontrol edin."));
+    }
   }
 
   return (
@@ -72,21 +97,21 @@ export function AdminSettingsPage() {
 
         {/* Review settings */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-5">
-          <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wide text-xs text-gray-400">Yorum Ayarları</h2>
+          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wide">Yorum Ayarları</h2>
           <ToggleRow
             label="Onay Gerekli"
             desc="Yeni yorumlar yayınlanmadan önce admin onayı beklesin."
-            checked={requireApproval}
-            onChange={setRequireApproval}
+            checked={effectiveApproval}
+            onChange={setApproval}
             testId="toggle-require-approval"
           />
-          {!requireApproval && (
+          {!effectiveApproval && (
             <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5">
               <ShieldCheck size={14} className="text-amber-600 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-amber-700">Otomatik onay açık — yorumlar admin onayı olmadan yayınlanır.</p>
             </div>
           )}
-          {requireApproval && (
+          {effectiveApproval && (
             <div className="flex items-start gap-2.5 bg-green-50 border border-green-200 rounded-lg px-3 py-2.5">
               <ShieldCheck size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-green-700">Manuel onay açık — yeni yorumlar admin onayından sonra yayınlanır.</p>
@@ -95,8 +120,8 @@ export function AdminSettingsPage() {
         </div>
 
         <div className="flex justify-end">
-          <button onClick={handleSave}
-            className={`flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors ${saved ? "bg-green-700" : "bg-green-600 hover:bg-green-700"}`}
+          <button onClick={handleSave} disabled={updateSettings.isPending}
+            className={`flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors disabled:opacity-60 ${saved ? "bg-green-700" : "bg-green-600 hover:bg-green-700"}`}
             data-testid="button-save-settings">
             <Save size={15} />
             {saved ? "Kaydedildi ✓" : "Ayarları Kaydet"}
@@ -137,7 +162,7 @@ export function AdminSettingsPage() {
           {pwError && <p className="text-xs text-red-600 font-medium">{pwError}</p>}
           {pwSuccess && <p className="text-xs text-green-600 font-medium">✓ Şifre başarıyla değiştirildi.</p>}
           <div className="flex justify-end">
-            <button onClick={handlePasswordChange} disabled={!currentPassword || !newPassword || !confirmPassword}
+            <button onClick={handlePasswordChange} disabled={!currentPassword || !newPassword || !confirmPassword || changePassword.isPending}
               className="text-sm font-semibold px-4 py-2 bg-gray-800 hover:bg-gray-900 disabled:bg-gray-200 disabled:text-gray-400 text-white rounded-lg transition-colors"
               data-testid="button-change-password">
               Şifreyi Değiştir

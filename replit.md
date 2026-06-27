@@ -1,6 +1,6 @@
-# [Project name]
+# iyi.pet — Mama Markaları (Pet Food Reviews)
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A Turkish pet-food brand review/complaint site. Visitors browse ranked brands, read reviews, submit their own (with a profanity/spam filter), and vote reviews helpful/unhelpful. An admin area moderates reviews (incl. bulk approve/reject/delete), manages brands (incl. manual pin/ranking), edits settings, and views statistics charts. No end-user login.
 
 ## Run & Operate
 
@@ -22,15 +22,23 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- DB schema (source of truth): `lib/db/src/schema/{brands,reviews,settings}.ts`
+- API contract (source of truth): `lib/api-spec/openapi.yaml` → codegen → `@workspace/api-zod` (server validation) + `@workspace/api-client-react` (hooks/keys)
+- Server routes: `artifacts/api-server/src/routes/{brands,reviews,settings,admin,stats}/`; seed + profanity in `artifacts/api-server/src/lib/`
+- Frontend: `artifacts/mama-markalari/src/` — `contexts/{DataContext,AdminAuthContext}.tsx`, `pages/`, `pages/admin/`, `components/`
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Contract-first: change `openapi.yaml`, run codegen, then implement server (Zod-validated) and client (generated hooks). Don't hand-write request/response types.
+- Generated mutations do NOT auto-invalidate caches — invalidate manually with `getList*QueryKey()` helpers. See `.agents/memory/codegen-mutations.md`.
+- Brands seed on server startup if the table is empty (`seedIfEmpty`).
+- Vote state (helpful/unhelpful, per review) and the admin-logged-in flag are the only things kept in browser localStorage; all real data lives in Postgres.
+- Admin auth is currently client-side only (localStorage flag); admin API routes are NOT yet server-protected. See Gotchas.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Public: ranked brand list (pinned-first, then rating), per-brand review pages with star-filtering, review submission with profanity/spam rejection, helpful/unhelpful voting.
+- Admin: review moderation with bulk multi-select (approve/reject/delete), brand CRUD with manual pin/ranking, settings (incl. require-approval toggle + password change), dashboard with recharts statistics (reviews over time, rating distribution).
 
 ## User preferences
 
@@ -38,7 +46,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- After editing `lib/api-spec/openapi.yaml`, always run `pnpm --filter @workspace/api-spec run codegen` before typechecking the server or frontend.
+- When adding a write/mutation on the frontend, manually invalidate every affected query key (lists + brand aggregates + stats). Missing one serves stale data until refresh.
+- Admin API routes (`/reviews` mutations, `/reviews/bulk`, `/brands/*`, `/settings`, `/admin/password`) are NOT server-protected — auth is only a client-side localStorage flag. Anyone can call them directly. Add server-side session/token auth before treating admin as secure (out of current scope).
 
 ## Pointers
 

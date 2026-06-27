@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { X, Star, Check, ShieldCheck, Upload } from "lucide-react";
-import { useData } from "@/contexts/DataContext";
+import { X, Star, Check, ShieldCheck, Upload, AlertCircle } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  useCreateReview,
+  getListPublicReviewsQueryKey,
+  getListReviewsQueryKey,
+  getListBrandsQueryKey,
+  getGetStatsQueryKey,
+} from "@workspace/api-client-react";
+import { getApiErrorMessage } from "@/lib/apiError";
 
 interface ReviewModalProps {
   brandName: string;
@@ -9,7 +17,8 @@ interface ReviewModalProps {
 }
 
 export function ReviewModal({ brandName, brandId, onClose }: ReviewModalProps) {
-  const { addReview } = useData();
+  const queryClient = useQueryClient();
+  const createReview = useCreateReview();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,6 +32,7 @@ export function ReviewModal({ brandName, brandId, onClose }: ReviewModalProps) {
   const [photoName, setPhotoName] = useState("");
   const [terms, setTerms] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const canSubmit =
     firstName.trim() && lastName.trim() && phone.trim().length >= 10 &&
@@ -38,25 +48,31 @@ export function ReviewModal({ brandName, brandId, onClose }: ReviewModalProps) {
     reader.readAsDataURL(file);
   }
 
-  function handleSubmit() {
-    if (!canSubmit) return;
-    const initial = firstName.trim()[0]?.toUpperCase() ?? "?";
-    const author = `${firstName.trim()} ${lastName.trim()[0]?.toUpperCase()}.`;
-    addReview({
-      brandId,
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      phone: phone.trim(),
-      author,
-      avatar: initial,
-      rating,
-      title: title.trim(),
-      text: comment.trim(),
-      petType,
-      photoBase64,
-      status: "pending",
-    });
-    setSubmitted(true);
+  async function handleSubmit() {
+    if (!canSubmit || createReview.isPending) return;
+    setErrorMsg("");
+    try {
+      await createReview.mutateAsync({
+        data: {
+          brandId,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          phone: phone.trim(),
+          rating,
+          title: title.trim(),
+          text: comment.trim(),
+          petType: petType || undefined,
+          photoBase64: photoBase64 ?? null,
+        },
+      });
+      queryClient.invalidateQueries({ queryKey: getListPublicReviewsQueryKey() });
+      queryClient.invalidateQueries({ queryKey: getListReviewsQueryKey() });
+      queryClient.invalidateQueries({ queryKey: getListBrandsQueryKey() });
+      queryClient.invalidateQueries({ queryKey: getGetStatsQueryKey() });
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMsg(getApiErrorMessage(err, "Yorum gönderilemedi. Lütfen tekrar deneyin."));
+    }
   }
 
   return (
@@ -221,6 +237,13 @@ export function ReviewModal({ brandName, brandId, onClose }: ReviewModalProps) {
               </span>
             </label>
 
+            {errorMsg && (
+              <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5" data-testid="error-review">
+                <AlertCircle size={15} className="text-red-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-red-600 leading-relaxed">{errorMsg}</p>
+              </div>
+            )}
+
             {/* Actions */}
             <div className="flex gap-3 pt-1 pb-2">
               <button onClick={onClose} className="flex-1 py-3 border border-gray-300 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors" data-testid="button-cancel">
@@ -228,11 +251,11 @@ export function ReviewModal({ brandName, brandId, onClose }: ReviewModalProps) {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!canSubmit}
+                disabled={!canSubmit || createReview.isPending}
                 className="flex-1 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-200 disabled:text-gray-400 text-white text-sm font-semibold rounded-xl transition-colors"
                 data-testid="button-submit-review"
               >
-                Yorumumu Gönder
+                {createReview.isPending ? "Gönderiliyor..." : "Yorumumu Gönder"}
               </button>
             </div>
           </div>

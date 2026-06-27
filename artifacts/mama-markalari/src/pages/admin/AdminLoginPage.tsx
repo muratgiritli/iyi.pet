@@ -16,8 +16,7 @@ export function AdminLoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
-    const ok = login(username, password);
+    const ok = await login(username, password);
     setLoading(false);
     if (ok) {
       setLocation("/admin");

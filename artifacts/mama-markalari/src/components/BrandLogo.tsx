@@ -1,7 +1,5 @@
-import { Brand } from "@/data/brands";
-
 interface BrandLogoProps {
-  brand: Brand;
+  brand: { logoBg: string; logoColor: string; logoText: string };
 }
 
 export function BrandLogo({ brand }: BrandLogoProps) {

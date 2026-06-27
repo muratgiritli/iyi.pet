@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
 import { useRoute, Link } from "wouter";
-import { ChevronRight, Globe, Package, PenLine, ThumbsUp, MoreVertical, ChevronLeft, ChevronDown, BadgeCheck, Flag } from "lucide-react";
+import { ChevronRight, Globe, Package, PenLine, ThumbsUp, ThumbsDown, MoreVertical, ChevronLeft, ChevronDown, BadgeCheck, Flag } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
-import { BrandLogo } from "@/components/BrandLogo";
 import { ReviewModal } from "@/components/ReviewModal";
-import { useData, FullReview } from "@/contexts/DataContext";
+import { useData } from "@/contexts/DataContext";
+import { useListPublicReviews, type Review } from "@workspace/api-client-react";
+import { formatTimeAgo } from "@/lib/time";
 import { brandDescriptions } from "@/data/brands";
 
 const REVIEWS_PER_PAGE = 5;
@@ -16,11 +17,11 @@ function getAvatarColor(name: string) {
   return avatarColors[Math.abs(hash) % avatarColors.length];
 }
 
-function ReviewCard({ review }: { review: FullReview }) {
-  const { isVoted, getLikeCount, toggleVote } = useData();
+function ReviewCard({ review }: { review: Review }) {
+  const { getVote, vote } = useData();
   const [showReport, setShowReport] = useState(false);
-  const voted = isVoted(review.id);
-  const likeCount = getLikeCount(review);
+  const currentVote = getVote(review.id);
+  const timeAgo = formatTimeAgo(review.createdAt);
 
   return (
     <div className="py-4 border-b border-gray-100 last:border-0" data-testid={`review-card-${review.id}`}>
@@ -33,17 +34,27 @@ function ReviewCard({ review }: { review: FullReview }) {
             <div className="flex items-center gap-2 flex-wrap">
               <span className="font-semibold text-gray-900 text-sm">{review.author}</span>
               <StarRating rating={review.rating} size={13} />
-              <span className="text-gray-400 text-xs">· {review.timeAgo}</span>
+              <span className="text-gray-400 text-xs">· {timeAgo}</span>
               {review.petType && <span className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full">{review.petType}</span>}
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
               <button
-                onClick={() => toggleVote(review.id)}
-                className={`flex items-center gap-1 text-xs transition-colors ${voted ? "text-green-600 font-semibold" : "text-gray-400 hover:text-gray-600"}`}
-                data-testid={`button-like-${review.id}`}
+                onClick={() => vote(review.id, "helpful")}
+                className={`flex items-center gap-1 text-xs transition-colors ${currentVote === "helpful" ? "text-green-600 font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                title="Yararlı"
+                data-testid={`button-helpful-${review.id}`}
               >
-                <ThumbsUp size={13} fill={voted ? "currentColor" : "none"} />
-                <span>{likeCount}</span>
+                <ThumbsUp size={13} fill={currentVote === "helpful" ? "currentColor" : "none"} />
+                <span>{review.helpfulCount}</span>
+              </button>
+              <button
+                onClick={() => vote(review.id, "unhelpful")}
+                className={`flex items-center gap-1 text-xs transition-colors ${currentVote === "unhelpful" ? "text-red-500 font-semibold" : "text-gray-400 hover:text-gray-600"}`}
+                title="Yararsız"
+                data-testid={`button-unhelpful-${review.id}`}
+              >
+                <ThumbsDown size={13} fill={currentVote === "unhelpful" ? "currentColor" : "none"} />
+                <span>{review.unhelpfulCount}</span>
               </button>
               <div className="relative">
                 <button
@@ -154,13 +165,14 @@ function Pagination({ current, total, onChange }: { current: number; total: numb
 export function BrandPage() {
   const [, params] = useRoute("/marka/:slug");
   const slug = params?.slug;
-  const { brands, reviews } = useData();
+  const { brands } = useData();
+  const { data: reviews = [] } = useListPublicReviews();
 
   const brand = brands.find((b) => b.slug === slug);
 
   const allReviews = useMemo(() => {
     if (!brand) return [];
-    return reviews.filter((r) => r.brandId === brand.id && r.status !== "rejected");
+    return reviews.filter((r) => r.brandId === brand.id);
   }, [brand, reviews]);
 
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -185,8 +197,8 @@ export function BrandPage() {
     switch (sortBy) {
       case "highest": list.sort((a, b) => b.rating - a.rating); break;
       case "lowest": list.sort((a, b) => a.rating - b.rating); break;
-      case "most_liked": list.sort((a, b) => b.likes - a.likes); break;
-      default: list.sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0) || b.id - a.id); break;
+      case "most_liked": list.sort((a, b) => b.helpfulCount - a.helpfulCount); break;
+      default: list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() || b.id - a.id); break;
     }
     return list;
   }, [allReviews, starFilter, sortBy]);

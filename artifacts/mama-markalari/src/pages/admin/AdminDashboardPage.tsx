@@ -1,28 +1,31 @@
 import { Link } from "wouter";
-import { Tag, MessageSquare, Star, Clock, PlusCircle, Eye, Settings, ExternalLink, MoreVertical } from "lucide-react";
+import { Tag, MessageSquare, Star, Clock, PlusCircle, Settings, ExternalLink } from "lucide-react";
+import {
+  ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis,
+  CartesianGrid, Tooltip as RechartsTooltip,
+} from "recharts";
 import { AdminLayout } from "./AdminLayout";
 import { StarRating } from "@/components/StarRating";
 import { useData } from "@/contexts/DataContext";
+import { useGetStats, useListReviews } from "@workspace/api-client-react";
+import { formatTimeAgo } from "@/lib/time";
 import { useEffect } from "react";
 
 export function AdminDashboardPage() {
-  const { brands, reviews, settings, saveSettings } = useData();
+  const { brands } = useData();
+  const { data: stats } = useGetStats();
+  const { data: reviews = [] } = useListReviews();
 
   useEffect(() => {
     document.title = "Admin Paneli – iyi.pet";
   }, []);
 
-  const totalBrands = brands.length;
-  const totalReviews = reviews.length;
-  const avgRating = brands.length > 0
-    ? (brands.filter((b) => b.rating > 0).reduce((s, b) => s + b.rating, 0) / brands.filter((b) => b.rating > 0).length).toFixed(1)
-    : "0.0";
-  const pendingReviews = reviews.filter((r) => r.status === "pending").length;
+  const pendingReviews = stats?.pendingReviews ?? 0;
 
   const statCards = [
-    { label: "Toplam Marka", value: totalBrands, sub: "Tüm markalar", icon: Tag, color: "text-blue-600", bg: "bg-blue-50" },
-    { label: "Toplam Yorum", value: totalReviews.toLocaleString("tr-TR"), sub: "Tüm zamanlar", icon: MessageSquare, color: "text-green-600", bg: "bg-green-50" },
-    { label: "Ortalama Puan", value: avgRating, sub: "Tüm markalar", icon: Star, color: "text-amber-500", bg: "bg-amber-50" },
+    { label: "Toplam Marka", value: stats?.totalBrands ?? 0, sub: "Tüm markalar", icon: Tag, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Toplam Yorum", value: (stats?.totalReviews ?? 0).toLocaleString("tr-TR"), sub: "Tüm zamanlar", icon: MessageSquare, color: "text-green-600", bg: "bg-green-50" },
+    { label: "Ortalama Puan", value: (stats?.avgRating ?? 0).toFixed(1), sub: "Onaylı yorumlar", icon: Star, color: "text-amber-500", bg: "bg-amber-50" },
     { label: "Onay Bekleyen", value: pendingReviews, sub: "İnceleme gerekli", icon: Clock, color: "text-orange-500", bg: "bg-orange-50" },
   ];
 
@@ -33,7 +36,18 @@ export function AdminDashboardPage() {
     { label: "Siteyi Görüntüle", desc: "Siteyi yeni sekmede açın", icon: ExternalLink, color: "text-purple-600", bg: "bg-purple-50", href: "/" },
   ];
 
-  const recentReviews = reviews.slice(0, 5);
+  const reviewsByDay = (stats?.reviewsByDay ?? []).map((d) => ({
+    date: new Date(d.date).toLocaleDateString("tr-TR", { day: "2-digit", month: "short" }),
+    count: d.count,
+  }));
+  const ratingDistribution = (stats?.ratingDistribution ?? []).map((r) => ({
+    label: `${r.rating}★`,
+    count: r.count,
+  }));
+
+  const recentReviews = [...reviews]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5);
 
   return (
     <AdminLayout>
@@ -67,6 +81,47 @@ export function AdminDashboardPage() {
               <div className="text-xs text-gray-400 mt-0.5">{sub}</div>
             </div>
           ))}
+        </div>
+
+        {/* Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5" data-testid="chart-reviews-by-day">
+            <h2 className="text-base font-bold text-gray-900 mb-1">Yorum Akışı</h2>
+            <p className="text-xs text-gray-400 mb-4">Son 30 gündeki yorum sayısı</p>
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={reviewsByDay} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="reviewArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#16a34a" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#16a34a" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#94a3b8" }} interval="preserveStartEnd" minTickGap={24} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                  <RechartsTooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e2e8f0" }} />
+                  <Area type="monotone" dataKey="count" name="Yorum" stroke="#16a34a" strokeWidth={2} fill="url(#reviewArea)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5" data-testid="chart-rating-distribution">
+            <h2 className="text-base font-bold text-gray-900 mb-1">Puan Dağılımı</h2>
+            <p className="text-xs text-gray-400 mb-4">Onaylı yorumların yıldız dağılımı</p>
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={ratingDistribution} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                  <XAxis dataKey="label" tick={{ fontSize: 11, fill: "#94a3b8" }} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                  <RechartsTooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e2e8f0" }} cursor={{ fill: "#f8fafc" }} />
+                  <Bar dataKey="count" name="Yorum" fill="#f59e0b" radius={[6, 6, 0, 0]} maxBarSize={48} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
@@ -107,7 +162,7 @@ export function AdminDashboardPage() {
                     <div className="flex items-center gap-2 mb-0.5">
                       <span className="text-sm font-semibold text-gray-900">{review.author}</span>
                       <StarRating rating={review.rating} size={11} />
-                      <span className="text-xs text-gray-400">· {review.timeAgo}</span>
+                      <span className="text-xs text-gray-400">· {formatTimeAgo(review.createdAt)}</span>
                     </div>
                     <p className="text-xs text-gray-500 truncate">{review.text}</p>
                   </div>
