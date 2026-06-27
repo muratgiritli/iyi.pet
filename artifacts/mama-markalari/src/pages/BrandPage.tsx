@@ -1,10 +1,12 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { ChevronRight, Globe, Package, PenLine, ThumbsUp, ThumbsDown, MoreVertical, ChevronLeft, ChevronDown, BadgeCheck, Flag } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
 import { ReviewModal } from "@/components/ReviewModal";
 import { useData } from "@/contexts/DataContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeo } from "@/lib/useSeo";
 import { useListPublicReviews, type Review } from "@workspace/api-client-react";
 import { formatTimeAgo } from "@/lib/time";
 import { brandDescriptions } from "@/data/brands";
@@ -18,9 +20,11 @@ function getAvatarColor(name: string) {
 }
 
 function ReviewCard({ review }: { review: Review }) {
-  const { getVote, vote } = useData();
+  const { getVote, vote, report, hasReported } = useData();
+  const { t } = useLanguage();
   const [showReport, setShowReport] = useState(false);
   const currentVote = getVote(review.id);
+  const reported = hasReported(review.id);
   const timeAgo = formatTimeAgo(review.createdAt);
 
   return (
@@ -41,7 +45,7 @@ function ReviewCard({ review }: { review: Review }) {
               <button
                 onClick={() => vote(review.id, "helpful")}
                 className={`flex items-center gap-1 text-xs transition-colors ${currentVote === "helpful" ? "text-green-600 font-semibold" : "text-gray-400 hover:text-gray-600"}`}
-                title="Yararlı"
+                title={t("review.helpful")}
                 data-testid={`button-helpful-${review.id}`}
               >
                 <ThumbsUp size={13} fill={currentVote === "helpful" ? "currentColor" : "none"} />
@@ -50,7 +54,7 @@ function ReviewCard({ review }: { review: Review }) {
               <button
                 onClick={() => vote(review.id, "unhelpful")}
                 className={`flex items-center gap-1 text-xs transition-colors ${currentVote === "unhelpful" ? "text-red-500 font-semibold" : "text-gray-400 hover:text-gray-600"}`}
-                title="Yararsız"
+                title={t("review.unhelpful")}
                 data-testid={`button-unhelpful-${review.id}`}
               >
                 <ThumbsDown size={13} fill={currentVote === "unhelpful" ? "currentColor" : "none"} />
@@ -69,12 +73,13 @@ function ReviewCard({ review }: { review: Review }) {
                     <div className="fixed inset-0 z-10" onClick={() => setShowReport(false)} />
                     <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 min-w-[140px]">
                       <button
-                        onClick={() => { setShowReport(false); alert("Yorumunuz raporlandı. Teşekkürler!"); }}
-                        className="w-full text-left px-3 py-2.5 text-xs text-red-600 hover:bg-red-50 rounded-lg flex items-center gap-2"
+                        onClick={() => { if (!reported) report(review.id); setShowReport(false); }}
+                        disabled={reported}
+                        className={`w-full text-left px-3 py-2.5 text-xs rounded-lg flex items-center gap-2 ${reported ? "text-gray-400 cursor-default" : "text-red-600 hover:bg-red-50"}`}
                         data-testid={`button-report-${review.id}`}
                       >
                         <Flag size={12} />
-                        Şikayet Et
+                        {reported ? t("review.reported") : t("review.report")}
                       </button>
                     </div>
                   </>
@@ -86,11 +91,11 @@ function ReviewCard({ review }: { review: Review }) {
           <p className="text-gray-700 text-sm leading-relaxed">{review.text}</p>
           {review.photoBase64 && (
             <div className="mt-2">
-              <img src={review.photoBase64} alt="Yorum fotoğrafı" className="w-20 h-20 object-cover rounded-lg border border-gray-200" />
+              <img src={review.photoBase64} alt={t("review.photoAlt")} className="w-20 h-20 object-cover rounded-lg border border-gray-200" />
             </div>
           )}
           {review.status === "pending" && (
-            <p className="text-xs text-amber-600 mt-1 font-medium">⏳ İnceleme bekliyor</p>
+            <p className="text-xs text-amber-600 mt-1 font-medium">⏳ {t("review.pending")}</p>
           )}
         </div>
       </div>
@@ -99,19 +104,20 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 const sortOpts = [
-  { value: "newest", label: "En Yeniler" },
-  { value: "highest", label: "En Yüksek Puan" },
-  { value: "lowest", label: "En Düşük Puan" },
-  { value: "most_liked", label: "En Çok Beğenilen" },
+  { value: "newest" },
+  { value: "highest" },
+  { value: "lowest" },
+  { value: "most_liked" },
 ];
 
 function SortDropdown({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const current = sortOpts.find((o) => o.value === value);
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg px-3 py-1.5 bg-white hover:bg-gray-50" data-testid="button-sort">
-        {current?.label}<ChevronDown size={13} className="text-gray-500" />
+        {t(`rsort.${current?.value ?? "newest"}`)}<ChevronDown size={13} className="text-gray-500" />
       </button>
       {open && (
         <>
@@ -121,7 +127,7 @@ function SortDropdown({ value, onChange }: { value: string; onChange: (v: string
               <button key={opt.value} onClick={() => { onChange(opt.value); setOpen(false); }}
                 className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg ${opt.value === value ? "text-green-700 font-semibold bg-green-50" : "text-gray-700"}`}
                 data-testid={`option-sort-${opt.value}`}>
-                {opt.label}
+                {t(`rsort.${opt.value}`)}
               </button>
             ))}
           </div>
@@ -166,6 +172,7 @@ export function BrandPage() {
   const [, params] = useRoute("/marka/:slug");
   const slug = params?.slug;
   const { brands } = useData();
+  const { t } = useLanguage();
   const { data: reviews = [] } = useListPublicReviews();
 
   const brand = brands.find((b) => b.slug === slug);
@@ -179,11 +186,6 @@ export function BrandPage() {
   const [starFilter, setStarFilter] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState("newest");
   const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    if (brand) document.title = `${brand.name} Yorumları – iyi.pet`;
-    else document.title = "Marka Bulunamadı – iyi.pet";
-  }, [brand]);
 
   const distribution = useMemo(() => {
     const dist: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -209,16 +211,46 @@ export function BrandPage() {
   const handleStarFilter = (star: number | null) => { setStarFilter(star); setPage(1); };
   const totalReviewCount = allReviews.length || brand?.reviewCount || 0;
 
+  const brandJsonLd = useMemo(() => {
+    if (!brand) return undefined;
+    const d = brand.description || brandDescriptions[brand.name] || t("brand.defaultDesc", { name: brand.name });
+    return {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: brand.name,
+      description: d,
+      ...(totalReviewCount > 0
+        ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: brand.rating.toFixed(1),
+              reviewCount: totalReviewCount,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          }
+        : {}),
+    };
+  }, [brand, totalReviewCount, t]);
+
+  useSeo({
+    title: brand ? t("seo.brandTitle", { name: brand.name }) : t("seo.notFoundTitle"),
+    description: brand
+      ? t("seo.brandDesc", { name: brand.name, n: totalReviewCount, rating: brand.rating.toFixed(1) })
+      : t("brand.notFoundText"),
+    jsonLd: brandJsonLd,
+  });
+
   if (!brand) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="max-w-3xl mx-auto px-4 py-24 text-center">
           <div className="text-5xl mb-4">🐾</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Marka bulunamadı</h1>
-          <p className="text-gray-500 mb-6">Aradığınız marka sistemde kayıtlı değil.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{t("brand.notFoundTitle")}</h1>
+          <p className="text-gray-500 mb-6">{t("brand.notFoundText")}</p>
           <Link href="/" className="inline-flex items-center gap-2 bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors">
-            Ana Sayfaya Dön
+            {t("brand.backHome")}
           </Link>
         </div>
       </div>
@@ -232,9 +264,9 @@ export function BrandPage() {
       <Header />
       <main className="max-w-3xl mx-auto px-4 py-4">
         <nav className="flex items-center gap-1.5 text-xs text-gray-500 mb-5" data-testid="breadcrumb">
-          <Link href="/" className="hover:text-gray-700">Ana Sayfa</Link>
+          <Link href="/" className="hover:text-gray-700">{t("brand.breadcrumbHome")}</Link>
           <ChevronRight size={12} className="text-gray-400" />
-          <Link href="/" className="hover:text-gray-700">Mama Markaları</Link>
+          <Link href="/" className="hover:text-gray-700">{t("nav.brands")}</Link>
           <ChevronRight size={12} className="text-gray-400" />
           <span className="text-green-600 font-medium">{brand.name}</span>
         </nav>
@@ -252,7 +284,7 @@ export function BrandPage() {
                 {brand.verified && (
                   <span className="inline-flex items-center gap-1 text-xs text-green-700 font-semibold bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
                     <BadgeCheck size={12} />
-                    Doğrulanmış Marka
+                    {t("brand.verifiedBrand")}
                   </span>
                 )}
               </div>
@@ -262,7 +294,7 @@ export function BrandPage() {
               </div>
               <div className="flex items-center gap-2 mt-0.5">
                 <StarRating rating={brand.rating} size={16} />
-                <span className="text-xs text-gray-400">({totalReviewCount.toLocaleString("tr-TR")} yorum)</span>
+                <span className="text-xs text-gray-400">({t("brand.reviewsCount", { n: totalReviewCount.toLocaleString("tr-TR") })})</span>
               </div>
             </div>
           </div>
@@ -273,18 +305,18 @@ export function BrandPage() {
             <div className="flex items-center gap-3 text-sm text-gray-500">
               {brand.websiteUrl ? (
                 <a href={brand.websiteUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-website">
-                  <Globe size={13} /><span>Web Sitesi</span>
+                  <Globe size={13} /><span>{t("brand.website")}</span>
                 </a>
               ) : (
-                <span className="flex items-center gap-1.5 text-gray-300" data-testid="link-website"><Globe size={13} /><span>Web Sitesi</span></span>
+                <span className="flex items-center gap-1.5 text-gray-300" data-testid="link-website"><Globe size={13} /><span>{t("brand.website")}</span></span>
               )}
               <span className="text-gray-300">|</span>
               {brand.productsUrl ? (
                 <a href={brand.productsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-green-600 transition-colors" data-testid="link-products">
-                  <Package size={13} /><span>Tüm Ürünleri</span>
+                  <Package size={13} /><span>{t("brand.allProducts")}</span>
                 </a>
               ) : (
-                <span className="flex items-center gap-1.5 text-gray-300" data-testid="link-products"><Package size={13} /><span>Tüm Ürünleri</span></span>
+                <span className="flex items-center gap-1.5 text-gray-300" data-testid="link-products"><Package size={13} /><span>{t("brand.allProducts")}</span></span>
               )}
             </div>
             <button
@@ -293,18 +325,18 @@ export function BrandPage() {
               data-testid="button-write-review"
             >
               <PenLine size={14} />
-              Yorum Yaz
+              {t("brand.writeReview")}
             </button>
           </div>
         </div>
 
         <div className="mb-5">
-          <h2 className="text-base font-bold text-gray-900 mb-3">Yıldız Puanına Göre Yorumlar</h2>
+          <h2 className="text-base font-bold text-gray-900 mb-3">{t("brand.reviewsByStars")}</h2>
           <div className="flex items-stretch gap-2 overflow-x-auto pb-1">
             <button onClick={() => handleStarFilter(null)}
               className={`flex flex-col items-center justify-center px-4 py-2.5 rounded-lg border text-sm font-medium flex-shrink-0 min-w-[70px] ${starFilter === null ? "border-green-600 bg-white text-green-700 shadow-sm" : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"}`}
               data-testid="button-filter-all">
-              <span className="font-semibold">Tümü</span>
+              <span className="font-semibold">{t("brand.all")}</span>
               <span className="text-xs text-gray-400 mt-0.5">{totalReviewCount.toLocaleString("tr-TR")}</span>
             </button>
             {[5, 4, 3, 2, 1].map((star) => (
@@ -320,12 +352,12 @@ export function BrandPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm px-5">
           <div className="flex items-center justify-between py-4 border-b border-gray-100">
-            <h2 className="font-bold text-gray-900">Yorumlar <span className="text-gray-400 font-normal">({filtered.length.toLocaleString("tr-TR")})</span></h2>
+            <h2 className="font-bold text-gray-900">{t("brand.reviews")} <span className="text-gray-400 font-normal">({filtered.length.toLocaleString("tr-TR")})</span></h2>
             <SortDropdown value={sortBy} onChange={(v) => { setSortBy(v); setPage(1); }} />
           </div>
 
           {paged.length === 0 ? (
-            <div className="py-12 text-center text-gray-400 text-sm">Bu filtreyle yorum bulunamadı.</div>
+            <div className="py-12 text-center text-gray-400 text-sm">{t("brand.noReviews")}</div>
           ) : (
             paged.map((review) => <ReviewCard key={review.id} review={review} />)
           )}

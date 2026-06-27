@@ -88,6 +88,7 @@ export interface Review {
   status: string;
   helpfulCount: number;
   unhelpfulCount: number;
+  reportCount: number;
   createdAt: string;
 }
 
@@ -108,6 +109,7 @@ export interface AdminReview {
   status: string;
   helpfulCount: number;
   unhelpfulCount: number;
+  reportCount: number;
   createdAt: string;
 }
 
@@ -141,6 +143,10 @@ export interface VoteInput {
   previous?: string | null;
   /** @nullable */
   next?: string | null;
+}
+
+export interface ReportInput {
+  reason?: string;
 }
 
 export interface BulkReviewInput {
@@ -187,12 +193,25 @@ export interface DayBucket {
   count: number;
 }
 
+export interface TopBrand {
+  name: string;
+  count: number;
+}
+
+export interface RatingTrendPoint {
+  date: string;
+  avg: number;
+}
+
 export interface Stats {
   totalBrands: number;
   totalReviews: number;
   avgRating: number;
   pendingReviews: number;
+  reportedReviews: number;
   ratingDistribution: RatingBucket[];
   reviewsByDay: DayBucket[];
+  topBrands: TopBrand[];
+  avgRatingTrend: RatingTrendPoint[];
 }
 

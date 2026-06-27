@@ -258,6 +258,37 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /reviews/{id}/report:
+    post:
+      operationId: reportReview
+      tags: [reviews]
+      summary: Report a review as inappropriate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportInput"
+      responses:
+        "200":
+          description: Updated review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /reviews/bulk:
     post:
       operationId: bulkReviewAction
@@ -475,6 +506,7 @@ components:
         - status
         - helpfulCount
         - unhelpfulCount
+        - reportCount
         - createdAt
       properties:
         id: { type: integer }
@@ -489,6 +521,7 @@ components:
         status: { type: string }
         helpfulCount: { type: integer }
         unhelpfulCount: { type: integer }
+        reportCount: { type: integer }
         createdAt: { type: string }
 
     AdminReview:
@@ -508,6 +541,7 @@ components:
         - status
         - helpfulCount
         - unhelpfulCount
+        - reportCount
         - createdAt
       properties:
         id: { type: integer }
@@ -525,6 +559,7 @@ components:
         status: { type: string }
         helpfulCount: { type: integer }
         unhelpfulCount: { type: integer }
+        reportCount: { type: integer }
         createdAt: { type: string }
 
     ReviewInput:
@@ -559,6 +594,11 @@ components:
       properties:
         previous: { type: ["string", "null"] }
         next: { type: ["string", "null"] }
+
+    ReportInput:
+      type: object
+      properties:
+        reason: { type: string }
 
     BulkReviewInput:
       type: object
@@ -634,6 +674,24 @@ components:
         date: { type: string }
         count: { type: integer }
 
+    TopBrand:
+      type: object
+      required:
+        - name
+        - count
+      properties:
+        name: { type: string }
+        count: { type: integer }
+
+    RatingTrendPoint:
+      type: object
+      required:
+        - date
+        - avg
+      properties:
+        date: { type: string }
+        avg: { type: number }
+
     Stats:
       type: object
       required:
@@ -641,13 +699,17 @@ components:
         - totalReviews
         - avgRating
         - pendingReviews
+        - reportedReviews
         - ratingDistribution
         - reviewsByDay
+        - topBrands
+        - avgRatingTrend
       properties:
         totalBrands: { type: integer }
         totalReviews: { type: integer }
         avgRating: { type: number }
         pendingReviews: { type: integer }
+        reportedReviews: { type: integer }
         ratingDistribution:
           type: array
           items:
@@ -656,3 +718,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/DayBucket"
+        topBrands:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopBrand"
+        avgRatingTrend:
+          type: array
+          items:
+            $ref: "#/components/schemas/RatingTrendPoint"

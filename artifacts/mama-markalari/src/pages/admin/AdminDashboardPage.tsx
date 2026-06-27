@@ -1,7 +1,7 @@
 import { Link } from "wouter";
-import { Tag, MessageSquare, Star, Clock, PlusCircle, Settings, ExternalLink } from "lucide-react";
+import { Tag, MessageSquare, Star, Clock, PlusCircle, Settings, ExternalLink, Flag } from "lucide-react";
 import {
-  ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis,
+  ResponsiveContainer, AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip as RechartsTooltip,
 } from "recharts";
 import { AdminLayout } from "./AdminLayout";
@@ -21,12 +21,14 @@ export function AdminDashboardPage() {
   }, []);
 
   const pendingReviews = stats?.pendingReviews ?? 0;
+  const reportedReviews = stats?.reportedReviews ?? 0;
 
   const statCards = [
     { label: "Toplam Marka", value: stats?.totalBrands ?? 0, sub: "Tüm markalar", icon: Tag, color: "text-blue-600", bg: "bg-blue-50" },
     { label: "Toplam Yorum", value: (stats?.totalReviews ?? 0).toLocaleString("tr-TR"), sub: "Tüm zamanlar", icon: MessageSquare, color: "text-green-600", bg: "bg-green-50" },
     { label: "Ortalama Puan", value: (stats?.avgRating ?? 0).toFixed(1), sub: "Onaylı yorumlar", icon: Star, color: "text-amber-500", bg: "bg-amber-50" },
     { label: "Onay Bekleyen", value: pendingReviews, sub: "İnceleme gerekli", icon: Clock, color: "text-orange-500", bg: "bg-orange-50" },
+    { label: "Şikayet Edilen", value: reportedReviews, sub: "Kullanıcı raporu", icon: Flag, color: "text-red-600", bg: "bg-red-50" },
   ];
 
   const quickActions = [
@@ -43,6 +45,14 @@ export function AdminDashboardPage() {
   const ratingDistribution = (stats?.ratingDistribution ?? []).map((r) => ({
     label: `${r.rating}★`,
     count: r.count,
+  }));
+  const topBrands = (stats?.topBrands ?? []).map((b) => ({
+    name: b.name.length > 14 ? b.name.slice(0, 13) + "…" : b.name,
+    count: b.count,
+  }));
+  const avgRatingTrend = (stats?.avgRatingTrend ?? []).map((p) => ({
+    date: new Date(p.date).toLocaleDateString("tr-TR", { day: "2-digit", month: "short" }),
+    avg: Math.round(p.avg * 100) / 100,
   }));
 
   const recentReviews = [...reviews]
@@ -120,6 +130,48 @@ export function AdminDashboardPage() {
                   <Bar dataKey="count" name="Yorum" fill="#f59e0b" radius={[6, 6, 0, 0]} maxBarSize={48} />
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5" data-testid="chart-top-brands">
+            <h2 className="text-base font-bold text-gray-900 mb-1">En Çok Yorum Alan Markalar</h2>
+            <p className="text-xs text-gray-400 mb-4">Yorum sayısına göre ilk markalar</p>
+            <div className="h-56">
+              {topBrands.length === 0 ? (
+                <div className="h-full flex items-center justify-center text-sm text-gray-400">Henüz veri yok.</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={topBrands} layout="vertical" margin={{ top: 5, right: 12, left: 10, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+                    <XAxis type="number" allowDecimals={false} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                    <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 11, fill: "#64748b" }} />
+                    <RechartsTooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e2e8f0" }} cursor={{ fill: "#f8fafc" }} />
+                    <Bar dataKey="count" name="Yorum" fill="#3b82f6" radius={[0, 6, 6, 0]} maxBarSize={26} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5" data-testid="chart-avg-rating-trend">
+            <h2 className="text-base font-bold text-gray-900 mb-1">Ortalama Puan Trendi</h2>
+            <p className="text-xs text-gray-400 mb-4">Zaman içinde kümülatif ortalama puan</p>
+            <div className="h-56">
+              {avgRatingTrend.length === 0 ? (
+                <div className="h-full flex items-center justify-center text-sm text-gray-400">Henüz veri yok.</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={avgRatingTrend} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                    <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#94a3b8" }} interval="preserveStartEnd" minTickGap={24} />
+                    <YAxis domain={[0, 5]} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                    <RechartsTooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e2e8f0" }} />
+                    <Line type="monotone" dataKey="avg" name="Ortalama" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
           </div>
         </div>

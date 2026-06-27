@@ -11,6 +11,7 @@ import { AdminBrandsPage } from "@/pages/admin/AdminBrandsPage";
 import { AdminSettingsPage } from "@/pages/admin/AdminSettingsPage";
 import { AdminAuthProvider, useAdminAuth } from "@/contexts/AdminAuthContext";
 import { DataProvider } from "@/contexts/DataContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -48,13 +49,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <DataProvider>
-          <AdminAuthProvider>
-            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <Router />
-            </WouterRouter>
-          </AdminAuthProvider>
-        </DataProvider>
+        <LanguageProvider>
+          <DataProvider>
+            <AdminAuthProvider>
+              <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+                <Router />
+              </WouterRouter>
+            </AdminAuthProvider>
+          </DataProvider>
+        </LanguageProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

@@ -15,6 +15,8 @@ import {
   VoteReviewResponse,
   BulkReviewActionBody,
   BulkReviewActionResponse,
+  ReportReviewParams,
+  ReportReviewResponse,
 } from "@workspace/api-zod";
 
 const router: IRouter = Router();
@@ -37,6 +39,7 @@ function toPublic(r: Review) {
     status: r.status,
     helpfulCount: r.helpfulCount,
     unhelpfulCount: r.unhelpfulCount,
+    reportCount: r.reportCount,
     createdAt: r.createdAt.toISOString(),
   };
 }
@@ -191,6 +194,25 @@ router.post("/reviews/:id/vote", async (req, res): Promise<void> => {
     .returning();
 
   res.json(VoteReviewResponse.parse(toPublic(review)));
+});
+
+router.post("/reviews/:id/report", async (req, res): Promise<void> => {
+  const params = ReportReviewParams.safeParse(req.params);
+  if (!params.success) {
+    res.status(400).json({ error: params.error.message });
+    return;
+  }
+  const [current] = await db.select().from(reviewsTable).where(eq(reviewsTable.id, params.data.id));
+  if (!current) {
+    res.status(404).json({ error: "Review not found" });
+    return;
+  }
+  const [review] = await db
+    .update(reviewsTable)
+    .set({ reportCount: current.reportCount + 1 })
+    .where(eq(reviewsTable.id, params.data.id))
+    .returning();
+  res.json(ReportReviewResponse.parse(toPublic(review)));
 });
 
 router.delete("/reviews/:id", async (req, res): Promise<void> => {

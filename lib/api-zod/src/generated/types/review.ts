@@ -20,5 +20,6 @@ export interface Review {
   status: string;
   helpfulCount: number;
   unhelpfulCount: number;
+  reportCount: number;
   createdAt: string;
 }

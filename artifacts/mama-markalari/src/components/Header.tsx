@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { Search, Globe, Menu, X, PawPrint } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import { useData } from "@/contexts/DataContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Header() {
   const [location, navigate] = useLocation();
   const { brands } = useData();
+  const { lang, toggleLang, t } = useLanguage();
   const [query, setQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -45,7 +47,7 @@ export function Header() {
           <input
             ref={inputRef}
             type="search"
-            placeholder="Marka ara..."
+            placeholder={t("header.searchPlaceholder")}
             value={query}
             onChange={(e) => { setQuery(e.target.value); setShowSuggestions(true); }}
             onFocus={() => setShowSuggestions(true)}
@@ -84,9 +86,9 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2 flex-shrink-0">
-          <button className="flex items-center gap-1 text-sm text-gray-600 px-2 py-1.5 rounded-lg hover:bg-gray-100" data-testid="button-language">
+          <button onClick={toggleLang} className="flex items-center gap-1 text-sm text-gray-600 px-2 py-1.5 rounded-lg hover:bg-gray-100" data-testid="button-language">
             <Globe size={16} className="text-gray-500" />
-            <span className="font-medium">TR</span>
+            <span className="font-medium">{lang.toUpperCase()}</span>
           </button>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -104,16 +106,21 @@ export function Header() {
             <Link href="/" onClick={() => setMenuOpen(false)}
               className="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
               data-testid="link-menu-mama-markaları">
-              Mama Markaları
+              {t("nav.brands")}
             </Link>
-            {["Evcil Hayvan Rehberi", "Veteriner Bul", "Blog", "Hakkımızda"].map((item) => (
+            {[
+              { key: "nav.guide", id: "guide" },
+              { key: "nav.findVet", id: "find-vet" },
+              { key: "nav.blog", id: "blog" },
+              { key: "nav.about", id: "about" },
+            ].map((item) => (
               <button
-                key={item}
+                key={item.id}
                 onClick={() => setMenuOpen(false)}
                 className="px-3 py-2.5 text-sm font-medium text-gray-400 text-left rounded-lg cursor-default"
-                data-testid={`link-menu-${item.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`link-menu-${item.id}`}
               >
-                {item} <span className="text-xs">(yakında)</span>
+                {t(item.key)} <span className="text-xs">{t("common.soon")}</span>
               </button>
             ))}
           </nav>

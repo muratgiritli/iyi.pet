@@ -7,12 +7,17 @@
  */
 import type { DayBucket } from './dayBucket';
 import type { RatingBucket } from './ratingBucket';
+import type { RatingTrendPoint } from './ratingTrendPoint';
+import type { TopBrand } from './topBrand';
 
 export interface Stats {
   totalBrands: number;
   totalReviews: number;
   avgRating: number;
   pendingReviews: number;
+  reportedReviews: number;
   ratingDistribution: RatingBucket[];
   reviewsByDay: DayBucket[];
+  topBrands: TopBrand[];
+  avgRatingTrend: RatingTrendPoint[];
 }

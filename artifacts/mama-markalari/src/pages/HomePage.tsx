@@ -1,10 +1,12 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, ChevronRight, Info, Globe, MapPin } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, Globe, MapPin, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Header } from "@/components/Header";
 import { StarRating } from "@/components/StarRating";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useData } from "@/contexts/DataContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useSeo } from "@/lib/useSeo";
 import type { Brand } from "@workspace/api-client-react";
 import { categories, sortOptions } from "@/data/brands";
 
@@ -48,6 +50,7 @@ function FilterDropdown({ value, onChange, options }: { value: string; onChange:
 }
 
 function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
+  const { t } = useLanguage();
   return (
     <Link
       href={`/marka/${brand.slug}`}
@@ -59,9 +62,15 @@ function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="font-semibold text-gray-900 text-sm truncate">{brand.name}</span>
+          {brand.rating >= 4 && (
+            <ThumbsUp size={14} className="text-green-600 fill-green-600 animate-pulse-up flex-shrink-0" data-testid={`thumb-up-${brand.id}`} />
+          )}
+          {brand.rating <= 2 && (
+            <ThumbsDown size={14} className="text-red-600 fill-red-600 animate-pulse-down flex-shrink-0" data-testid={`thumb-down-${brand.id}`} />
+          )}
           {brand.verified && (
             <span className="inline-flex items-center gap-0.5 text-xs text-green-700 font-medium bg-green-50 px-1.5 py-0.5 rounded-full flex-shrink-0">
-              ✓ Doğrulandı
+              ✓ {t("common.verified")}
             </span>
           )}
         </div>
@@ -85,6 +94,7 @@ type OriginTab = "all" | "global" | "local";
 
 export function HomePage() {
   const { brands } = useData();
+  const { t } = useLanguage();
   const [location] = useLocation();
   const searchQuery = new URLSearchParams(window.location.search).get("q") ?? "";
 
@@ -93,9 +103,8 @@ export function HomePage() {
   const [sortBy, setSortBy] = useState("rating_desc");
   const [showAll, setShowAll] = useState(false);
 
-  useEffect(() => {
-    document.title = "Mama Markaları Sıralaması – iyi.pet";
-  }, []);
+  const localizedCategories = categories.map((c) => ({ value: c.value, label: t(`cat.${c.value}`) }));
+  const localizedSortOptions = sortOptions.map((s) => ({ value: s.value, label: t(`sort.${s.value}`) }));
 
   const filtered = useMemo(() => {
     let list = brands.filter((b) => {
@@ -121,10 +130,31 @@ export function HomePage() {
   const displayed = showAll ? filtered : filtered.slice(0, 10);
 
   const originTabs = [
-    { value: "all" as OriginTab, label: "Tümü", icon: null },
-    { value: "global" as OriginTab, label: "Global Markalar", icon: <Globe size={13} className="flex-shrink-0" /> },
-    { value: "local" as OriginTab, label: "Yerel Markalar", icon: <MapPin size={13} className="flex-shrink-0" /> },
+    { value: "all" as OriginTab, label: t("home.tab.all"), icon: null },
+    { value: "global" as OriginTab, label: t("home.tab.global"), icon: <Globe size={13} className="flex-shrink-0" /> },
+    { value: "local" as OriginTab, label: t("home.tab.local"), icon: <MapPin size={13} className="flex-shrink-0" /> },
   ];
+
+  const jsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: t("home.brandsTitle"),
+      itemListElement: filtered.slice(0, 10).map((b, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: b.name,
+        url: `/marka/${b.slug}`,
+      })),
+    }),
+    [filtered, t],
+  );
+
+  useSeo({
+    title: t("seo.homeTitle"),
+    description: t("seo.homeDesc"),
+    jsonLd,
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -132,12 +162,12 @@ export function HomePage() {
       <main className="max-w-3xl mx-auto px-4 py-6">
         <div className="mb-4">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            {searchQuery ? `"${searchQuery}" için sonuçlar` : "Mama Markaları"}
+            {searchQuery ? t("home.resultsFor", { q: searchQuery }) : t("home.brandsTitle")}
           </h1>
           <p className="text-sm text-gray-500">
             {searchQuery
-              ? `${filtered.length} marka bulundu.`
-              : "Gerçek pet sahiplerinin yorumlarına göre en iyi mama markaları sıralaması."}
+              ? t("home.brandsFound", { n: filtered.length })
+              : t("home.subtitle")}
           </p>
         </div>
 
@@ -159,27 +189,27 @@ export function HomePage() {
 
         <div className="flex items-center justify-between mb-4 gap-2">
           <div className="flex items-center gap-2">
-            <FilterDropdown value={category} onChange={setCategory} options={categories} />
-            <FilterDropdown value={sortBy} onChange={setSortBy} options={sortOptions} />
+            <FilterDropdown value={category} onChange={setCategory} options={localizedCategories} />
+            <FilterDropdown value={sortBy} onChange={setSortBy} options={localizedSortOptions} />
           </div>
           <button className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 flex-shrink-0" data-testid="button-ranking-info">
             <Info size={12} />
-            <span className="hidden sm:inline">Sıralama nasıl belirlenir?</span>
+            <span className="hidden sm:inline">{t("home.rankingInfo")}</span>
           </button>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-100 bg-gray-50">
-            <div className="w-7 flex-shrink-0"><span className="text-xs font-semibold text-gray-400">#</span></div>
+            <div className="w-7 flex-shrink-0"><span className="text-xs font-semibold text-gray-400">{t("home.col.rank")}</span></div>
             <div className="w-16 flex-shrink-0" />
-            <div className="flex-1"><span className="text-xs font-semibold text-gray-400">Marka</span></div>
-            <div className="hidden sm:block flex-shrink-0 pr-7"><span className="text-xs font-semibold text-gray-400">Puan</span></div>
-            <div className="hidden sm:block w-16 text-right flex-shrink-0"><span className="text-xs font-semibold text-gray-400">Yorum</span></div>
+            <div className="flex-1"><span className="text-xs font-semibold text-gray-400">{t("home.col.brand")}</span></div>
+            <div className="hidden sm:block flex-shrink-0 pr-7"><span className="text-xs font-semibold text-gray-400">{t("home.col.rating")}</span></div>
+            <div className="hidden sm:block w-16 text-right flex-shrink-0"><span className="text-xs font-semibold text-gray-400">{t("home.col.reviews")}</span></div>
           </div>
 
           {displayed.length === 0 ? (
             <div className="py-12 flex flex-col items-center gap-2 text-gray-400">
-              <span className="text-sm">Bu filtreyle marka bulunamadı.</span>
+              <span className="text-sm">{t("home.noBrands")}</span>
             </div>
           ) : (
             displayed.map((brand, index) => <BrandRow key={brand.id} brand={brand} rank={index + 1} />)
@@ -191,7 +221,7 @@ export function HomePage() {
             <button onClick={() => setShowAll(true)}
               className="flex items-center gap-2.5 px-5 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-white hover:border-gray-400 transition-all bg-white shadow-sm"
               data-testid="button-show-all">
-              Tüm markaları inceleyin ({filtered.length - 10} daha)
+              {t("home.showAll", { n: filtered.length - 10 })}
             </button>
             <ChevronDown size={18} className="text-gray-400" />
           </div>
@@ -200,7 +230,7 @@ export function HomePage() {
         {showAll && (
           <div className="mt-4 flex justify-center">
             <button onClick={() => setShowAll(false)} className="text-sm text-gray-500 hover:text-gray-700" data-testid="button-show-less">
-              Daha az göster
+              {t("home.showLess")}
             </button>
           </div>
         )}

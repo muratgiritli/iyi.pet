@@ -166,6 +166,7 @@ export const ListReviewsResponseItem = zod.object({
   "status": zod.string(),
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
   "createdAt": zod.string()
 })
 export const ListReviewsResponse = zod.array(ListReviewsResponseItem)
@@ -209,6 +210,7 @@ export const CreateReviewResponse = zod.object({
   "status": zod.string(),
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
   "createdAt": zod.string()
 })
 
@@ -229,6 +231,7 @@ export const ListPublicReviewsResponseItem = zod.object({
   "status": zod.string(),
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
   "createdAt": zod.string()
 })
 export const ListPublicReviewsResponse = zod.array(ListPublicReviewsResponseItem)
@@ -261,6 +264,7 @@ export const UpdateReviewStatusResponse = zod.object({
   "status": zod.string(),
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
   "createdAt": zod.string()
 })
 
@@ -300,6 +304,36 @@ export const VoteReviewResponse = zod.object({
   "status": zod.string(),
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
+  "createdAt": zod.string()
+})
+
+
+/**
+ * @summary Report a review as inappropriate
+ */
+export const ReportReviewParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const ReportReviewBody = zod.object({
+  "reason": zod.string().optional()
+})
+
+export const ReportReviewResponse = zod.object({
+  "id": zod.number(),
+  "brandId": zod.number(),
+  "author": zod.string(),
+  "avatar": zod.string(),
+  "rating": zod.number(),
+  "title": zod.string(),
+  "text": zod.string(),
+  "petType": zod.string(),
+  "photoBase64": zod.string().nullish(),
+  "status": zod.string(),
+  "helpfulCount": zod.number(),
+  "unhelpfulCount": zod.number(),
+  "reportCount": zod.number(),
   "createdAt": zod.string()
 })
 
@@ -377,6 +411,7 @@ export const GetStatsResponse = zod.object({
   "totalReviews": zod.number(),
   "avgRating": zod.number(),
   "pendingReviews": zod.number(),
+  "reportedReviews": zod.number(),
   "ratingDistribution": zod.array(zod.object({
   "rating": zod.number(),
   "count": zod.number()
@@ -384,6 +419,14 @@ export const GetStatsResponse = zod.object({
   "reviewsByDay": zod.array(zod.object({
   "date": zod.string(),
   "count": zod.number()
+})),
+  "topBrands": zod.array(zod.object({
+  "name": zod.string(),
+  "count": zod.number()
+})),
+  "avgRatingTrend": zod.array(zod.object({
+  "date": zod.string(),
+  "avg": zod.number()
 }))
 })
 

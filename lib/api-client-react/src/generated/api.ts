@@ -32,6 +32,7 @@ import type {
   LoginInput,
   PasswordChangeInput,
   PublicSettings,
+  ReportInput,
   Review,
   ReviewInput,
   ReviewStatusUpdate,
@@ -867,6 +868,77 @@ export const useVoteReview = <TError = ErrorType<Error>,
         TContext
       > => {
       return useMutation(getVoteReviewMutationOptions(options));
+    }
+
+export const getReportReviewUrl = (id: number,) => {
+
+
+
+
+  return `/api/reviews/${id}/report`
+}
+
+/**
+ * @summary Report a review as inappropriate
+ */
+export const reportReview = async (id: number,
+    reportInput?: ReportInput, options?: RequestInit): Promise<Review> => {
+
+  return customFetch<Review>(getReportReviewUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(reportInput)
+  }
+);}
+
+
+
+
+export const getReportReviewMutationOptions = <TError = ErrorType<Error>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportReview>>, TError,{id: number;data?: BodyType<ReportInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof reportReview>>, TError,{id: number;data?: BodyType<ReportInput>}, TContext> => {
+
+const mutationKey = ['reportReview'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof reportReview>>, {id: number;data?: BodyType<ReportInput>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  reportReview(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ReportReviewMutationResult = NonNullable<Awaited<ReturnType<typeof reportReview>>>
+    export type ReportReviewMutationBody = BodyType<ReportInput> | undefined
+    export type ReportReviewMutationError = ErrorType<Error>
+
+    /**
+ * @summary Report a review as inappropriate
+ */
+export const useReportReview = <TError = ErrorType<Error>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportReview>>, TError,{id: number;data?: BodyType<ReportInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof reportReview>>,
+        TError,
+        {id: number;data?: BodyType<ReportInput>},
+        TContext
+      > => {
+      return useMutation(getReportReviewMutationOptions(options));
     }
 
 export const getBulkReviewActionUrl = () => {

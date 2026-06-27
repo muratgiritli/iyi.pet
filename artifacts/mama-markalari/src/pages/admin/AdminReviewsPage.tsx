@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, X, Search, Trash2 } from "lucide-react";
+import { Check, X, Search, Trash2, Flag } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "./AdminLayout";
 import { StarRating } from "@/components/StarRating";
@@ -17,7 +17,7 @@ import {
 } from "@workspace/api-client-react";
 import { formatTimeAgo } from "@/lib/time";
 
-type StatusFilter = "all" | "approved" | "pending" | "rejected";
+type StatusFilter = "all" | "approved" | "pending" | "rejected" | "reported";
 
 export function AdminReviewsPage() {
   const { brands } = useData();
@@ -43,7 +43,8 @@ export function AdminReviewsPage() {
     const matchSearch =
       r.author.toLowerCase().includes(search.toLowerCase()) ||
       r.text.toLowerCase().includes(search.toLowerCase());
-    const matchFilter = filter === "all" || r.status === filter;
+    const matchFilter =
+      filter === "all" ? true : filter === "reported" ? r.reportCount > 0 : r.status === filter;
     return matchSearch && matchFilter;
   });
 
@@ -52,6 +53,7 @@ export function AdminReviewsPage() {
     approved: reviews.filter((r) => r.status === "approved").length,
     pending: reviews.filter((r) => r.status === "pending").length,
     rejected: reviews.filter((r) => r.status === "rejected").length,
+    reported: reviews.filter((r) => r.reportCount > 0).length,
   };
 
   const filterTabs: { value: StatusFilter; label: string }[] = [
@@ -59,6 +61,7 @@ export function AdminReviewsPage() {
     { value: "approved", label: `Onaylı (${counts.approved})` },
     { value: "pending", label: `Bekleyen (${counts.pending})` },
     { value: "rejected", label: `Reddedilen (${counts.rejected})` },
+    { value: "reported", label: `Şikayetli (${counts.reported})` },
   ];
 
   const filteredIds = filtered.map((r) => r.id);
@@ -204,6 +207,11 @@ export function AdminReviewsPage() {
                       <StarRating rating={review.rating} size={11} />
                       <span className="text-xs text-gray-400">· {formatTimeAgo(review.createdAt)}</span>
                       <span className="text-xs text-gray-400">· {brand?.name}</span>
+                      {review.reportCount > 0 && (
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded-full" data-testid={`report-badge-${review.id}`}>
+                          <Flag size={10} /> {review.reportCount}
+                        </span>
+                      )}
                     </div>
                     {review.title && <p className="text-xs font-semibold text-gray-700 mb-0.5">{review.title}</p>}
                     <p className="text-xs text-gray-600 line-clamp-2">{review.text}</p>

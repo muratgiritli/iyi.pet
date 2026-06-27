@@ -4,11 +4,13 @@ import {
   useListBrands,
   useGetSettings,
   useVoteReview,
+  useReportReview,
   getListPublicReviewsQueryKey,
   getListBrandsQueryKey,
+  getGetStatsQueryKey,
   type Brand,
 } from "@workspace/api-client-react";
-import { voteStore, VoteType } from "@/store/dataStore";
+import { voteStore, reportStore, VoteType } from "@/store/dataStore";
 
 interface DataContextValue {
   brands: Brand[];
@@ -16,6 +18,8 @@ interface DataContextValue {
   requireApproval: boolean;
   getVote: (id: number) => VoteType | null;
   vote: (reviewId: number, type: VoteType) => void;
+  hasReported: (id: number) => boolean;
+  report: (reviewId: number) => void;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
@@ -28,8 +32,27 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const brandsQuery = useListBrands();
   const settingsQuery = useGetSettings();
   const voteMutation = useVoteReview();
+  const reportMutation = useReportReview();
 
   const getVote = useCallback((id: number) => voteStore.getVote(id), []);
+  const hasReported = useCallback((id: number) => reportStore.hasReported(id), []);
+
+  const report = useCallback(
+    (reviewId: number) => {
+      if (reportStore.hasReported(reviewId)) return;
+      reportStore.setReported(reviewId);
+      bump();
+      reportMutation.mutate(
+        { id: reviewId, data: {} },
+        {
+          onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: getGetStatsQueryKey() });
+          },
+        },
+      );
+    },
+    [reportMutation, queryClient, bump],
+  );
 
   const vote = useCallback(
     (reviewId: number, type: VoteType) => {
@@ -62,6 +85,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         requireApproval: settingsQuery.data?.requireApproval ?? true,
         getVote,
         vote,
+        hasReported,
+        report,
       }}
     >
       {children}

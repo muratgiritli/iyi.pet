@@ -18,6 +18,7 @@ export const reviewsTable = pgTable("reviews", {
   status: text("status").notNull().default("pending"),
   helpfulCount: integer("helpful_count").notNull().default(0),
   unhelpfulCount: integer("unhelpful_count").notNull().default(0),
+  reportCount: integer("report_count").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

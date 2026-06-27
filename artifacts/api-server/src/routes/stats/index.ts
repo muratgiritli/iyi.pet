@@ -5,11 +5,15 @@ import { GetStatsResponse } from "@workspace/api-zod";
 const router: IRouter = Router();
 
 router.get("/stats", async (_req, res): Promise<void> => {
-  const brands = await db.select({ id: brandsTable.id }).from(brandsTable);
+  const brands = await db
+    .select({ id: brandsTable.id, name: brandsTable.name })
+    .from(brandsTable);
   const reviews = await db
     .select({
+      brandId: reviewsTable.brandId,
       rating: reviewsTable.rating,
       status: reviewsTable.status,
+      reportCount: reviewsTable.reportCount,
       createdAt: reviewsTable.createdAt,
     })
     .from(reviewsTable);
@@ -17,6 +21,7 @@ router.get("/stats", async (_req, res): Promise<void> => {
   const totalBrands = brands.length;
   const totalReviews = reviews.length;
   const pendingReviews = reviews.filter((r) => r.status === "pending").length;
+  const reportedReviews = reviews.filter((r) => r.reportCount > 0).length;
   const avgRating =
     totalReviews > 0
       ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10) / 10
@@ -53,14 +58,38 @@ router.get("/stats", async (_req, res): Promise<void> => {
   }
   const reviewsByDay = Array.from(dayMap.entries()).map(([date, count]) => ({ date, count }));
 
+  const nameById = new Map(brands.map((b) => [b.id, b.name]));
+  const brandCount = new Map<number, number>();
+  for (const r of reviews) {
+    brandCount.set(r.brandId, (brandCount.get(r.brandId) ?? 0) + 1);
+  }
+  const topBrands = Array.from(brandCount.entries())
+    .map(([id, count]) => ({ name: nameById.get(id) ?? "—", count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
+  const avgRatingTrend: { date: string; avg: number }[] = [];
+  for (const dateKey of dayMap.keys()) {
+    const cutoff = new Date(`${dateKey}T23:59:59.999Z`);
+    const subset = reviews.filter((r) => r.createdAt <= cutoff);
+    const avg =
+      subset.length > 0
+        ? Math.round((subset.reduce((s, r) => s + r.rating, 0) / subset.length) * 100) / 100
+        : 0;
+    avgRatingTrend.push({ date: dateKey, avg });
+  }
+
   res.json(
     GetStatsResponse.parse({
       totalBrands,
       totalReviews,
       avgRating,
       pendingReviews,
+      reportedReviews,
       ratingDistribution,
       reviewsByDay,
+      topBrands,
+      avgRatingTrend,
     }),
   );
 });
