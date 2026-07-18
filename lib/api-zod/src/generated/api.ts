@@ -211,7 +211,13 @@ export const CreateReviewResponse = zod.object({
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
   "reportCount": zod.number(),
-  "createdAt": zod.string()
+  "createdAt": zod.string(),
+  "translations": zod.object({
+  "en": zod.string().optional(),
+  "ar": zod.string().optional(),
+  "fr": zod.string().optional(),
+  "es": zod.string().optional()
+}).optional()
 })
 
 
@@ -232,7 +238,13 @@ export const ListPublicReviewsResponseItem = zod.object({
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
   "reportCount": zod.number(),
-  "createdAt": zod.string()
+  "createdAt": zod.string(),
+  "translations": zod.object({
+  "en": zod.string().optional(),
+  "ar": zod.string().optional(),
+  "fr": zod.string().optional(),
+  "es": zod.string().optional()
+}).optional()
 })
 export const ListPublicReviewsResponse = zod.array(ListPublicReviewsResponseItem)
 
@@ -305,7 +317,13 @@ export const VoteReviewResponse = zod.object({
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
   "reportCount": zod.number(),
-  "createdAt": zod.string()
+  "createdAt": zod.string(),
+  "translations": zod.object({
+  "en": zod.string().optional(),
+  "ar": zod.string().optional(),
+  "fr": zod.string().optional(),
+  "es": zod.string().optional()
+}).optional()
 })
 
 
@@ -334,7 +352,13 @@ export const ReportReviewResponse = zod.object({
   "helpfulCount": zod.number(),
   "unhelpfulCount": zod.number(),
   "reportCount": zod.number(),
-  "createdAt": zod.string()
+  "createdAt": zod.string(),
+  "translations": zod.object({
+  "en": zod.string().optional(),
+  "ar": zod.string().optional(),
+  "fr": zod.string().optional(),
+  "es": zod.string().optional()
+}).optional()
 })
 
 

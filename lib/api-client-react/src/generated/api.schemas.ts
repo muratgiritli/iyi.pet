@@ -74,6 +74,13 @@ export interface BrandUpdate {
   pinnedRank?: number;
 }
 
+export type ReviewTranslations = {
+  en?: string;
+  ar?: string;
+  fr?: string;
+  es?: string;
+};
+
 export interface Review {
   id: number;
   brandId: number;
@@ -90,6 +97,7 @@ export interface Review {
   unhelpfulCount: number;
   reportCount: number;
   createdAt: string;
+  translations?: ReviewTranslations;
 }
 
 export interface AdminReview {

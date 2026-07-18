@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { eq, desc, inArray } from "drizzle-orm";
-import { db, reviewsTable, settingsTable, type Review } from "@workspace/db";
+import { db, reviewsTable, reviewTranslationsTable, settingsTable, type Review } from "@workspace/db";
+import { translateReviewInBackground } from "../../lib/translateReview";
 import {
   CreateReviewBody,
   CreateReviewResponse,
@@ -25,7 +26,22 @@ function toAdmin(r: Review) {
   return { ...r, createdAt: r.createdAt.toISOString() };
 }
 
-function toPublic(r: Review) {
+async function loadTranslations(reviewIds: number[]): Promise<Map<number, Record<string, string>>> {
+  const map = new Map<number, Record<string, string>>();
+  if (reviewIds.length === 0) return map;
+  const rows = await db
+    .select()
+    .from(reviewTranslationsTable)
+    .where(inArray(reviewTranslationsTable.reviewId, reviewIds));
+  for (const row of rows) {
+    const entry = map.get(row.reviewId) ?? {};
+    entry[row.lang] = row.text;
+    map.set(row.reviewId, entry);
+  }
+  return map;
+}
+
+function toPublic(r: Review, translations?: Record<string, string>) {
   return {
     id: r.id,
     brandId: r.brandId,
@@ -41,6 +57,7 @@ function toPublic(r: Review) {
     unhelpfulCount: r.unhelpfulCount,
     reportCount: r.reportCount,
     createdAt: r.createdAt.toISOString(),
+    ...(translations && Object.keys(translations).length > 0 ? { translations } : {}),
   };
 }
 
@@ -55,7 +72,8 @@ router.get("/reviews/public", async (_req, res): Promise<void> => {
     .from(reviewsTable)
     .where(eq(reviewsTable.status, "approved"))
     .orderBy(desc(reviewsTable.createdAt));
-  res.json(ListPublicReviewsResponse.parse(rows.map(toPublic)));
+  const translationsByReview = await loadTranslations(rows.map((r) => r.id));
+  res.json(ListPublicReviewsResponse.parse(rows.map((r) => toPublic(r, translationsByReview.get(r.id)))));
 });
 
 router.post("/reviews", async (req, res): Promise<void> => {
@@ -97,6 +115,8 @@ router.post("/reviews", async (req, res): Promise<void> => {
     })
     .returning();
 
+  translateReviewInBackground(review.id, review.text);
+
   res.status(201).json(CreateReviewResponse.parse(toPublic(review)));
 });
 
@@ -118,6 +138,7 @@ router.post("/reviews/bulk", async (req, res): Promise<void> => {
 
   let updated = 0;
   if (action === "delete") {
+    await db.delete(reviewTranslationsTable).where(inArray(reviewTranslationsTable.reviewId, ids));
     const rows = await db.delete(reviewsTable).where(inArray(reviewsTable.id, ids)).returning({ id: reviewsTable.id });
     updated = rows.length;
   } else {
@@ -221,6 +242,7 @@ router.delete("/reviews/:id", async (req, res): Promise<void> => {
     res.status(400).json({ error: params.error.message });
     return;
   }
+  await db.delete(reviewTranslationsTable).where(eq(reviewTranslationsTable.reviewId, params.data.id));
   const [review] = await db.delete(reviewsTable).where(eq(reviewsTable.id, params.data.id)).returning();
   if (!review) {
     res.status(404).json({ error: "Review not found" });

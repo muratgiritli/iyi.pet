@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { ReviewTranslations } from './reviewTranslations';
 
 export interface Review {
   id: number;
@@ -22,4 +23,5 @@ export interface Review {
   unhelpfulCount: number;
   reportCount: number;
   createdAt: string;
+  translations?: ReviewTranslations;
 }

@@ -25,6 +25,7 @@ export * from './reportInput';
 export * from './review';
 export * from './reviewInput';
 export * from './reviewStatusUpdate';
+export * from './reviewTranslations';
 export * from './settingsUpdate';
 export * from './stats';
 export * from './topBrand';

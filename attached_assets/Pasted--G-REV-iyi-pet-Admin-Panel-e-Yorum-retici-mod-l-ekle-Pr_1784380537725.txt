@@ -1,0 +1,134 @@
+# GÖREV: iyi.pet — Admin Panel'e "Yorum Üretici" modülü ekle
+
+## Proje bağlamı
+iyi.pet = evcil hayvan mama markası yorum/sıralama platformu (SPA)
+- Site: https://iyi.pet
+- Ana sayfa: marka listesi (puan + yorum sayısı)
+- Marka detay: `/marka/{slug}` — yorumlar, puan dağılımı, yorum yazma formu
+- API: `/api/brands`, `/api/settings` (mevcut yapıya uy)
+- Stack: React/Vite SPA + backend API + DB (mevcut projeye uyumlu devam et)
+- Site dili: TR (EN arayüz opsiyonel)
+- Yorum isim formatı: "Ad S." → örnek: "Arzu M.", "Mehmet K."
+- Yorum altında EN/AR/FR/ES otomatik çeviri altyapısı varsa entegre et; yoksa bu modülde de hazırla
+
+## ÖNEMLİ
+- Python KULLANMA — tamamen web (React admin panel + JS/TS backend)
+- Mevcut iyi.pet tasarım diline uy (Inter font, yeşil vurgu, beyaz kartlar, mobil uyumlu)
+- Bu modül sadece ADMIN erişimli olsun (mevcut auth varsa ona bağla, yoksa basit admin şifre koruması ekle)
+
+---
+
+## 1. YENİ SAYFA / PANEL
+
+Route: `/admin/yorum-uretici` veya `/panel/yorum-uretici`
+Admin menüsüne link ekle: **"Yorum Üretici"**
+
+### Form alanları (sırayla):
+
+#### 1) MAMA MARKASI — dropdown
+Mevcut DB'deki markalardan çek (dinamik liste).
+Örnek markalar: Royal Canin, Pro Plan, Hill's, Orijen, Acana, ProChoice, Reflex, Brit Care, N&D, Whiskas, Pedigree vb.
+"Diğer / Yeni marka" seçeneği olmasın — sadece sistemdeki markalar.
+
+#### 2) HAYVAN TÜRÜ — radio button
+- Kedi
+- Köpek
+
+#### 3) YORUM ADEDİ — number input
+Min: 1 · Max: 500 · Varsayılan: 50
+
+#### 4) YILDIZ DAĞILIMI — 3 slider veya number input (%)
+Toplam %100 olmalı, canlı kontrol:
+
+| Grup | Yıldız | Varsayılan |
+|------|--------|------------|
+| İyi | 4–5 ★ | %70 |
+| Orta | 3 ★ | %20 |
+| Kötü | 1–2 ★ | %10 |
+
+- Toplam ≠ %100 → kırmızı uyarı + "Yorum Üret" butonu disabled
+- Canlı önizleme: "35 İyi · 10 Orta · 5 Kötü" (yorum adedine göre hesapla)
+- Yuvarlama farkı son gruba eklensin
+
+#### 5) YORUM UZUNLUĞU — select
+- Kısa (1–2 cümle)
+- Orta (3–4 cümle)
+- Uzun (5–7 cümle)
+- Karışık (rastgele dağıt — varsayılan)
+
+#### 6) TARİH ARALIĞI — bilgi + sabit kural
+- Bugünden geriye **en fazla 3 ay** (90 gün)
+- Rastgele dağıt
+- UI'da göster: "Tarihler: son 3 ay içinde rastgele"
+
+#### 7) AKSİYON BUTONLARI
+- **"Önizleme Üret"** → 5 örnek yorum göster (DB'ye kaydetme)
+- **"Yorumları Üret ve Kaydet"** → tam üretim + DB'ye seed
+- **"CSV İndir"** → üretilen yorumları indir
+- **"JSON İndir"** → üretilen yorumları indir
+- **"Temizle"** → formu sıfırla
+
+---
+
+## 2. YORUM ÜRETİM KURALLARI
+
+### İsim
+- Türkçe gerçekçi ad havuzu (80+ farklı isim)
+- Soyad: sadece baş harf + nokta → "Arzu M.", "Selin K.", "Mehmet T."
+- firstName + lastNameInitial ayrı kaydet
+- displayName = "Ad S."
+- Mümkün olduğunca farklı isimler, tekrar az olsun
+
+### Tarih
+- createdAt: bugünden geriye max 90 gün, rastgele
+- ISO format: "2026-05-15T10:30:00Z"
+- relativeDate: "3 hafta önce", "2 ay önce", "5 gün önce" (UI için)
+
+### Yıldız
+- İyi grubu: 4 veya 5 (rastgele, çoğu 4)
+- Orta grubu: 3
+- Kötü grubu: 1 veya 2 (rastgele)
+
+### Yorum metni (Türkçe, doğal, gerçekçi)
+Konu: seçilen marka + kedi/köpek maması
+Temalar (çeşitlendir):
+- Lezzet / yememe / seçicilik
+- Sindirim (ishal, kusma, düzenli)
+- Tüy dökülmesi / tüy yumağı / mat tüy
+- Kilo alma / zayıflama
+- Koku (ağır, balıksı, yapay)
+- Fiyat / performans
+- Paket / ambalaj / kargo hasarı
+- Veteriner tavsiyesi / mama değiştirme
+- Alerji / kaşıntı / deri sorunu
+- Yavru / kısırlaştırılmış / yaşlı formül
+
+**İyi yorumlar:** abartısız, gerçekçi olumlu
+**Orta yorumlar:** "ne iyi ne kötü", kararsız ton
+**Kötü yorumlar:** somut şikayet, 1–3 cümle (uzun seçildiyse 5–7 cümle)
+
+Aynı yorum metni tekrar etmesin.
+
+### Uzunluk
+- Kısa: 1–2 cümle (~50–120 karakter)
+- Orta: 3–4 cümle (~120–250 karakter)
+- Uzun: 5–7 cümle (~250–500 karakter)
+- Karışık: %25 uzun, %50 orta, %25 kısa
+
+### Diğer alanlar
+```typescript
+{
+  brandSlug: string;          // seçilen marka
+  firstName: string;
+  lastNameInitial: string;
+  displayName: string;        // "Arzu M."
+  rating: 1|2|3|4|5;
+  petType: "Kedi" | "Köpek";
+  product: string;            // markaya uygun gerçekçi ürün adı
+  comment: string;            // TR master metin
+  createdAt: string;          // ISO, son 90 gün
+  helpfulCount: number;       // 3–28 random
+  notHelpfulCount: number;    // 0–4 random
+  phone: null;                // seed yorum
+  translations: [];           // kayıt sonrası dolar
+}

@@ -1,6 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import { seedIfEmpty } from "./lib/seed";
+import { startTranslationQueue } from "./lib/translateReview";
 
 const rawPort = process.env["PORT"];
 
@@ -29,4 +30,13 @@ app.listen(port, async (err) => {
   } catch (seedErr) {
     logger.error({ err: seedErr }, "Failed to seed database");
   }
+
+  try {
+    const { seedProchoice } = await import("./lib/seedProchoice");
+    await seedProchoice();
+  } catch (seedErr) {
+    logger.error({ err: seedErr }, "Failed to seed ProChoice reviews");
+  }
+
+  startTranslationQueue();
 });

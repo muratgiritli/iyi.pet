@@ -523,6 +523,13 @@ components:
         unhelpfulCount: { type: integer }
         reportCount: { type: integer }
         createdAt: { type: string }
+        translations:
+          type: object
+          properties:
+            en: { type: string }
+            ar: { type: string }
+            fr: { type: string }
+            es: { type: string }
 
     AdminReview:
       type: object

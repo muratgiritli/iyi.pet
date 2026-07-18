@@ -19,6 +19,58 @@ function getAvatarColor(name: string) {
   return avatarColors[Math.abs(hash) % avatarColors.length];
 }
 
+const TRANSLATION_TABS = [
+  { lang: "en", label: "EN" },
+  { lang: "ar", label: "AR" },
+  { lang: "fr", label: "FR" },
+  { lang: "es", label: "ES" },
+] as const;
+
+function ReviewTranslations({ translations, reviewId }: { translations: NonNullable<Review["translations"]>; reviewId: number }) {
+  const [show, setShow] = useState(false);
+  const available = TRANSLATION_TABS.filter((tab) => translations[tab.lang]);
+  const [activeLang, setActiveLang] = useState<string>(available[0]?.lang ?? "en");
+  if (available.length === 0) return null;
+  const active = available.find((tab) => tab.lang === activeLang) ?? available[0];
+  return (
+    <div className="mt-2">
+      <button
+        onClick={() => setShow(!show)}
+        className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700"
+        data-testid={`button-translations-${reviewId}`}
+      >
+        <Globe size={12} />
+        {show ? "Çevirileri gizle" : "Çevirileri göster"}
+        <ChevronDown size={12} className={`transition-transform ${show ? "rotate-180" : ""}`} />
+      </button>
+      {show && (
+        <div className="mt-2 bg-gray-50 border border-gray-100 rounded-lg p-3">
+          <div className="flex items-center gap-1 mb-2">
+            {available.map((tab) => (
+              <button
+                key={tab.lang}
+                onClick={() => setActiveLang(tab.lang)}
+                className={`text-xs px-2 py-1 rounded-md font-medium transition-colors ${active.lang === tab.lang ? "bg-blue-600 text-white" : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-100"}`}
+                data-testid={`tab-translation-${tab.lang}-${reviewId}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+            <span className="ml-auto text-[10px] text-gray-400 uppercase tracking-wide">Otomatik çeviri</span>
+          </div>
+          <p
+            className="text-gray-700 text-sm leading-relaxed"
+            dir={active.lang === "ar" ? "rtl" : "ltr"}
+            data-testid={`text-translation-${reviewId}`}
+          >
+            {translations[active.lang]}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ReviewCard({ review }: { review: Review }) {
   const { getVote, vote, report, hasReported } = useData();
   const { t } = useLanguage();
@@ -89,6 +141,7 @@ function ReviewCard({ review }: { review: Review }) {
           </div>
           {review.title && <p className="text-sm font-semibold text-gray-800 mb-0.5">{review.title}</p>}
           <p className="text-gray-700 text-sm leading-relaxed">{review.text}</p>
+          {review.translations && <ReviewTranslations translations={review.translations} reviewId={review.id} />}
           {review.photoBase64 && (
             <div className="mt-2">
               <img src={review.photoBase64} alt={t("review.photoAlt")} className="w-20 h-20 object-cover rounded-lg border border-gray-200" />

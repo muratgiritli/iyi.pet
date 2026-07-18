@@ -9,6 +9,7 @@ A Turkish pet-food brand review/complaint site. Visitors browse ranked brands, r
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
+- `pnpm --filter @workspace/api-server run seed:prochoice` — seed the 86 ProChoice reviews + run the translation queue (idempotent; also runs automatically at server startup)
 - Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
@@ -31,7 +32,8 @@ A Turkish pet-food brand review/complaint site. Visitors browse ranked brands, r
 
 - Contract-first: change `openapi.yaml`, run codegen, then implement server (Zod-validated) and client (generated hooks). Don't hand-write request/response types.
 - Generated mutations do NOT auto-invalidate caches — invalidate manually with `getList*QueryKey()` helpers. See `.agents/memory/codegen-mutations.md`.
-- Brands seed on server startup if the table is empty (`seedIfEmpty`).
+- Brands seed on server startup if the table is empty (`seedIfEmpty`); ProChoice's 86 reviews seed idempotently at startup (`seedProchoice`).
+- Reviews are auto-translated to EN/AR/FR/ES via the Replit OpenAI integration (`translateReview.ts`): fire-and-forget on review create (failure never blocks publish), plus a startup + 5-min interval retry queue for `translation_status` pending/failed. Translations cached in `review_translations`. Brand/product names are kept untranslated.
 - Vote state (helpful/unhelpful, per review) and the admin-logged-in flag are the only things kept in browser localStorage; all real data lives in Postgres.
 - Admin auth is currently client-side only (localStorage flag); admin API routes are NOT yet server-protected. See Gotchas.
 
