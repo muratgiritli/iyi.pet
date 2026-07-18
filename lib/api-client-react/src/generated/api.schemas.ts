@@ -189,6 +189,8 @@ export interface AuthResult {
   success: boolean;
   /** @nullable */
   error?: string | null;
+  /** @nullable */
+  token?: string | null;
 }
 
 export interface RatingBucket {
@@ -221,5 +223,69 @@ export interface Stats {
   reviewsByDay: DayBucket[];
   topBrands: TopBrand[];
   avgRatingTrend: RatingTrendPoint[];
+}
+
+export type GenerateReviewsInputPetType = typeof GenerateReviewsInputPetType[keyof typeof GenerateReviewsInputPetType];
+
+
+export const GenerateReviewsInputPetType = {
+  Kedi: 'Kedi',
+  Köpek: 'Köpek',
+} as const;
+
+export type GenerateReviewsInputLength = typeof GenerateReviewsInputLength[keyof typeof GenerateReviewsInputLength];
+
+
+export const GenerateReviewsInputLength = {
+  short: 'short',
+  medium: 'medium',
+  long: 'long',
+  mixed: 'mixed',
+} as const;
+
+export interface GenerateReviewsInput {
+  brandId: number;
+  petType: GenerateReviewsInputPetType;
+  /**
+     * @minimum 1
+     * @maximum 500
+     */
+  count: number;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  goodPercent: number;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  midPercent: number;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  badPercent: number;
+  length: GenerateReviewsInputLength;
+  save: boolean;
+}
+
+export interface GeneratedReview {
+  brandSlug: string;
+  firstName: string;
+  lastNameInitial: string;
+  displayName: string;
+  rating: number;
+  petType: string;
+  product: string;
+  comment: string;
+  createdAt: string;
+  helpfulCount: number;
+  notHelpfulCount: number;
+}
+
+export interface GenerateReviewsResult {
+  reviews: GeneratedReview[];
+  saved: number;
 }
 

@@ -10,4 +10,6 @@ export interface AuthResult {
   success: boolean;
   /** @nullable */
   error?: string | null;
+  /** @nullable */
+  token?: string | null;
 }

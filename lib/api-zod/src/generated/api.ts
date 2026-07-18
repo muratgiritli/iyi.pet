@@ -405,7 +405,8 @@ export const AdminLoginBody = zod.object({
 
 export const AdminLoginResponse = zod.object({
   "success": zod.boolean(),
-  "error": zod.string().nullish()
+  "error": zod.string().nullish(),
+  "token": zod.string().nullish()
 })
 
 
@@ -423,7 +424,53 @@ export const ChangeAdminPasswordBody = zod.object({
 
 export const ChangeAdminPasswordResponse = zod.object({
   "success": zod.boolean(),
-  "error": zod.string().nullish()
+  "error": zod.string().nullish(),
+  "token": zod.string().nullish()
+})
+
+
+/**
+ * @summary Generate realistic Turkish reviews for a brand (optionally save)
+ */
+export const generateReviewsBodyCountMax = 500;
+
+export const generateReviewsBodyGoodPercentMin = 0;
+export const generateReviewsBodyGoodPercentMax = 100;
+
+export const generateReviewsBodyMidPercentMin = 0;
+export const generateReviewsBodyMidPercentMax = 100;
+
+export const generateReviewsBodyBadPercentMin = 0;
+export const generateReviewsBodyBadPercentMax = 100;
+
+
+
+export const GenerateReviewsBody = zod.object({
+  "brandId": zod.number(),
+  "petType": zod.enum(['Kedi', 'Köpek']),
+  "count": zod.number().min(1).max(generateReviewsBodyCountMax),
+  "goodPercent": zod.number().min(generateReviewsBodyGoodPercentMin).max(generateReviewsBodyGoodPercentMax),
+  "midPercent": zod.number().min(generateReviewsBodyMidPercentMin).max(generateReviewsBodyMidPercentMax),
+  "badPercent": zod.number().min(generateReviewsBodyBadPercentMin).max(generateReviewsBodyBadPercentMax),
+  "length": zod.enum(['short', 'medium', 'long', 'mixed']),
+  "save": zod.boolean()
+})
+
+export const GenerateReviewsResponse = zod.object({
+  "reviews": zod.array(zod.object({
+  "brandSlug": zod.string(),
+  "firstName": zod.string(),
+  "lastNameInitial": zod.string(),
+  "displayName": zod.string(),
+  "rating": zod.number(),
+  "petType": zod.string(),
+  "product": zod.string(),
+  "comment": zod.string(),
+  "createdAt": zod.string(),
+  "helpfulCount": zod.number(),
+  "notHelpfulCount": zod.number()
+})),
+  "saved": zod.number()
 })
 
 

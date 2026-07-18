@@ -9,6 +9,7 @@ import { AdminDashboardPage } from "@/pages/admin/AdminDashboardPage";
 import { AdminReviewsPage } from "@/pages/admin/AdminReviewsPage";
 import { AdminBrandsPage } from "@/pages/admin/AdminBrandsPage";
 import { AdminSettingsPage } from "@/pages/admin/AdminSettingsPage";
+import { AdminGeneratorPage } from "@/pages/admin/AdminGeneratorPage";
 import { AdminAuthProvider, useAdminAuth } from "@/contexts/AdminAuthContext";
 import { DataProvider } from "@/contexts/DataContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -36,6 +37,9 @@ function Router() {
       </Route>
       <Route path="/admin/yorumlar">
         {() => <ProtectedRoute component={AdminReviewsPage} />}
+      </Route>
+      <Route path="/admin/yorum-uretici">
+        {() => <ProtectedRoute component={AdminGeneratorPage} />}
       </Route>
       <Route path="/admin/yorum-ayarlari">
         {() => <ProtectedRoute component={AdminSettingsPage} />}

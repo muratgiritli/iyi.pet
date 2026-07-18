@@ -1,12 +1,13 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Home, Tag, MessageSquare, Settings, Users, LogOut, PawPrint, Menu, X, ChevronDown, User } from "lucide-react";
+import { Home, Tag, MessageSquare, Settings, Users, LogOut, PawPrint, Menu, X, ChevronDown, User, Sparkles } from "lucide-react";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 const navItems = [
   { href: "/admin", label: "Genel Bakış", icon: Home },
   { href: "/admin/markalar", label: "Markalar", icon: Tag },
   { href: "/admin/yorumlar", label: "Yorumlar", icon: MessageSquare },
+  { href: "/admin/yorum-uretici", label: "Yorum Üretici", icon: Sparkles },
   { href: "/admin/yorum-ayarlari", label: "Yorum Ayarları", icon: Settings },
   { href: "/admin/kullanicilar", label: "Kullanıcılar", icon: Users },
 ];

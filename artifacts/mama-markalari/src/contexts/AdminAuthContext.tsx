@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { useAdminLogin } from "@workspace/api-client-react";
+import { useAdminLogin, setAuthTokenGetter } from "@workspace/api-client-react";
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -9,6 +9,9 @@ interface AdminAuthContextType {
 
 const AdminAuthContext = createContext<AdminAuthContextType | null>(null);
 const STORAGE_KEY = "iyipet_admin_auth";
+const TOKEN_KEY = "iyipet_admin_token";
+
+setAuthTokenGetter(() => localStorage.getItem(TOKEN_KEY));
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -21,6 +24,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       const res = await loginMutation.mutateAsync({ data: { username, password } });
       if (res.success) {
         localStorage.setItem(STORAGE_KEY, "true");
+        if (res.token) localStorage.setItem(TOKEN_KEY, res.token);
         setIsAuthenticated(true);
         return true;
       }
@@ -32,6 +36,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(TOKEN_KEY);
     setIsAuthenticated(false);
   };
 

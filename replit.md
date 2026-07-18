@@ -51,6 +51,7 @@ _Populate as you build — explicit user instructions worth remembering across s
 - After editing `lib/api-spec/openapi.yaml`, always run `pnpm --filter @workspace/api-spec run codegen` before typechecking the server or frontend.
 - When adding a write/mutation on the frontend, manually invalidate every affected query key (lists + brand aggregates + stats). Missing one serves stale data until refresh.
 - Admin API routes (`/reviews` mutations, `/reviews/bulk`, `/brands/*`, `/settings`, `/admin/password`) are NOT server-protected — auth is only a client-side localStorage flag. Anyone can call them directly. Add server-side session/token auth before treating admin as secure (out of current scope).
+- Exception: `/admin/review-generator` IS token-protected — `/admin/login` returns a bearer token (in-memory Set, cleared on server restart → re-login needed), sent via `setAuthTokenGetter` in AdminAuthContext. Extend this pattern to other admin routes when securing them.
 
 ## Pointers
 

@@ -28,6 +28,8 @@ import type {
   BulkResult,
   BulkReviewInput,
   Error,
+  GenerateReviewsInput,
+  GenerateReviewsResult,
   HealthStatus,
   LoginInput,
   PasswordChangeInput,
@@ -1296,6 +1298,76 @@ export const useChangeAdminPassword = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getChangeAdminPasswordMutationOptions(options));
+    }
+
+export const getGenerateReviewsUrl = () => {
+
+
+
+
+  return `/api/admin/review-generator`
+}
+
+/**
+ * @summary Generate realistic Turkish reviews for a brand (optionally save)
+ */
+export const generateReviews = async (generateReviewsInput: GenerateReviewsInput, options?: RequestInit): Promise<GenerateReviewsResult> => {
+
+  return customFetch<GenerateReviewsResult>(getGenerateReviewsUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(generateReviewsInput)
+  }
+);}
+
+
+
+
+export const getGenerateReviewsMutationOptions = <TError = ErrorType<Error>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateReviews>>, TError,{data: BodyType<GenerateReviewsInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof generateReviews>>, TError,{data: BodyType<GenerateReviewsInput>}, TContext> => {
+
+const mutationKey = ['generateReviews'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof generateReviews>>, {data: BodyType<GenerateReviewsInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  generateReviews(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GenerateReviewsMutationResult = NonNullable<Awaited<ReturnType<typeof generateReviews>>>
+    export type GenerateReviewsMutationBody = BodyType<GenerateReviewsInput>
+    export type GenerateReviewsMutationError = ErrorType<Error>
+
+    /**
+ * @summary Generate realistic Turkish reviews for a brand (optionally save)
+ */
+export const useGenerateReviews = <TError = ErrorType<Error>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateReviews>>, TError,{data: BodyType<GenerateReviewsInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof generateReviews>>,
+        TError,
+        {data: BodyType<GenerateReviewsInput>},
+        TContext
+      > => {
+      return useMutation(getGenerateReviewsMutationOptions(options));
     }
 
 export const getGetStatsUrl = () => {
