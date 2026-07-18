@@ -6,6 +6,7 @@ export const settingsTable = pgTable("settings", {
   id: integer("id").primaryKey().default(1),
   requireApproval: boolean("require_approval").notNull().default(true),
   adminPassword: text("admin_password").notNull().default("admin123"),
+  demoCleanupDone: boolean("demo_cleanup_done").notNull().default(false),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });
 

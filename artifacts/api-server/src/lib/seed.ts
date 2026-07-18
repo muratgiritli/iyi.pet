@@ -1,4 +1,5 @@
 import { db, brandsTable, reviewsTable, settingsTable } from "@workspace/db";
+import { and, eq, or, sql } from "drizzle-orm";
 import { logger } from "./logger";
 import { EXTRA_BRANDS } from "./extraBrands";
 
@@ -110,33 +111,19 @@ const SEED_REVIEWS: SeedReview[] = [
   { brandId: 10, author: "Tolga J.", avatar: "T", rating: 5, timeAgo: "3 hafta önce", text: "Monge grain free serisini tercih ediyorum. Kedimde allerji azaldı, çok memnunum.", likes: 10 },
 ];
 
-function parseRelative(timeAgo: string): Date {
-  const now = Date.now();
-  const m = timeAgo.match(/(\d+)\s*(dakika|saat|gün|hafta|ay)/);
-  if (!m) return new Date(now);
-  const n = parseInt(m[1], 10);
-  const unit = m[2];
-  const ms =
-    unit === "dakika" ? n * 60_000 :
-    unit === "saat" ? n * 3_600_000 :
-    unit === "gün" ? n * 86_400_000 :
-    unit === "hafta" ? n * 7 * 86_400_000 :
-    n * 30 * 86_400_000;
-  return new Date(now - ms);
-}
 
 export async function seedIfEmpty(): Promise<void> {
   const existing = await db.select({ id: brandsTable.id }).from(brandsTable).limit(1);
 
   if (existing.length === 0) {
-    logger.info("Seeding brands and reviews");
+    logger.info("Seeding brands");
 
     await db.insert(brandsTable).values(
       SEED_BRANDS.map((b) => ({
         name: b.name,
         slug: b.slug,
-        rating: b.rating,
-        reviewCount: b.reviewCount,
+        rating: 0,
+        reviewCount: 0,
         category: b.category,
         origin: b.origin,
         logoText: b.logoText,
@@ -146,26 +133,6 @@ export async function seedIfEmpty(): Promise<void> {
       })),
     );
 
-    const inserted = await db.select({ id: brandsTable.id, slug: brandsTable.slug }).from(brandsTable);
-    const slugToId = new Map(inserted.map((r) => [r.slug, r.id]));
-    const idToSlug = new Map(SEED_BRANDS.map((b) => [b.id, b.slug]));
-
-    await db.insert(reviewsTable).values(
-      SEED_REVIEWS.map((r) => {
-        const slug = idToSlug.get(r.brandId)!;
-        const brandId = slugToId.get(slug)!;
-        return {
-          brandId,
-          author: r.author,
-          avatar: r.avatar,
-          rating: r.rating,
-          text: r.text,
-          status: "approved",
-          helpfulCount: r.likes,
-          createdAt: parseRelative(r.timeAgo),
-        };
-      }),
-    );
   }
 
   const settingsRow = await db.select({ id: settingsTable.id }).from(settingsTable).limit(1);
@@ -193,4 +160,44 @@ export async function seedIfEmpty(): Promise<void> {
       logger.info({ count: result.length }, "Seeded missing brands");
     }
   }
+
+  await cleanupDemoData();
+}
+
+async function cleanupDemoData(): Promise<void> {
+  const flag = await db.select({ done: settingsTable.demoCleanupDone }).from(settingsTable).limit(1);
+  if (flag.length > 0 && flag[0].done) {
+    return;
+  }
+
+  const deleted = await db
+    .delete(reviewsTable)
+    .where(or(...SEED_REVIEWS.map((r) => and(eq(reviewsTable.author, r.author), eq(reviewsTable.text, r.text)))))
+    .returning({ id: reviewsTable.id });
+  if (deleted.length > 0) {
+    logger.info({ count: deleted.length }, "Deleted demo reviews");
+  }
+
+  await db.execute(sql`
+    UPDATE brands b SET
+      review_count = agg.cnt,
+      rating = agg.avg_rating
+    FROM (
+      SELECT b2.id,
+             COALESCE(r.cnt, 0) AS cnt,
+             COALESCE(r.avg_rating, 0) AS avg_rating
+      FROM brands b2
+      LEFT JOIN (
+        SELECT brand_id, count(*)::int AS cnt, round(avg(rating)::numeric, 1)::float AS avg_rating
+        FROM reviews
+        WHERE status = 'approved'
+        GROUP BY brand_id
+      ) r ON r.brand_id = b2.id
+    ) agg
+    WHERE agg.id = b.id
+      AND (b.review_count IS DISTINCT FROM agg.cnt OR b.rating IS DISTINCT FROM agg.avg_rating)
+  `);
+
+  await db.update(settingsTable).set({ demoCleanupDone: true });
+  logger.info("Demo data cleanup completed");
 }

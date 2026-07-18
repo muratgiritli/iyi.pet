@@ -62,10 +62,10 @@ function BrandRow({ brand, rank }: { brand: Brand; rank: number }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="font-semibold text-gray-900 text-sm truncate">{brand.name}</span>
-          {brand.rating >= 4 && (
+          {brand.reviewCount > 0 && brand.rating >= 4 && (
             <ThumbsUp size={14} className="text-green-600 fill-green-600 animate-pulse-up flex-shrink-0" data-testid={`thumb-up-${brand.id}`} />
           )}
-          {brand.rating <= 2 && (
+          {brand.reviewCount > 0 && brand.rating <= 2 && (
             <ThumbsDown size={14} className="text-red-600 fill-red-600 animate-pulse-down flex-shrink-0" data-testid={`thumb-down-${brand.id}`} />
           )}
           {brand.verified && (
