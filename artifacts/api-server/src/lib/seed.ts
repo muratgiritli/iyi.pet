@@ -1,5 +1,6 @@
 import { db, brandsTable, reviewsTable, settingsTable } from "@workspace/db";
 import { logger } from "./logger";
+import { EXTRA_BRANDS } from "./extraBrands";
 
 interface SeedBrand {
   id: number;
@@ -170,5 +171,26 @@ export async function seedIfEmpty(): Promise<void> {
   const settingsRow = await db.select({ id: settingsTable.id }).from(settingsTable).limit(1);
   if (settingsRow.length === 0) {
     await db.insert(settingsTable).values({ id: 1 });
+  }
+
+  if (EXTRA_BRANDS.length > 0) {
+    const result = await db
+      .insert(brandsTable)
+      .values(
+        EXTRA_BRANDS.map((b) => ({
+          name: b.name,
+          slug: b.slug,
+          category: b.category,
+          origin: b.origin,
+          logoText: b.logoText,
+          logoColor: b.logoColor,
+          logoBg: b.logoBg,
+        })),
+      )
+      .onConflictDoNothing({ target: brandsTable.slug })
+      .returning({ id: brandsTable.id });
+    if (result.length > 0) {
+      logger.info({ count: result.length }, "Seeded missing brands");
+    }
   }
 }

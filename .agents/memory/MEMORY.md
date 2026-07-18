@@ -1,1 +1,2 @@
 - [Orval codegen mutation/cache conventions](codegen-mutations.md) — generated hooks don't auto-invalidate; body-only `{data}` vs path `{id,data}`; brand update is partial PATCH (safe).
+- [Dev vs prod data](dev-vs-prod-data.md) — direct SQL inserts hit only the dev DB; prod DB is separate and read-only to the agent, so reference data must ship via idempotent startup seeding + republish.
