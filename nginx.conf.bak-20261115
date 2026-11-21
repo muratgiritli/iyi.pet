@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    location / {
+    # atakum-izle
+    sub_filter_once on;
+    sub_filter '</head>' '<script defer src="/__izle/t.js"></script></head>';
+    sub_filter '</HEAD>' '<script defer src="/__izle/t.js"></script></HEAD>';
+
+        try_files $uri $uri.html $uri/ =404;
+    }
+    location = /sitemap.xml { types { } default_type application/xml; }
+    location = /robots.txt { types { } default_type text/plain; }
+}

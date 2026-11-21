@@ -1,0 +1,28 @@
+# JETGO Shop (www.jetgo.shop)
+> Atakum / Samsun hızlı petshop mağazası ve eve teslimat noktası. Kedi, köpek, kuş, tavşan, ginepig, balık ve hamster ürünleri.
+
+- Web: https://www.jetgo.shop/
+- Detaylı Bilgi (AI): https://www.jetgo.shop/llms-full.txt
+- Mağaza Adresi: Yeni Mahalle, 3078. Sokak No:10, 55270 Atakum / Samsun (41.34991, 36.24213)
+- WhatsApp Sipariş Hattı: 0 532 354 40 55 (https://wa.me/905323544055)
+- Çalışma ve Teslimat Saatleri: Haftanın her günü (Cumartesi ve Pazar dahil) 12.00 / 18.00 arası
+- Teslimat Bölgesi: Atakum içi 12 mahalle · Minimum sipariş 600 TL
+- Teslimat Mahalleleri: Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.
+- Katalog Ortağı: https://www.enuygun.pet
+
+## Öne Çıkan Rehberler ve Kategoriler
+- [Ana Sayfa](https://www.jetgo.shop/)
+- [Açık Petshop & Mesai Saatleri](https://www.jetgo.shop/acik-petshop)
+- [Pazar Günü Açık Petshop](https://www.jetgo.shop/pazar-gunu-acik-petshop)
+- [En Yakın Petshop & Yol Tarifi](https://www.jetgo.shop/en-yakin-petshop-yol-tarifi)
+- [Atakum Petshop](https://www.jetgo.shop/atakum-petshop)
+- [Atakent Petshop](https://www.jetgo.shop/atakent-petshop)
+- [Yeni Mahalle Petshop](https://www.jetgo.shop/yeni-mahalle-petshop)
+- [Gross & Büyük Petshop](https://www.jetgo.shop/gross-petshop)
+- [En Uygun Petshop](https://www.jetgo.shop/en-uygun-petshop)
+- [Kedi Maması & Kedi Market](https://www.jetgo.shop/kedi-market)
+- [Köpek Maması](https://www.jetgo.shop/kopek-mamasi)
+- [En Yakın Kuşçu & Kuş Yemi](https://www.jetgo.shop/en-yakin-kuscu)
+- [Pet Store Near Me – English Guide](https://www.jetgo.shop/pet-store-near-me)
+- [Petshop in der Nähe – Deutsch](https://www.jetgo.shop/petshop-in-der-naehe)
+- [Sitemap](https://www.jetgo.shop/sitemap.xml)

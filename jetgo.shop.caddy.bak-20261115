@@ -1,0 +1,7 @@
+jetgo.shop, www.jetgo.shop {
+	encode gzip
+	reverse_proxy 127.0.0.1:5003
+	header {
+		Strict-Transport-Security max-age=63072000; includeSubDomains; preload
+	}
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sayfa Bulunamadı (404) | JETGO Shop Atakum</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0b1d4a" />
+  <style>
+    :root { --navy:#0b1d4a; --yellow:#ffcc00; --ink:#0b1d4a; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Montserrat,system-ui,-apple-system,sans-serif; color:var(--ink); background:#f5f6f8; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+    a { color:inherit; text-decoration:none; }
+    header { background:var(--navy); color:#fff; padding:18px 20px; border-bottom:3px solid var(--yellow); }
+    .wrap { width:min(760px, calc(100% - 32px)); margin:0 auto; }
+    main { flex:1; padding:36px 0; display:flex; align-items:center; }
+    .card { background:#fff; border-radius:16px; padding:28px 24px; box-shadow:0 8px 24px rgba(11,29,74,.08); width:100%; }
+    h1 { font-size:clamp(22px, 5vw, 30px); font-weight:900; color:var(--navy); margin-bottom:10px; }
+    p { font-size:15px; color:#374151; line-height:1.6; margin:8px 0; }
+    .btns { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:12px 18px; border-radius:10px; font-weight:800; font-size:14px; }
+    .btn-home { background:var(--navy); color:#fff; }
+    .btn-wa { background:#128c47; color:#fff; }
+    .cats { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; padding-top:16px; border-top:1px solid #e5e7eb; }
+    .cats a { min-height:44px; padding:10px 14px; background:#eef2f9; border-radius:8px; font-weight:700; font-size:13px; display:inline-flex; align-items:center; }
+    a:focus-visible { outline:3px solid var(--navy); outline-offset:2px; }
+  
+    
+    /* jetgo-bottom-bar-css-start */
+    body { padding-bottom: calc(116px + env(safe-area-inset-bottom, 0px)) !important; }
+    .wa-float { display: none !important; }
+    .jetgo-sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: #0b1d4a;
+      border-top: 2px solid #ffcc00;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.32);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      user-select: none;
+    }
+    .jsb-notice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #dc2626;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 0 0 12px rgba(220,38,38,0.45);
+      animation: jsbPulseGlow 1.8s infinite ease-in-out;
+    }
+    .jsb-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 6px #ffffff;
+      flex-shrink: 0;
+      animation: jsbPulseDot 1.4s infinite ease-in-out;
+    }
+    .jsb-msg {
+      display: block;
+      text-align: center;
+    }
+    @keyframes jsbPulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(220,38,38,0.4); }
+      50% { transform: scale(1.01); box-shadow: 0 0 16px rgba(239,68,68,0.85); background: #ef4444; }
+    }
+    @keyframes jsbPulseDot {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+    .jsb-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 0.95fr;
+      gap: 6px;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .jsb-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 44px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none !important;
+      white-space: nowrap;
+      transition: filter 0.15s ease, transform 0.15s ease;
+      padding: 0 4px;
+    }
+    .jsb-btn:active { transform: scale(0.97); }
+    .jsb-call {
+      background: #ffcc00;
+      color: #0b1d4a !important;
+    }
+    .jsb-wa {
+      background: #25d366;
+      color: #ffffff !important;
+    }
+    .jsb-map {
+      background: #ffffff;
+      color: #0b1d4a !important;
+    }
+    .jsb-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    @media (max-width: 360px) {
+      .jsb-notice { font-size: 10px; padding: 3px 6px; }
+      .jsb-btn { font-size: 10.5px; gap: 3px; padding: 0 2px; }
+      .jsb-btn svg { width: 14px; height: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .jsb-notice, .jsb-pulse { animation: none !important; }
+    }
+    /* jetgo-bottom-bar-css-end */
+
+
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><b>JETGO <span style="color:#ffcc00">SHOP</span></b> · Atakum Petshop</div></header>
+  <main>
+    <div class="wrap">
+      <div class="card">
+        <h1>Aradığınız sayfa bulunamadı (404)</h1>
+        <p>Bağlantı değişmiş veya kaldırılmış olabilir. Ana sayfaya dönebilir ya da Atakum içi sipariş için doğrudan WhatsApp sipariş hattımıza yazabilirsiniz.</p>
+        <p><b>WhatsApp Sipariş Hattı:</b> 0 532 354 40 55 · Her Gün 12.00 / 18.00 Arası · Minimum Sipariş 600 TL</p>
+        <p style="font-size:13px"><b>Teslimat Mahalleleri:</b> Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.</p>
+        <div class="btns">
+          <a class="btn btn-home" href="/">Ana Sayfaya Dön</a>
+          <a class="btn btn-wa" href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO%20Shop%27tan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">WhatsApp Sipariş: 0 532 354 40 55</a>
+        </div>
+        <div class="cats">
+          <a href="/kedi-mamasi">Kedi Ürünleri</a>
+          <a href="/kopek-mamasi">Köpek Ürünleri</a>
+          <a href="/atakum-kus-yemi">Kuş Ürünleri</a>
+          <a href="/kemirgen-urunleri-teslimat">Kemirgen</a>
+          <a href="/akvaryum-malzemeleri">Akvaryum</a>
+        </div>
+      </div>
+    </div>
+  </main>
+<!-- jetgo-bottom-bar-start -->
+<div class="jetgo-sticky-bar" id="jetgoStickyBar" role="region" aria-label="Hızlı İletişim ve Uyarı">
+  <div class="jsb-notice">
+    <span class="jsb-pulse"></span>
+    <span class="jsb-msg">🐾 Herhangi bir evcil hayvan almak ya da satmak<br>için bizi aramayın.</span>
+  </div>
+  <div class="jsb-actions">
+    <a href="tel:+905323544055" class="jsb-btn jsb-call" aria-label="Hemen Ara">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Hemen Ara</span>
+    </a>
+    <a href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO%20Shop%27tan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer" class="jsb-btn jsb-wa" aria-label="WhatsApp Sipariş">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 11.9C2.16 6.45 6.6 2.01 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89zm8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89a11.84 11.84 0 0 0 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.43z"/></svg>
+      <span>WhatsApp Sipariş</span>
+    </a>
+    <a href="https://www.google.com/maps/place/Samsun+Petshop+Enuygunpet/@41.3494032,36.2410372,17z/data=!4m10!1m2!2m1!1senuygunpet!3m6!1s0x408879a38cad8b89:0x2f8d7996011cec2d!8m2!3d41.34991!4d36.24213!15sCgplbnV5Z3VucGV0WgwiCmVudXlndW5wZXSSAQlwZXRfc3RvcmXgAQA!16s%2Fg%2F11x2x7jtwk?entry=ttu" target="_blank" rel="noopener noreferrer" class="jsb-btn jsb-map" aria-label="Yol Tarifi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Yol Tarifi</span>
+    </a>
+  </div>
+</div>
+<!-- jetgo-bottom-bar-end -->
+</body>
+</html>
