@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <meta name="shell-type" content="mobile_tab"/>
+  <title>Atakum Enuygun Petshop | Mama, Kuş Yemi, Kedi Kumu ve Pet Market</title>
+  <meta name="description" content="Atakum Enuygun Petshop: Atakum ve Samsun geneline aynı gün kapıya teslimat, toptan fiyat avantajı, WhatsApp sipariş hattı: 0 532 354 40 55 (Her gün 12:00–18:00, min. 600 TL)."/>
+  <link rel="canonical" href="https://www.atakumpet.com/"/>
+  <link rel="alternate" hreflang="tr" href="https://www.atakumpet.com/"/>
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png"/>
+  <link rel="icon" href="/favicon.ico" sizes="32x32"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#9d4300"/>
+
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="9C3Dvfvs1o4kQ1buA8Ma8SHCYchsks5Z0XfuNfJvVk0" />
+  <!-- Yandex Verification -->
+  <meta name="yandex-verification" content="794e09fc893bde27" />
+
+  <!-- Google Tag Manager -->
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MH8CX54F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { width: 100vw; margin: 0; padding: 0; }
+      body { overscroll-behavior: none; min-height: max(884px, 100dvh); }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .map-responsive { position: relative; width: 100%; border-radius: 1rem; overflow: hidden; }
+    .map-responsive iframe { width: 100% !important; min-height: 340px !important; border: 0; }
+  </style>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface-variant": "#584237",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffddb8",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#f97316",
+            "secondary-container": "#86f2e4",
+            "on-error-container": "#93000a",
+            "error": "#ba1a1a",
+            "surface": "#faf8ff",
+            "inverse-surface": "#283044",
+            "on-secondary-fixed-variant": "#005049",
+            "surface-container-high": "#e2e7ff",
+            "surface-variant": "#dae2fd",
+            "on-primary-container": "#582200",
+            "background": "#faf8ff",
+            "secondary": "#006a61",
+            "surface-container": "#eaedff",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#ffdbca",
+            "error-container": "#ffdad6",
+            "surface-tint": "#9d4300",
+            "secondary-fixed": "#89f5e7",
+            "on-tertiary-fixed": "#2a1700",
+            "on-tertiary-container": "#492c00",
+            "primary-fixed-dim": "#ffb690",
+            "on-secondary": "#ffffff",
+            "outline": "#8c7164",
+            "outline-variant": "#e0c0b1",
+            "on-primary": "#ffffff",
+            "primary": "#9d4300",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-background": "#131b2e",
+            "on-secondary-container": "#006f66",
+            "tertiary": "#855300",
+            "tertiary-container": "#d78900",
+            "surface-dim": "#d2d9f4",
+            "on-surface": "#131b2e",
+            "inverse-primary": "#ffb690",
+            "surface-container-low": "#f2f3ff",
+            "inverse-on-surface": "#eef0ff",
+            "on-primary-fixed": "#341100",
+            "on-tertiary-fixed-variant": "#653e00",
+            "on-primary-fixed-variant": "#783200",
+            "secondary-fixed-dim": "#6bd8cb",
+            "surface-bright": "#faf8ff",
+            "on-secondary-fixed": "#00201d",
+            "surface-container-highest": "#dae2fd"
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-2xl": "2rem",
+            "space-md": "0.75rem",
+            "space-lg": "1rem",
+            "margin-tablet": "1.5rem",
+            "space-sm": "0.5rem",
+            "gutter-tablet": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.375rem",
+            "gutter": "0.75rem",
+            "space-3xl": "3rem",
+            "space-xl": "1.5rem",
+            "space-2xs": "0.25rem"
+          },
+          fontFamily: {
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "display-lg-mobile": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"]
+          },
+          fontSize: {
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-sm": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "800" }]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "PetStore",
+        "@id": "https://www.atakumpet.com/#store",
+        "name": "Atakum Enuygun Petshop",
+        "image": "https://www.atakumpet.com/img/hero-pets.png",
+        "url": "https://www.atakumpet.com/",
+        "telephone": "+905323544055",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Yeni Mahalle, 3078. Sokak No:10",
+          "addressLocality": "Atakum",
+          "addressRegion": "Samsun",
+          "postalCode": "55270",
+          "addressCountry": "TR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 41.3501628,
+          "longitude": 36.2421795
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        },
+        "sameAs": [
+          "https://www.instagram.com/enuygun.pet/",
+          "https://www.facebook.com/enuygun.pet",
+          "https://www.enuygun.pet",
+          "https://www.atakumpet.com"
+        ],
+        "areaServed": [
+          {"@type": "Place", "name": "Yenimahalle, Atakum, Samsun"},
+          {"@type": "Place", "name": "Atakent, Atakum, Samsun"},
+          {"@type": "Place", "name": "Güzelyalı, Atakum, Samsun"},
+          {"@type": "Place", "name": "Mimarsinan, Atakum, Samsun"},
+          {"@type": "Place", "name": "Denizevleri, Atakum, Samsun"},
+          {"@type": "Place", "name": "Körfez, Atakum, Samsun"},
+          {"@type": "Place", "name": "Kurupelit, Atakum, Samsun"},
+          {"@type": "Place", "name": "Esenevler, Atakum, Samsun"},
+          {"@type": "Place", "name": "Yeşilyurt, Atakum, Samsun"},
+          {"@type": "Place", "name": "Cumhuriyet, Atakum, Samsun"},
+          {"@type": "Place", "name": "Kamalı, Atakum, Samsun"},
+          {"@type": "Place", "name": "İncesu, Atakum, Samsun"}
+        ],
+        "hasMap": "https://www.google.com/maps?cid=5184132483842322452"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MH8CX54F"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Top Sticky Header -->
+  <header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 px-margin flex items-center justify-between gap-space-sm max-w-4xl mx-auto">
+      <div class="flex items-center gap-space-xs">
+        <div class="w-9 h-9 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-[20px]">pets</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Atakum Samsun</span>
+          <span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight truncate">ATAKUM ENUYGUN PETSHOP</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a aria-label="WhatsApp Sipariş: 0 532 354 40 55" class="h-11 px-3 bg-emerald-600 text-white rounded-full flex items-center justify-center gap-1.5 shadow-[0_4px_16px_-2px_rgba(16,185,129,0.3)] active:scale-95 transition-all text-xs font-bold" href="https://wa.me/905323544055?text=Merhaba%2C%20Atakum%20Petshop%27tan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          <span class="hidden sm:inline">WhatsApp</span>
+        </a>
+        <a aria-label="Hemen Ara: 0 532 354 40 55" class="min-w-[44px] h-11 px-space-md bg-primary-container text-on-primary rounded-full flex items-center justify-center gap-space-xs shadow-[0_4px_16px_-2px_rgba(249,115,22,0.25)] active:scale-95 transition-all font-bold" href="tel:05323544055">
+          <span class="material-symbols-outlined text-[18px]">call</span>
+          <span class="font-label-sm text-label-sm tracking-wide hidden xs:inline">Ara</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen">
+    <div class="flex flex-col w-full max-w-4xl mx-auto">
+
+      <!-- WhatsApp Delivery Banner -->
+      <section class="px-margin pt-space-md">
+        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex flex-col gap-2">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 font-bold text-sm text-emerald-800">
+              <span class="material-symbols-outlined text-emerald-600 text-[20px]">moped</span>
+              <span>WhatsApp Sipariş Hattı: 0 532 354 40 55</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-200/80 text-emerald-800 text-[11px] font-bold shrink-0">12:00 - 18:00</span>
+          </div>
+          <p class="text-xs text-emerald-900/90 leading-snug">
+            <strong>Atakum İçi Aynı Gün Kapıda Teslimat:</strong> Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu. (Min. sipariş: <strong>600 TL</strong>).
+          </p>
+        </div>
+      </section>
+
+      <!-- Top Hero Announcement & Welcome Card -->
+      <section class="px-margin pt-space-sm pb-space-md" id="ana-sayfa">
+        <!-- Announcement Badges -->
+        <div class="flex flex-wrap items-center gap-space-xs mb-space-md">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-container/30 text-secondary">
+            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+            <span class="font-label-sm text-label-sm tracking-normal">Atakum İçi Aynı Gün Kapıda Teslimat</span>
+          </div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container/15 text-primary">
+            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+            <span class="font-label-sm text-label-sm tracking-normal">%100 Taze &amp; Orijinal Mama</span>
+          </div>
+        </div>
+
+        <!-- Hero Card with Mascot Picture -->
+        <div class="relative overflow-hidden rounded-lg bg-surface-container-lowest shadow-[0_4px_20px_-2px_rgba(249,115,22,0.12)]">
+          <div class="relative w-full h-56 overflow-hidden">
+            <img class="w-full h-full object-cover" alt="Atakum Enuygun Petshop - Kedi ve Köpek Maması Çeşitleri" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnuN0QeUKi9n5wbN-yc24R5QQE2bmtaUTVGjSOTdNuRt2jxJ-X7j_vtcah6MqJtllfNjoqJHYQ20ilGbFNsyrds53pXW-bB_HR-7JFVUyc9u8UAuhnFmNygU5iwonX4K6wv2mhz7pK6vN-uKJ9CnRz69QUX0Q2jWo6218WeGWERhY75R8lShSLaHSsRrnOC9Tma_h7QlrrBvRfGPmFPxCcQ43Zs2GL0ZcDN_HrFnU"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/85 via-inverse-surface/30 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm mb-1.5 shadow-sm">
+                <span class="material-symbols-outlined text-[14px]">pets</span>
+                <span>Mahallenizin Dost Canlısı Pet Marketi</span>
+              </div>
+              <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-white drop-shadow-sm font-bold">
+                Pati Dostlarınıza Hak Ettikleri Sevgi &amp; Özen
+              </h1>
+              <p class="font-body-sm text-body-sm text-surface-container-high/90 mt-0.5 line-clamp-1">
+                Atakum sahil ve tüm mahallelere bir telefonla taze mama servisi.
+              </p>
+            </div>
+          </div>
+
+          <!-- Core Value Ribbons -->
+          <div class="p-space-md bg-surface-container-lowest flex flex-col gap-space-sm">
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="flex flex-col items-center justify-center p-2 rounded-2xl bg-surface-container-low">
+                <span class="material-symbols-outlined text-primary text-[22px]" style="font-variation-settings: 'FILL' 1;">award_star</span>
+                <span class="font-label-sm text-label-sm text-on-surface mt-1 leading-tight font-bold">Orijinal Mama</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-2 rounded-2xl bg-surface-container-low">
+                <span class="material-symbols-outlined text-secondary text-[22px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+                <span class="font-label-sm text-label-sm text-on-surface mt-1 leading-tight font-bold">Kapıda Nakit / Kart</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-2 rounded-2xl bg-surface-container-low">
+                <span class="material-symbols-outlined text-tertiary-container text-[22px]" style="font-variation-settings: 'FILL' 1;">two_wheeler</span>
+                <span class="font-label-sm text-label-sm text-on-surface mt-1 leading-tight font-bold">Hızlı Servis</span>
+              </div>
+            </div>
+
+            <!-- Primary Dual Action Buttons -->
+            <div class="flex flex-col gap-2 pt-1">
+              <a class="w-full h-13 py-3 px-space-lg rounded-full bg-emerald-600 text-white flex items-center justify-center gap-2 shadow-[0_6px_20px_rgba(16,185,129,0.3)] active:scale-[0.98] transition-all font-bold" href="https://wa.me/905323544055?text=Merhaba%2C%20Atakum%20Petshop%27tan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">
+                <span class="material-symbols-outlined text-[22px]">chat</span>
+                <span class="font-label-lg text-label-lg tracking-wide">WhatsApp Sipariş: 0 532 354 40 55</span>
+              </a>
+              <div class="grid grid-cols-2 gap-2">
+                <a class="w-full h-11 py-2 px-space-md rounded-full bg-primary-container text-on-primary flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all font-bold text-sm" href="tel:05323544055">
+                  <span class="material-symbols-outlined text-[18px]">call</span>
+                  <span>Telefonla Ara</span>
+                </a>
+                <a class="w-full h-11 py-2 px-space-md rounded-full bg-surface-container text-on-surface flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all font-bold text-sm" href="#konum">
+                  <span class="material-symbols-outlined text-[18px] text-secondary">navigation</span>
+                  <span class="text-secondary">Yol Tarifi Al</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reyonlar / Pet Categories Section -->
+      <section class="px-margin py-space-md" id="reyonlar">
+        <div class="flex items-center justify-between mb-space-md">
+          <div>
+            <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Zengin Ürün Çeşitliliği</span>
+            <h2 class="font-headline-md text-headline-md text-on-surface font-bold">Reyonlar &amp; Ürün Kategorileri</h2>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-[18px]">category</span>
+          </div>
+        </div>
+
+        <!-- Category Stack with Tactile Cards -->
+        <div class="flex flex-col gap-space-md">
+          <!-- 1. Kedi Reyonu -->
+          <div class="p-space-md rounded-2xl bg-surface-container-lowest shadow-[0_3px_12px_rgba(249,115,22,0.06)] flex items-start gap-space-md">
+            <div class="w-14 h-14 rounded-2xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0">
+              <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">cruelty_free</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Kedi Reyonu</h3>
+                <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary font-label-sm text-label-sm shrink-0">Premium</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Sterilised, yavru &amp; yetişkin kuru mamalar, yaş konserveler, kokusuz bentonit kumlar, tırmalama tahtaları ve taşıma çantaları.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <a href="/kedi-mamasi" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-primary-container/20">Kuru Mama</a>
+                <a href="/kedi-kumu" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-primary-container/20">Bentonit Kum</a>
+                <a href="/yas-mama" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-primary-container/20">Pouch Yaş Mama</a>
+                <a href="/gimcat" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-primary-container/20">Malt Macunu</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Köpek Reyonu -->
+          <div class="p-space-md rounded-2xl bg-surface-container-lowest shadow-[0_3px_12px_rgba(249,115,22,0.06)] flex items-start gap-space-md">
+            <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+              <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">sound_detection_dog_barking</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Köpek Reyonu</h3>
+                <span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-secondary font-label-sm text-label-sm shrink-0">Geniş Seri</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Irklara özel tahılsız kuru mamalar, ödül bisküvileri, doğal pres çiğneme kemikleri, ergonomik göğüs tasmaları &amp; antrenman ekipmanları.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <a href="/kopek-mamasi" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-secondary-container/30">Tahılsız Mama</a>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Göğüs Tasması</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Çiğneme Kemiği</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Kuş Dünyası -->
+          <div class="p-space-md rounded-2xl bg-surface-container-lowest shadow-[0_3px_12px_rgba(249,115,22,0.06)] flex items-start gap-space-md">
+            <div class="w-14 h-14 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shrink-0">
+              <span class="material-symbols-outlined text-[28px]">raven</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Kuş Dünyası</h3>
+                <span class="px-2 py-0.5 rounded-full bg-tertiary-container/15 text-tertiary font-label-sm text-label-sm shrink-0">Besleyici</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Muhabbet kuşu, kanarya, papağan özel tohum karışımları, mineral blokları, gaga taşları, tüy sağlığı B vitamini damlaları ve kafes aksesuarları.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <a href="/kus-yemi-muhabbet-kusu-malzemeleri" class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm hover:bg-tertiary-container/20">Özel Yemler</a>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Kalamar Kemiği</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Vitamin Takviyesi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Kemirgen & Tavşan -->
+          <div class="p-space-md rounded-2xl bg-surface-container-lowest shadow-[0_3px_12px_rgba(249,115,22,0.06)] flex items-start gap-space-md">
+            <div class="w-14 h-14 rounded-2xl bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+              <span class="material-symbols-outlined text-[28px]">egg</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Kemirgen &amp; Tavşan</h3>
+                <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm shrink-0">Doğal</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Doğal dağ çayır otu, preslenmiş pelet yemler, tozsuz sıkıştırılmış çam talaşı, damlatmaz bilyeli suluklar ve kemirme takozları.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Kuru Çayır Otu</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Tozsuz Talaş</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Pelet Yem</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Akvaryum & Balık -->
+          <div class="p-space-md rounded-2xl bg-surface-container-lowest shadow-[0_3px_12px_rgba(249,115,22,0.06)] flex items-start gap-space-md">
+            <div class="w-14 h-14 rounded-2xl bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+              <span class="material-symbols-outlined text-[28px]">phishing</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Akvaryum &amp; Balık</h3>
+                <span class="px-2 py-0.5 rounded-full bg-secondary-container/30 text-secondary font-label-sm text-label-sm shrink-0">Su Bakımı</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                Japon &amp; tropikal balık pul ve granül yemleri, su berraklaştırıcı düzenleyiciler, iç ve dış filtre elyafları, hava motorları ve ısıtıcılar.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Granül &amp; Pul Yem</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Su Düzenleyici</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">Filtre Süngeri</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lokasyon, Adres & Mağaza Ziyareti (With Exact Google Maps Embed) -->
+      <section class="px-margin py-space-md" id="konum">
+        <div class="p-space-lg rounded-2xl bg-surface-container-lowest shadow-[0_4px_20px_-2px_rgba(0,106,97,0.08)]">
+          <div class="flex items-center gap-space-xs mb-3">
+            <div class="w-9 h-9 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary">
+              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+            </div>
+            <div>
+              <span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Atakum / Samsun</span>
+              <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Mağaza &amp; Konum Bilgisi</h2>
+            </div>
+          </div>
+
+          <!-- Official Google Maps Embed -->
+          <div class="map-responsive mb-space-md shadow-sm border border-slate-200">
+            <iframe title="Atakum Enuygun Petshop konum haritası" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.100796386986!2d36.242179500000006!3d41.3501628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x408879084590d33b%3A0x47f16b6777453014!2sAtakum%20Enuygun%20Petshop!5e0!3m2!1str!2str!4v1794836170854!5m2!1str!2str" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+
+          <!-- Address Text Card -->
+          <div class="p-space-md rounded-xl bg-surface-container-low mb-space-md">
+            <div class="flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">store</span>
+              <div>
+                <div class="font-label-md text-label-md text-on-surface font-bold">Açık Adres:</div>
+                <div class="font-body-md text-body-md text-on-surface-variant mt-0.5 leading-snug">
+                  Yeni Mahalle, 3078. Sokak No:10, Atakum / Samsun
+                </div>
+                <div class="font-body-sm text-body-sm text-secondary mt-1 flex items-center gap-1 font-semibold">
+                  <span class="material-symbols-outlined text-[16px]">tram</span>
+                  <span>Sahil şeridi &amp; Tramvay hattına yürüme mesafesinde</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parking Pill -->
+          <div class="flex items-center gap-2 p-2.5 rounded-xl bg-surface-container-high/40 text-on-surface mb-space-md">
+            <span class="material-symbols-outlined text-primary text-[18px]">local_parking</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Mağaza önünde kolay ve ücretsiz kısa süreli araç park yeri mevcuttur.</span>
+          </div>
+
+          <!-- Payment Assurance Card -->
+          <div class="p-3 rounded-xl bg-secondary-container/20 flex items-center gap-3 mb-space-md">
+            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary shrink-0">
+              <span class="material-symbols-outlined text-[20px]">credit_card</span>
+            </div>
+            <div>
+              <div class="font-label-sm text-label-sm text-on-secondary-container font-bold">Kapıda Esnek Ödeme Kolaylığı</div>
+              <div class="font-body-sm text-body-sm text-on-surface-variant">Atakum içi adrese teslimatlarda ister Nakit ister tüm Kredi Kartları ile temassız ödeme yapabilirsiniz.</div>
+            </div>
+          </div>
+
+          <!-- Location Action Buttons -->
+          <div class="grid grid-cols-2 gap-2">
+            <a class="h-11 px-space-sm rounded-full bg-surface-container text-on-surface flex items-center justify-center gap-1.5 active:scale-95 transition-all text-center font-bold text-sm" href="https://maps.google.com/?q=41.3501628,36.2421795" rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined text-[18px] text-primary">map</span>
+              <span class="truncate">Haritada Aç</span>
+            </a>
+            <a class="h-11 px-space-sm rounded-full bg-secondary text-on-secondary flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all text-center font-bold text-sm" href="https://www.google.com/maps/dir/?api=1&destination=Atakum+Enuygun+Petshop" rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined text-[18px]">directions</span>
+              <span class="truncate">Yol Tarifi Al</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Local Pet Advisory & Fast Phone Action Box -->
+      <section class="px-margin pt-space-xs pb-space-lg" id="iletisim">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-container via-primary-container to-surface-tint p-space-lg text-on-primary shadow-[0_6px_24px_rgba(249,115,22,0.22)]">
+          <div class="absolute -right-4 -bottom-4 text-white/10 pointer-events-none">
+            <span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">pets</span>
+          </div>
+          <div class="relative z-10 flex flex-col gap-2">
+            <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 text-white font-label-sm text-label-sm w-fit backdrop-blur-sm">
+              <span class="material-symbols-outlined text-[14px]">support_agent</span>
+              <span>Birebir Mama Danışmanlığı</span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-white font-bold">
+              Dostunuz için en doğru mamayı birlikte seçelim!
+            </h3>
+            <p class="font-body-sm text-body-sm text-white/90 leading-relaxed">
+              Yaş, kilo, tüy dökülmesi veya alerji durumlarına göre veteriner onaylı alternatifleri öğrenmek ve sipariş vermek için bizi hemen arayın.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2 mt-2">
+              <a class="w-full h-12 rounded-full bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" href="https://wa.me/905323544055?text=Merhaba%2C%20Atakum%20Petshop%27tan%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">
+                <span class="material-symbols-outlined text-[20px]">chat</span>
+                <span>WhatsApp: 0 532 354 40 55</span>
+              </a>
+              <a class="w-full h-12 rounded-full bg-surface-container-lowest text-primary font-bold text-sm flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" href="tel:05323544055">
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">phone_in_talk</span>
+                <span>Hemen Telefonla Ara</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Footer & Sitemap Quick Links -->
+      <footer class="px-margin py-space-md border-t border-slate-200/80 text-center text-xs text-on-surface-variant flex flex-col gap-2">
+        <p class="font-bold text-slate-700">© 2026 Atakum Enuygun Petshop — Tüm Hakları Saklıdır.</p>
+        <p>Yeni Mahalle, 3078. Sokak No:10 Atakum / Samsun • Tel: 0 532 354 40 55</p>
+        <div class="flex justify-center gap-3 text-primary text-[11px] pt-1">
+          <a href="/sitemap.xml" class="hover:underline">XML Site Haritası</a>
+          <span>•</span>
+          <a href="/acik-petshop" class="hover:underline">Açık Petshop</a>
+          <span>•</span>
+          <a href="/atakum-petshop" class="hover:underline">Atakum Petshop</a>
+          <span>•</span>
+          <a href="/samsun-petshop" class="hover:underline">Samsun Petshop</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Tab Bar -->
+  <nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(249,115,22,0.06)]" data-active-classes="text-primary font-bold">
+    <div class="flex justify-around items-center h-16 px-space-xs max-w-4xl mx-auto">
+      <a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs transition-colors text-primary font-bold" data-path="ana-sayfa" href="#ana-sayfa">
+        <span class="material-symbols-outlined text-[22px]">storefront</span>
+        <span class="font-label-sm text-label-sm mt-0.5">Ana Sayfa</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant transition-colors hover:text-primary" data-path="reyonlar-kategoriler" href="#reyonlar">
+        <span class="material-symbols-outlined text-[22px]">category</span>
+        <span class="font-label-sm text-label-sm mt-0.5">Reyonlar</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant transition-colors hover:text-primary" data-path="konum-harita" href="#konum">
+        <span class="material-symbols-outlined text-[22px]">distance</span>
+        <span class="font-label-sm text-label-sm mt-0.5">Konum</span>
+      </a>
+      <a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant transition-colors hover:text-primary" data-path="iletisim" href="#iletisim">
+        <span class="material-symbols-outlined text-[22px]">contact_phone</span>
+        <span class="font-label-sm text-label-sm mt-0.5">İletişim</span>
+      </a>
+    </div>
+  </nav>
+</body>
+</html>

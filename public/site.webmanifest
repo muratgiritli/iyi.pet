@@ -1,0 +1,22 @@
+{
+  "name": "Atakum Petshop",
+  "short_name": "Atakum Pet",
+  "description": "Atakum içi aynı gün teslimat petshop. WhatsApp Sipariş: 0 532 354 40 55 (12:00–18:00, Min. 600 TL).",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#1a365d",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

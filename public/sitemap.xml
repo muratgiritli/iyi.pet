@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<!-- Atakum Pet (www.atakumpet.com) Ana Site Haritası İndeksi | Toplam Kanonik URL: 4136 -->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-ana-sayfalar.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-yerel-bolgeler.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-kedi.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-kopek.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-kus-balik-kemirgen.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-markalar-urunler.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.atakumpet.com/sitemap-rehber-genel.xml</loc>
+    <lastmod>2026-11-16T17:38:37+03:00</lastmod>
+  </sitemap>
+</sitemapindex>

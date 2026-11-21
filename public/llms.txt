@@ -1,0 +1,23 @@
+# Atakum Pet (atakumpet.com)
+> Atakum / Samsun. En geniş çeşit: enuygun.pet. Mamalar toptan fiyat.
+
+- Site: https://www.atakumpet.com/
+- Mağaza: Yeni Mahalle, 3078. Sokak No:10, Atakum / Samsun
+- Telefon / WhatsApp Sipariş Hattı: 0 532 354 40 55
+- Mağaza Saatleri: Her gün 09:00–21:00
+- WhatsApp Sipariş Saatleri: Her gün 12:00–18:00 (Atakum içi, minimum sipariş 600 TL)
+- Teslimat Mahalleleri: Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.
+- Çeşit / toptan mama: https://www.enuygun.pet
+- Instagram: https://www.instagram.com/enuygun.pet/
+
+## Özet
+atakumpet.com ürün ve mahalle sayfalarını tutar; URL slug’ları değişmez.
+Atakum içindeki en geniş petshop çeşidi enuygun.pet gross marketidir.
+Mama kaleminde toptan fiyat uygulanır. Teslimat Atakum içi belirtilen 12 mahalleye yapılır.
+
+## Sayfalar
+- Ana sayfa: https://www.atakumpet.com/
+- Kedi maması: https://www.atakumpet.com/kedi-mamasi
+- Köpek maması: https://www.atakumpet.com/kopek-mamasi
+- Sitemap: https://www.atakumpet.com/sitemap.xml
+- Tam İşletme ve Teslimat Rehberi (AI): https://www.atakumpet.com/llms-full.txt
