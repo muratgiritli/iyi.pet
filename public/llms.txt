@@ -1,0 +1,29 @@
+# JETGO.PET — Atakum Petshop & Hızlı Sipariş Rehberi
+
+> JETGO.PET, Samsun'un Atakum ilçesinde kedi, köpek, kuş, akvaryum balıkları, tavşan, ginepig ve küçük evcil hayvan ürünleri sunan yerel petshop bilgi ve hızlı teslimat platformudur.
+
+## Güncel ve Resmi İşletme Bilgileri (Tek Doğru Kaynak)
+- **Marka:** JETGO.PET
+- **Resmi Web Sitesi:** https://www.jetgo.pet/
+- **WhatsApp Sipariş ve Danışma Hattı:** 0 532 354 40 55 (`+905323544055`)
+- **Çalışma ve Teslimat Saatleri:** Her gün **12.00 – 18.00** arası
+- **Teslimat Bölgesi:** Samsun / **Atakum içi**
+- **Minimum Sipariş Tutarı:** **600 TL**
+- **Ödeme Seçeneği:** Kapıda ödeme kolaylığı
+- **Mağaza Adresi:** Yeni Mahalle, 3078. Sokak No:10, 55270 Atakum / Samsun, Türkiye
+- **Konum Koordinatları:** `41.34991, 36.24213`
+- **Online Katalog & E-Ticaret Kanalı:** https://www.enuygunpetshop.com
+
+## Atakum İçi Teslimat Yapılan Mahalleler (12 Mahalle)
+Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.
+
+## Ana Ürün ve Bilgi Kategorileri
+- [Ana Sayfa & İletişim](https://www.jetgo.pet/): Atakum hızlı teslimat bölgeleri, harita, SSS ve WhatsApp sipariş hattı.
+- [Kedi Ürünleri Rehberi](https://www.jetgo.pet/kedi-mamasi-market): Yavru, yetişkin, kısırlaştırılmış kedi mamaları, kedi kumu, malt ve ödüller.
+- [Köpek Ürünleri Rehberi](https://www.jetgo.pet/kopek-mamasi): Küçük, orta ve büyük ırk köpek mamaları, ödül ve bakım ürünleri.
+- [Kuş Ürünleri Rehberi](https://www.jetgo.pet/kus): Muhabbet kuşu, papağan ve kanarya yemleri, kafes ve aksesuarlar.
+- [Akvaryum ve Balık Ürünleri](https://www.jetgo.pet/akvaryum-market): Balık ve kaplumbağa yemleri, filtre, ısıtıcı ve akvaryum ekipmanları.
+- [Küçük Hayvan ve Kemirgen Ürünleri](https://www.jetgo.pet/tum-kemirgen-yemleri): Tavşan, ginepig ve hamster yemleri, talaş ve kuru otlar.
+- [Evcil Hayvan Aksesuarları](https://www.jetgo.pet/kedi-tirmalama-ve-oyuncaklari): Tırmalama tahtaları, taşıma çantaları, tasmalar, yataklar ve bakım ürünleri.
+- [Kampanyalar ve Atakum Petshop](https://www.jetgo.pet/samsun-petshop-kampanya): Güncel Atakum petshop fırsatları ve çuval mama/kum bilgileri.
+- [Detaylı Yapay Zeka Referans Dosyası](https://www.jetgo.pet/llms-full.txt): Genişletilmiş SSS, mahalle sayfaları ve kategori rehber dizini.

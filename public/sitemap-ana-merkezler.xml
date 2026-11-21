@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<!-- Ana Sayfa, Kurumsal ve Ana Kategori Merkezleri (11 URL) -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.jetgo.pet/</loc>
+    <lastmod>2026-11-15T22:33:51+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/jetgo-purple-hero.jpg</image:loc>
+      <image:title>JETGO.PET Samsun Atakum Petshop Hızlı Teslimat</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/cat.jpg</image:loc>
+      <image:title>Kedi Maması ve Kedi Kumu — JETGO.PET Atakum</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/dog.jpg</image:loc>
+      <image:title>Köpek Maması ve Aksesuar — JETGO.PET Atakum</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/bird.jpg</image:loc>
+      <image:title>Kuş Yemi ve Kafes Ekipmanları — JETGO.PET Atakum</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/fish.jpg</image:loc>
+      <image:title>Akvaryum ve Kaplumbağa Ürünleri — JETGO.PET Atakum</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hamster.jpg</image:loc>
+      <image:title>Tavşan ve Kemirgen Ürünleri — JETGO.PET Atakum</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/samsun-petshop-kampanya</loc>
+    <lastmod>2026-11-15T22:33:51+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/jetgo-purple-hero.jpg</image:loc>
+      <image:title>Samsun Petshop Kampanya içeriği | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/kedi-mamasi-market</loc>
+    <lastmod>2026-11-15T22:09:06+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Kedi Maması Market içeriği | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/kopek-mamasi</loc>
+    <lastmod>2026-11-15T22:09:06+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Köpek Maması içeriği | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/kus</loc>
+    <lastmod>2026-11-15T22:09:06+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Kuş | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/akvaryum-market</loc>
+    <lastmod>2026-11-15T22:09:04+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Akvaryum Market içeriği | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/tum-kemirgen-yemleri</loc>
+    <lastmod>2026-11-15T22:09:08+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Tum Kemirgen Yemleri | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/kedi-tirmalama-ve-oyuncaklari</loc>
+    <lastmod>2026-11-15T22:09:06+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Kedi Tirmalama Ve Oyuncaklari | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/iletisim.asp</loc>
+    <lastmod>2026-11-15T22:09:05+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>İletişim ve Sipariş Hattı — Atakum | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/hakk%C4%B1mda</loc>
+    <lastmod>2026-11-15T22:09:05+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Hakkımızda — Atakum Petshop | JETGO.PET</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.jetgo.pet/kopek-odul-mamasi</loc>
+    <lastmod>2026-11-15T22:09:06+03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.jetgo.pet/img/hero-pets.png</image:loc>
+      <image:title>Köpek Ödül Maması | JETGO.PET</image:title>
+    </image:image>
+  </url>
+</urlset>

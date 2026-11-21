@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Konuma En Yakın Petshop — Harita &amp; Adres | JETGO.PET</title>
+  <meta name="description" content="Konuma En Yakın Petshop: Yeni Mahalle 3078. Sokak No:10 Atakum/Samsun. Harita yol tarifi ve 12.00-18.00 Atakum içi teslimat için: 0 532 354 40 55." />
+  <link rel="canonical" href="https://www.jetgo.pet/konuma-en-yakin-petshop" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <meta name="theme-color" content="#001b39" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=optional" rel="stylesheet" />
+  <style>
+    :root { --navy:#001b39; --navy-deep:#001326; --yellow:#ffb800; --teal:#008b8b; --teal-deep:#067272; --wa:#25d366; --ink:#001b39; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:Nunito,system-ui,sans-serif; color:var(--ink); background:#fff; }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+    .wrap { width:min(1180px, calc(100% - 40px)); margin:0 auto; }
+
+    header.top { position:sticky; top:0; z-index:80; background:#fff; border-bottom:1px solid #eef2f6; }
+    .top-inner { width:min(1180px, calc(100% - 28px)); margin:0 auto; display:flex; align-items:center; gap:14px; min-height:78px; }
+    .brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+    .paw { width:42px; height:42px; border-radius:50%; background:var(--yellow); display:grid; place-items:center; }
+    .paw svg { width:22px; height:22px; }
+    .brand-txt b { display:block; font-size:16px; font-weight:900; letter-spacing:.04em; color:var(--navy); }
+    .brand-txt i { display:block; font-style:normal; font-size:11px; font-weight:700; color:#5a6b7d; margin-top:2px; }
+    nav.desk { display:flex; align-items:center; justify-content:center; gap:14px; flex:1; }
+    nav.desk a { font-size:11px; font-weight:800; letter-spacing:.05em; white-space:nowrap; color:var(--navy); }
+    nav.desk a:hover { color:var(--teal); }
+    .icons { display:flex; align-items:center; gap:14px; margin-left:auto; }
+    .icons a, .icons button { background:none; border:0; padding:0; cursor:pointer; color:var(--navy); display:grid; place-items:center; position:relative; }
+    .icons svg { width:20px; height:20px; }
+    .cart-badge { position:absolute; top:-7px; right:-8px; background:var(--yellow); color:var(--navy); font-size:9px; font-weight:800; min-width:15px; height:15px; border-radius:99px; display:grid; place-items:center; }
+    .burger { display:none; }
+
+    .hero { background:radial-gradient(circle at 84% 22%, #ffe9a8 0 88px, transparent 89px), radial-gradient(circle at 70% 80%, #c8ecec 0 72px, transparent 73px), linear-gradient(#fff, #f4fbfb); overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; align-items:center; gap:8px; min-height:540px; }
+    .hero-copy { padding:48px 0 42px; }
+    .kicker { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:800; color:var(--teal); margin-bottom:10px; }
+    .hero h1 { font-size:clamp(30px, 4.2vw, 50px); font-weight:900; line-height:.96; letter-spacing:-.03em; }
+    .hero h1 .navy { display:block; }
+    .hero h1 .teal { display:block; color:var(--teal); }
+    .hero .lead { margin-top:14px; max-width:460px; font-size:14px; font-weight:700; line-height:1.55; color:#3d5168; }
+    .feats { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .feat { width:108px; background:#fff; border-radius:14px; padding:12px 8px 10px; text-align:center; box-shadow:0 8px 18px rgba(0,27,57,.07); }
+    .feat .ico { width:36px; height:36px; margin:0 auto 8px; border-radius:10px; background:#e6f6f6; color:var(--teal); display:grid; place-items:center; }
+    .feat .ico svg { width:18px; height:18px; }
+    .feat b { display:block; font-size:9px; font-weight:800; letter-spacing:.03em; line-height:1.25; }
+    .ctas { display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
+    .btn-wa { display:inline-flex; align-items:center; gap:10px; background:var(--wa); color:#fff; font-size:13px; font-weight:800; letter-spacing:.04em; padding:14px 22px; border-radius:12px; }
+    .btn-call { display:inline-flex; align-items:center; gap:10px; background:var(--yellow); color:var(--navy); font-size:13px; font-weight:800; letter-spacing:.04em; padding:14px 22px; border-radius:12px; }
+    .hero-art { position:relative; min-height:420px; display:flex; align-items:flex-end; justify-content:center; }
+    .hero-art::before { content:""; position:absolute; width:270px; height:270px; right:24px; top:36px; background:#ffe08a; border-radius:50%; opacity:.5; }
+    .hero-art::after { content:""; position:absolute; width:160px; height:160px; left:18px; bottom:40px; background:#9fe0e0; border-radius:50%; opacity:.45; }
+    .hero-art img { position:relative; z-index:1; width:min(520px,100%); }
+
+    .cats { padding:36px 0 18px; }
+    .cat-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:14px; }
+    .cat { border-radius:22px; padding:22px 12px 18px; text-align:center; min-height:258px; display:flex; flex-direction:column; align-items:center; }
+    .c-kedi { background:#d4f3ee; } .c-kopek { background:#ffe8a3; } .c-kus { background:#d7eafc; }
+    .c-tavsan { background:#dff3c9; } .c-gine { background:#fde3ea; } .c-kap { background:#cfe8fb; }
+    .cat img { width:92px; height:92px; border-radius:50%; object-fit:cover; margin-bottom:14px; box-shadow:0 6px 14px rgba(0,27,57,.12); }
+    .cat h3 { font-size:16px; font-weight:900; letter-spacing:.04em; margin-bottom:8px; }
+    .cat p { font-size:12px; font-weight:700; color:#4a6076; line-height:1.4; flex:1; }
+    .cat .go { margin-top:12px; font-size:12px; font-weight:800; color:var(--teal); }
+
+    .banner { background:var(--teal-deep); color:#fff; margin-top:28px; }
+    .banner-inner { display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center; padding:28px 0; }
+    .ban-left { display:flex; align-items:center; gap:16px; }
+    .ban-left svg { flex-shrink:0; }
+    .ban-left h2 { font-size:clamp(18px,2.4vw,26px); font-weight:900; line-height:1.15; }
+    .ban-left p { margin-top:6px; font-size:13px; font-weight:700; opacity:.92; }
+    .zones { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .zones a { display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; color:var(--navy); border-radius:999px; padding:10px 12px; font-size:11px; font-weight:800; letter-spacing:.04em; }
+    .zones svg { width:14px; height:14px; color:var(--teal); flex-shrink:0; }
+
+    .contact-wrap { padding:48px 0 36px; }
+    .contact-wrap h2 { font-size:22px; font-weight:900; letter-spacing:.04em; margin-bottom:22px; }
+    .contact-card { display:grid; grid-template-columns:.85fr 1.15fr; gap:24px; }
+    .rows { display:grid; gap:16px; }
+    .row { display:flex; align-items:flex-start; gap:12px; font-size:14px; font-weight:700; line-height:1.45; }
+    .row .dot { width:32px; height:32px; border-radius:50%; background:var(--teal); color:#fff; display:grid; place-items:center; flex-shrink:0; }
+    .row .dot svg { width:15px; height:15px; }
+    .map-box { position:relative; min-height:280px; background:#d7e3ea; border-radius:14px; overflow:hidden; }
+    .map-box iframe { width:100%; height:100%; min-height:280px; border:0; pointer-events:none; }
+    .map-hit { position:absolute; inset:0; z-index:2; }
+    .map-pin { position:absolute; left:50%; top:42%; transform:translate(-50%,-70%); z-index:3; pointer-events:none; text-align:center; }
+    .pin-mark { width:46px; height:46px; margin:0 auto 8px; background:var(--teal); color:#fff; border-radius:50% 50% 50% 0; transform:rotate(-45deg); display:grid; place-items:center; }
+    .pin-mark svg { width:18px; height:18px; transform:rotate(45deg); }
+    .pin-label { background:#fff; padding:8px 12px; border-radius:8px; box-shadow:0 8px 20px rgba(0,27,57,.16); min-width:160px; }
+    .pin-label b { display:block; font-size:12px; }
+    .pin-label span { display:block; font-size:10px; font-weight:700; margin-top:3px; opacity:.8; }
+
+    .values { background:#fff; padding:22px 0 28px; border-top:1px solid #eef2f6; }
+    .value-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+    .value { display:flex; gap:12px; align-items:flex-start; }
+    .vico { width:36px; height:36px; border-radius:50%; background:#e6f6f6; color:var(--teal); display:grid; place-items:center; flex-shrink:0; }
+    .vico svg { width:18px; height:18px; }
+    .value b { display:block; font-size:12px; font-weight:800; }
+    .value span { display:block; font-size:11px; font-weight:700; margin-top:3px; opacity:.75; }
+
+    footer.site { background:var(--navy-deep); color:#fff; padding:22px 0; }
+    .foot-inner { display:grid; grid-template-columns:1.1fr 1.6fr auto; align-items:center; gap:16px; }
+    .foot-brand { display:flex; align-items:center; gap:10px; }
+    .foot-brand .paw { width:28px; height:28px; }
+    .foot-brand .paw svg { width:15px; height:15px; }
+    .foot-brand b { display:block; font-size:13px; letter-spacing:.06em; }
+    .foot-brand span { display:block; font-size:11px; font-weight:700; opacity:.8; margin-top:2px; }
+    .foot-feats { display:flex; flex-wrap:wrap; gap:12px 16px; justify-content:center; font-size:10px; font-weight:800; letter-spacing:.03em; }
+    .social { display:flex; gap:10px; }
+    .social a { width:34px; height:34px; border:1px solid rgba(255,255,255,.35); border-radius:50%; display:grid; place-items:center; }
+    .social svg { width:16px; height:16px; }
+
+    .drawer { display:none; position:fixed; inset:0; z-index:90; background:rgba(0,19,38,.5); }
+    .drawer.open { display:block; }
+    .drawer nav { position:absolute; top:0; right:0; width:min(320px,88vw); height:100%; background:#fff; padding:28px 22px; display:flex; flex-direction:column; gap:16px; }
+    .drawer nav a { font-weight:800; font-size:14px; letter-spacing:.04em; }
+
+    @media (max-width:1080px) {
+      nav.desk { gap:8px; }
+      nav.desk a { font-size:10px; }
+      .cat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width:980px) {
+      nav.desk { display:none; }
+      .burger { display:grid; }
+      .hero-grid, .banner-inner, .contact-card, .value-grid, .foot-inner { grid-template-columns:1fr; }
+      .hero-copy { padding:28px 0 8px; }
+      .zones { grid-template-columns:1fr 1fr; }
+      .foot-inner { text-align:center; justify-items:center; }
+    }
+    @media (max-width:640px) {
+      .cat-grid { grid-template-columns:1fr 1fr; }
+      .ctas { flex-direction:column; }
+      .btn-wa, .btn-call { justify-content:center; }
+    }
+  </style>
+  <style id="jetgo-wa-styles">
+    .wa-topbar { background:#001326; color:#fff; font-size:12px; font-weight:800; padding:8px 12px; text-align:center; border-bottom:2px solid #ffb800; line-height:1.5; }
+    .wa-topbar a { color:#25d366; font-weight:900; text-decoration:none; white-space:nowrap; }
+    .wa-topbar .sep { opacity:.45; margin:0 7px; }
+    .wa-order-card { margin:18px 0; background:linear-gradient(135deg,#f0fdf4 0%,#ecfeff 100%); border:2px solid #25d366; border-radius:14px; padding:18px 20px; color:#001b39; }
+    .wa-order-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    .wa-order-title { font-size:16px; font-weight:900; color:#001b39; display:flex; align-items:center; gap:8px; }
+    .wa-order-btn { display:inline-flex; align-items:center; gap:8px; background:#25d366; color:#fff !important; font-size:14px; font-weight:900; padding:10px 18px; border-radius:10px; text-decoration:none; box-shadow:0 4px 12px rgba(37,211,102,.28); }
+    .wa-order-badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+    .wa-badge { background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:5px 10px; font-size:12px; font-weight:800; color:#001b39; }
+    .wa-badge.min { background:#fffbeb; border-color:#ffb800; color:#92400e; }
+    .wa-hoods { font-size:12.5px !important; font-weight:700; color:#334155 !important; line-height:1.55 !important; margin:0 !important; }
+    .wa-hoods b { color:#001b39; font-weight:900; }
+    .wa-float { position:fixed; right:16px; bottom:16px; z-index:85; display:inline-flex; align-items:center; gap:8px; background:#25d366; color:#fff !important; font-size:13px; font-weight:900; padding:11px 16px; border-radius:999px; box-shadow:0 8px 22px rgba(0,27,57,.24); text-decoration:none; }
+    .zones .zone-pill { display:flex; align-items:center; justify-content:center; gap:6px; background:#fff; color:#001b39; border-radius:999px; padding:9px 10px; font-size:11px; font-weight:800; letter-spacing:.03em; }
+    .zones .zone-pill svg { width:13px; height:13px; color:#008b8b; flex-shrink:0; }
+    @media (max-width:640px) {
+      .wa-topbar { font-size:11px; padding:7px 10px; }
+      .wa-topbar .sep { margin:0 4px; }
+      .wa-order-card { padding:15px 14px; }
+      .wa-order-btn { width:100%; justify-content:center; }
+      .wa-float { right:12px; bottom:12px; font-size:12px; padding:10px 14px; }
+    }
+  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:site_name" content="JETGO.PET" />
+  <meta property="og:title" content="Konuma En Yakın Petshop — Harita &amp; Adres | JETGO.PET" />
+  <meta property="og:description" content="Konuma En Yakın Petshop: Yeni Mahalle 3078. Sokak No:10 Atakum/Samsun. Harita yol tarifi ve 12.00-18.00 Atakum içi teslimat için: 0 532 354 40 55." />
+  <meta property="og:url" content="https://www.jetgo.pet/konuma-en-yakin-petshop" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://www.jetgo.pet/img/hero-pets.png" />
+  <meta property="og:image:width" content="840" />
+  <meta property="og:image:height" content="560" />
+  <meta property="og:image:alt" content="JETGO.PET Atakum Petshop — Hızlı Teslimat" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Konuma En Yakın Petshop — Harita &amp; Adres | JETGO.PET" />
+  <meta name="twitter:description" content="Konuma En Yakın Petshop: Yeni Mahalle 3078. Sokak No:10 Atakum/Samsun. Harita yol tarifi ve 12.00-18.00 Atakum içi teslimat için: 0 532 354 40 55." />
+  <meta name="twitter:image" content="https://www.jetgo.pet/img/hero-pets.png" />
+  <script type="application/ld+json" id="jetgo-jsonld">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://www.jetgo.pet/konuma-en-yakin-petshop#webpage", "url": "https://www.jetgo.pet/konuma-en-yakin-petshop", "name": "Konuma En Yakın Petshop — Harita & Adres | JETGO.PET", "description": "Konuma En Yakın Petshop: Yeni Mahalle 3078. Sokak No:10 Atakum/Samsun. Harita yol tarifi ve 12.00-18.00 Atakum içi teslimat için: 0 532 354 40 55.", "inLanguage": "tr-TR", "isPartOf": {"@id": "https://www.jetgo.pet/#website"}, "about": {"@id": "https://www.jetgo.pet/#store"}, "breadcrumb": {"@id": "https://www.jetgo.pet/konuma-en-yakin-petshop#breadcrumb"}, "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".lp-ai-box"]}}, {"@type": "BreadcrumbList", "@id": "https://www.jetgo.pet/konuma-en-yakin-petshop#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.jetgo.pet/"}, {"@type": "ListItem", "position": 2, "name": "Konum & Ulaşım", "item": "https://www.jetgo.pet/samsun-petshop-kampanya"}, {"@type": "ListItem", "position": 3, "name": "Konuma En Yakın Petshop", "item": "https://www.jetgo.pet/konuma-en-yakin-petshop"}]}, {"@type": "FAQPage", "@id": "https://www.jetgo.pet/konuma-en-yakin-petshop#faq", "mainEntity": [{"@type": "Question", "name": "Konuma En Yakın Petshop için çalışma ve teslimat saatleriniz nedir?", "acceptedAnswer": {"@type": "Answer", "text": "JETGO.PET mağazası ve 0 532 354 40 55 numaralı WhatsApp sipariş hattımız Cumartesi ve Pazar dahil her gün 12.00 / 18.00 saatleri arasında hizmet vermektedir."}}, {"@type": "Question", "name": "Atakum içi siparişlerde minimum tutar ve teslimat mahalleleri nelerdir?", "acceptedAnswer": {"@type": "Answer", "text": "Minimum sipariş tutarı 600 TL'dir (kapıda ödeme). Teslimat bölgemiz: Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu."}}, {"@type": "Question", "name": "Ürünler açık mama mı yoksa orijinal kapalı paket mi?", "acceptedAnswer": {"@type": "Answer", "text": "JETGO.PET'te tazelik, hijyen ve son kullanma tarihi güvencesi için kedi maması, köpek maması ve kuş yemleri orijinal kapalı ambalajlarında sunulmaktadır."}}, {"@type": "Question", "name": "Sipariş vermeden önce ürünün son kullanma tarihini öğrenebilir miyim?", "acceptedAnswer": {"@type": "Answer", "text": "Elbette. 12.00 – 18.00 saatleri arasında 0 532 354 40 55 WhatsApp hattımıza yazdığınızda raftaki ürünün fotoğrafını ve güncel son kullanma tarihini anında paylaşırız."}}]}]}</script>
+  <style id="jetgo-mobile-qa-fixes">
+    :root { --teal:#006b6b !important; --wa:#0d7a3e !important; }
+    html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+    img { max-width:100%; height:auto; display:block; }
+    .skip-link { position:absolute; left:-9999px; top:8px; z-index:200; background:#ffb800; color:#001b39; font-weight:900; font-size:14px; padding:10px 16px; border-radius:8px; }
+    .skip-link:focus { left:12px; }
+    a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline:3px solid #ffb800; outline-offset:2px; border-radius:6px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto !important; }
+      *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    }
+    .wrap { padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); }
+    .top-inner { padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); min-height:68px; }
+    .hero { overflow:visible !important; overflow-x:clip !important; }
+    .hero-grid > *, .banner-inner > *, .contact-card > *, .foot-inner > *, .value, .page-card, .inner-copy { min-width:0; }
+    h1, h2, h3, p, a, span, b, li, summary, .zone-pill, .wa-badge { overflow-wrap:anywhere; word-break:break-word; }
+    .hero-art { min-height:0 !important; padding:12px 0 20px; }
+    .hero-art picture { display:block; width:min(520px,100%); aspect-ratio:3 / 2; position:relative; z-index:1; }
+    .hero-art img { width:100% !important; height:auto !important; aspect-ratio:3 / 2; }
+    .cat picture { display:block; width:92px; height:92px; margin:0 auto 14px; flex-shrink:0; }
+    .cat picture img { width:92px; height:92px; margin-bottom:0 !important; }
+    .feats { gap:8px; }
+    .feat { flex:1 1 112px; width:auto !important; min-width:96px; max-width:100%; }
+    nav.desk a { min-height:44px; padding:0 5px; display:inline-flex; align-items:center; }
+    .icons { gap:4px; }
+    .icons a, .icons button { min-width:44px; min-height:44px; border-radius:10px; }
+    .cart-badge { top:4px; right:3px; }
+    .zones { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+    .zones a, .zones .zone-pill { min-height:44px; padding:8px 10px !important; font-size:11px; font-weight:800; color:#001b39 !important; background:#fff; border-radius:999px; display:flex; align-items:center; justify-content:center; gap:6px; text-align:center; }
+    .zones a svg, .zones .zone-pill svg { width:14px; height:14px; color:#006b6b !important; flex-shrink:0; }
+    .faq-wrap { padding:12px 0 36px; background:#fff; }
+    .faq-wrap h2 { font-size:22px; font-weight:900; letter-spacing:.04em; margin-bottom:18px; color:#001b39; }
+    .faq-list { display:grid; gap:10px; }
+    .faq-item { border:1px solid #dbe4ee; border-radius:12px; background:#f8fafc; overflow:hidden; }
+    .faq-item summary { list-style:none; min-height:48px; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; font-size:14px; font-weight:800; color:#001b39; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-plus { font-size:18px; font-weight:900; color:#006b6b; flex-shrink:0; line-height:1; }
+    .faq-item[open] .faq-plus { transform:rotate(45deg); }
+    .faq-ans { padding:0 16px 14px; font-size:13.5px; font-weight:700; line-height:1.6; color:#334155; border-top:1px solid #e2e8f0; padding-top:12px; background:#fff; }
+    .pin-label { display:block !important; }
+    .wa-topbar strong { white-space:nowrap; }
+    .breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:4px; font-size:12px; font-weight:800; color:#475569; margin-bottom:10px; }
+    .breadcrumb a.bc-link { display:inline-flex; align-items:center; justify-content:center; min-height:30px; min-width:44px; padding:2px 8px; border-radius:6px; color:#006b6b !important; background:#f1f5f9; text-decoration:none !important; }
+    .breadcrumb span[aria-current="page"] { color:#001b39; padding:2px 4px; }
+    .hub-guides { margin-top:16px; padding:14px 16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; }
+    .hub-guides h2 { font-size:15px !important; margin:0 0 8px !important; color:#001b39; }
+    .hub-guides-links { display:flex; flex-wrap:wrap; gap:6px; }
+    .hub-guides-links a.hub-pill { display:inline-flex !important; align-items:center; justify-content:center; min-height:32px !important; min-width:44px; padding:4px 10px !important; background:#fff; border:1px solid #cbd5e1; border-radius:999px; font-size:12px; font-weight:800; color:#006b6b !important; text-decoration:none !important; }
+    .social a { width:44px !important; height:44px !important; }
+    .foot-nav { width:100%; grid-column:1 / -1; display:flex; flex-wrap:wrap; justify-content:center; gap:6px 12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.14); margin-top:4px; }
+    .foot-nav a { display:inline-flex; align-items:center; justify-content:center; min-height:32px; min-width:44px; padding:4px 8px; font-size:11.5px; font-weight:800; color:#e2e8f0; text-decoration:underline; text-underline-offset:3px; }
+    .wa-topbar { padding:6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left)) !important; }
+    .wa-topbar a { color:#4ade80 !important; display:inline-flex; align-items:center; min-height:26px; padding:2px 6px; }
+    .btn-wa, .wa-order-btn, .wa-float { background:#0d7a3e !important; color:#fff !important; min-height:44px; }
+    .btn-call, .inner-copy .cta-btn, .inner-copy .buy-btn { min-height:44px; }
+    .inner-copy a:not(.cta-btn):not(.buy-btn):not(.wa-order-btn):not(.hub-pill):not(.bc-link) { display:inline-block; min-height:26px; line-height:26px; padding:0 2px; color:#006b6b; text-decoration:underline; text-underline-offset:3px; }
+    .wa-float { right:max(12px, env(safe-area-inset-right)) !important; bottom:max(12px, env(safe-area-inset-bottom)) !important; }
+    footer.site { padding-bottom:calc(84px + env(safe-area-inset-bottom)) !important; }
+    .drawer nav { height:100vh; height:100dvh; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:18px max(20px, env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) 20px !important; gap:6px !important; }
+    .drawer-head { display:flex; align-items:center; justify-content:space-between; padding-bottom:10px; margin-bottom:4px; border-bottom:1px solid #e2e8f0; }
+    .drawer-head b { font-size:15px; font-weight:900; color:#001b39; }
+    .drawer-close { min-width:44px; min-height:44px; border:1px solid #cbd5e1; background:#f8fafc; color:#001b39; border-radius:10px; font-size:18px; font-weight:900; cursor:pointer; display:grid; place-items:center; }
+    .drawer nav a { min-height:44px; display:flex; align-items:center; padding:6px 8px; border-radius:8px; color:#001b39; }
+    .drawer nav a:active, .drawer nav a:hover { background:#f1f5f9; }
+    .map-fallback { margin-top:10px; display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 16px; background:#001b39; color:#fff !important; border-radius:10px; font-size:13px; font-weight:800; width:100%; text-align:center; }
+    @media (max-width:640px) {
+      .zones { grid-template-columns:1fr 1fr !important; }
+    }
+    @media (max-width:400px) {
+      .paw { width:34px; height:34px; }
+      .paw svg { width:18px; height:18px; }
+      .brand-txt b { font-size:14px; }
+      .brand-txt i { display:none; }
+      .icons { gap:1px; }
+      .zones { grid-template-columns:1fr !important; }
+    }
+    @media (max-width:350px) {
+      .cat-grid { grid-template-columns:1fr !important; }
+      .page-card { padding:18px 14px !important; }
+    }
+  </style>
+  <style id="jetgo-landing-v2">
+    body { background:#f6fafb; }
+    .lp-hero { padding:26px 0 24px; border-bottom:1px solid #dbe7ee; }
+    .lp-theme-0 .lp-hero { background:linear-gradient(135deg,#001b39 0%,#063b52 100%); color:#fff; }
+    .lp-theme-1 .lp-hero { background:linear-gradient(135deg,#ecfdf5 0%,#e0f2fe 100%); color:#001b39; }
+    .lp-theme-2 .lp-hero { background:linear-gradient(135deg,#fffbeb 0%,#e6f7f7 100%); color:#001b39; }
+    .lp-theme-3 .lp-hero { background:linear-gradient(135deg,#042f2e 0%,#001b39 100%); color:#fff; }
+    .lp-theme-4 .lp-hero { background:linear-gradient(135deg,#f0f9ff 0%,#eef2ff 100%); color:#001b39; }
+    .lp-theme-5 .lp-hero { background:linear-gradient(135deg,#1e293b 0%,#0f3d3e 100%); color:#fff; }
+
+    .lp-dark .breadcrumb a.bc-link { background:rgba(255,255,255,.14); color:#fff !important; }
+    .lp-dark .breadcrumb span { color:#e2e8f0 !important; }
+    .lp-kicker { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-bottom:10px; background:#ffb800; color:#001b39; max-width:100%; }
+    .lp-hero h1 { font-size:clamp(23px,3.8vw,38px); font-weight:900; line-height:1.15; letter-spacing:-.02em; margin-bottom:12px; overflow-wrap:anywhere; }
+    .lp-ai-box { border-radius:14px; padding:15px 18px; margin:12px 0 18px; font-size:14.5px; font-weight:700; line-height:1.62; border-left:5px solid #ffb800; overflow-wrap:anywhere; }
+    .lp-dark .lp-ai-box { background:rgba(255,255,255,.11); color:#f8fafc; }
+    .lp-light .lp-ai-box { background:#fff; color:#1e293b; box-shadow:0 6px 18px rgba(0,27,57,.06); }
+
+    .lp-actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:14px; }
+    .lp-act { min-height:48px; padding:12px 14px; border-radius:12px; font-size:13px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; gap:8px; text-align:center; text-decoration:none !important; overflow-wrap:anywhere; }
+    .lp-act-wa { background:#0d7a3e !important; color:#fff !important; }
+    .lp-act-tel { background:#ffb800 !important; color:#001b39 !important; }
+    .lp-act-map { background:#fff !important; color:#001b39 !important; border:2px solid #cbd5e1; }
+    .lp-dark .lp-act-map { border-color:rgba(255,255,255,.35); }
+
+    .lp-pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .lp-pill { font-size:12px; font-weight:800; padding:6px 11px; border-radius:8px; }
+    .lp-dark .lp-pill { background:rgba(255,255,255,.13); color:#fff; }
+    .lp-light .lp-pill { background:#fff; color:#001b39; border:1px solid #cbd5e1; }
+
+    .lp-body { padding:26px 0 34px; }
+    .lp-grid { display:grid; grid-template-columns:1.35fr .85fr; gap:22px; align-items:start; }
+    .lp-bp-rev .lp-grid { grid-template-columns:.85fr 1.35fr; }
+    .lp-bp-rev .lp-col-main { order:2; }
+    .lp-bp-rev .lp-col-side { order:1; }
+    .lp-grid > * { min-width:0; }
+
+    .lp-highlights { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:20px; }
+    .lp-hl-item { background:#fff; border:1px solid #dce6ef; border-top:4px solid #008080; border-radius:14px; padding:14px 16px; min-width:0; }
+    .lp-hl-item b { display:block; font-size:13.5px; font-weight:900; color:#001b39; margin-bottom:4px; }
+    .lp-hl-item span { display:block; font-size:12.5px; font-weight:600; color:#334155; line-height:1.5; }
+
+    .lp-card { background:#fff; border:1px solid #dce6ef; border-radius:16px; padding:22px; margin-bottom:18px; box-shadow:0 6px 20px rgba(0,27,57,.04); }
+    .lp-card h2 { font-size:clamp(18px,2.3vw,22px); font-weight:900; color:#001b39; margin-bottom:10px; line-height:1.25; overflow-wrap:anywhere; }
+    .lp-card h3 { font-size:15.5px; font-weight:900; color:#001b39; margin:14px 0 6px; overflow-wrap:anywhere; }
+    .lp-card p { font-size:14.5px; font-weight:600; color:#334155; line-height:1.68; margin:9px 0; overflow-wrap:anywhere; }
+    .lp-spotlight { background:#f0fdfa; border:1px solid #99f6e4; border-radius:12px; padding:13px 15px; margin:12px 0; }
+    .lp-spotlight b { display:block; font-size:13.5px; font-weight:900; color:#0f3d3e; margin-bottom:4px; }
+    .lp-spotlight p { margin:0; font-size:13.5px; color:#134e4a; line-height:1.58; }
+
+    .lp-list { list-style:none; display:grid; gap:8px; margin:12px 0; padding:0; }
+    .lp-list li { position:relative; padding:10px 12px 10px 36px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; font-size:13.5px; font-weight:700; color:#1e293b; line-height:1.55; overflow-wrap:anywhere; }
+    .lp-list li::before { content:"✓"; position:absolute; left:12px; top:10px; color:#0d7a3e; font-weight:900; font-size:15px; }
+
+    .lp-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:12px 0; }
+    .lp-step { background:#f8fafc; border:1px solid #dbe4ee; border-radius:12px; padding:14px; }
+    .lp-step-num { display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#001b39; color:#ffb800; font-size:13px; font-weight:900; margin-bottom:8px; }
+    .lp-step b { display:block; font-size:13.5px; font-weight:900; color:#001b39; margin-bottom:4px; }
+    .lp-step span { display:block; font-size:12.5px; font-weight:600; color:#475569; line-height:1.5; }
+
+    .lp-actions > *, .lp-steps > *, .lp-cats-mini > *, .lp-highlights > * { min-width:0; }
+    .spec-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; }
+    .spec-table th, .spec-table td { text-align:left; padding:11px 12px; border-bottom:1px solid #e2e8f0; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; }
+    .spec-table th { width:36%; font-weight:900; color:#001b39; background:#f8fafc; }
+    .spec-table td { font-weight:700; color:#334155; }
+
+    .lp-cats-mini { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
+    .lp-cat-link { min-height:46px; padding:8px 10px; border-radius:12px; background:#f8fafc; border:1px solid #dbe4ee; display:flex; align-items:center; gap:9px; font-size:12.5px; font-weight:900; color:#001b39 !important; text-decoration:none !important; }
+    .lp-cat-link picture { width:34px; height:34px; flex-shrink:0; display:block; }
+    .lp-cat-link img { width:34px; height:34px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+
+    .lp-hood-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .lp-hood-chips a { min-height:34px; min-width:44px; padding:5px 10px; border-radius:999px; background:#f1f5f9; border:1px solid #cbd5e1; font-size:12px; font-weight:800; color:#001b39 !important; display:inline-flex; align-items:center; justify-content:center; text-decoration:none !important; }
+
+    .lp-rel-links { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+    .lp-rel-links a { min-height:34px; min-width:44px; padding:6px 11px; border-radius:10px; background:#f8fafc; border:1px solid #cbd5e1; font-size:12.5px; font-weight:800; color:#006b6b !important; display:inline-flex; align-items:center; text-decoration:none !important; overflow-wrap:anywhere; }
+
+    .lp-ext-cat { color:#006b6b !important; font-weight:800; text-decoration:underline !important; display:inline-block; min-height:28px; line-height:28px; max-width:100%; overflow-wrap:anywhere; }
+
+    @media (max-width:920px) {
+      .lp-grid, .lp-bp-rev .lp-grid { grid-template-columns:1fr; }
+      .lp-bp-rev .lp-col-main { order:1; }
+      .lp-bp-rev .lp-col-side { order:2; }
+    }
+    @media (max-width:720px) {
+      .lp-actions, .lp-steps, .lp-highlights { grid-template-columns:1fr; }
+      .lp-card { padding:18px 15px; }
+    }
+    @media (max-width:540px) {
+      .spec-table, .spec-table tbody, .spec-table tr, .spec-table th, .spec-table td { display:block; width:100%; }
+      .spec-table tr { border:1px solid #e2e8f0; border-radius:10px; margin-bottom:8px; overflow:hidden; }
+      .spec-table th { border-bottom:0; padding:9px 12px 4px; }
+      .spec-table td { border-bottom:0; padding:4px 12px 10px; background:#fff; }
+      .lp-cats-mini { grid-template-columns:1fr; }
+    }
+  </style>
+  <style id="jetgo-mob-dock-styles">
+    .jetgo-mob-dock { display:none; }
+    @keyframes jetgoBadgePulse {
+      0%, 100% {
+        transform:scale3d(1, 1, 1);
+        box-shadow:0 0 0 0 rgba(248, 113, 113, .62), 0 3px 10px rgba(0, 0, 0, .28);
+      }
+      50% {
+        transform:scale3d(1.022, 1.022, 1);
+        box-shadow:0 0 0 6px rgba(248, 113, 113, 0), 0 5px 14px rgba(185, 28, 28, .45);
+      }
+    }
+    @media (max-width:920px) {
+      .wa-float, #jetgo-wa-float { display:none !important; }
+      .jetgo-mob-dock {
+        display:block;
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:88;
+        background:#001326;
+        border-top:2px solid #ffb800;
+        box-shadow:0 -8px 26px rgba(0, 19, 38, .34);
+        padding-bottom:env(safe-area-inset-bottom);
+        overflow:hidden;
+      }
+      .jetgo-dock-notice-row {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:7px max(10px, env(safe-area-inset-right)) 7px max(10px, env(safe-area-inset-left));
+        background:linear-gradient(180deg, #001b39 0%, #001326 100%);
+        border-bottom:1px solid rgba(255, 255, 255, .18);
+      }
+      .jetgo-pet-warn-badge {
+        display:inline-block;
+        width:fit-content;
+        max-width:calc(100% - 10px);
+        margin:0 auto;
+        padding:5px 14px;
+        border-radius:999px;
+        background:linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
+        border:1.5px solid #fca5a5;
+        color:#fff;
+        font-size:12px;
+        font-weight:900;
+        line-height:1.34;
+        text-align:center;
+        text-wrap:balance;
+        will-change:transform, box-shadow;
+        animation:jetgoBadgePulse 2s ease-in-out infinite;
+      }
+      .jetgo-pet-warn-badge svg {
+        display:inline-block;
+        width:14px;
+        height:14px;
+        vertical-align:-2px;
+        margin-right:5px;
+        color:#fde047;
+      }
+      .jetgo-dock-btns {
+        display:grid;
+        grid-template-columns:1fr 1.38fr 1fr;
+        gap:1px;
+        background:rgba(255, 255, 255, .24);
+        padding-left:env(safe-area-inset-left);
+        padding-right:env(safe-area-inset-right);
+      }
+      .jetgo-dock-btn {
+        min-height:50px;
+        padding:8px 5px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:5px;
+        font-size:12.2px;
+        font-weight:900;
+        line-height:1.18;
+        letter-spacing:0 !important;
+        text-align:center;
+        text-decoration:none !important;
+        min-width:0;
+      }
+      .jetgo-dock-btn svg {
+        width:17px;
+        height:17px;
+        flex-shrink:0;
+      }
+      .jetgo-dock-btn span {
+        overflow-wrap:anywhere;
+        word-break:break-word;
+      }
+      .jetgo-dock-call {
+        background:#ffb800 !important;
+        color:#001b39 !important;
+      }
+      .jetgo-dock-wa {
+        background:#0d7a3e !important;
+        color:#ffffff !important;
+      }
+      .jetgo-dock-map {
+        background:#002855 !important;
+        color:#ffffff !important;
+      }
+      .jetgo-dock-btn:active {
+        filter:brightness(.93);
+      }
+      footer.site {
+        padding-bottom:calc(148px + env(safe-area-inset-bottom)) !important;
+      }
+    }
+    @media (max-width:385px) {
+      .jetgo-pet-warn-badge {
+        font-size:11.2px;
+        padding:5px 10px;
+        border-radius:14px;
+      }
+      .jetgo-dock-btn {
+        flex-direction:column;
+        gap:3px;
+        padding:7px 4px;
+        font-size:11.5px;
+        min-height:52px;
+      }
+      .jetgo-dock-btn svg {
+        width:16px;
+        height:16px;
+      }
+      footer.site {
+        padding-bottom:calc(205px + env(safe-area-inset-bottom)) !important;
+      }
+    }
+    @media (max-width:920px) and (max-height:440px) {
+      .jetgo-dock-notice-row { padding:4px 10px; }
+      .jetgo-pet-warn-badge { font-size:11px; padding:3px 10px; }
+      .jetgo-dock-btn { min-height:40px; padding:5px 6px; flex-direction:row; font-size:11.5px; }
+      footer.site { padding-bottom:calc(105px + env(safe-area-inset-bottom)) !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .jetgo-pet-warn-badge { animation:none !important; }
+    }
+  </style>
+</head>
+<body class="lp-theme-4 lp-light lp-bp-std">
+  <a class="skip-link" href="#main-content">İçeriğe geç</a>
+  <div class="wa-topbar" id="jetgo-wa-topbar">
+    WhatsApp Sipariş Hattı: <a href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%27ten%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">0 532 354 40 55</a>
+    <span class="sep">|</span> Her gün 12.00 / 18.00 arası
+    <span class="sep">|</span> Atakum içi
+    <span class="sep">|</span> Minimum sipariş: <strong>600 TL</strong>
+  </div>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="/" aria-label="JETGO.PET ana sayfa">
+        <span class="paw"><svg viewBox="0 0 48 48" fill="#001b39"><path d="M16.2 18.4c2.4 0 4.3-2.2 4.3-5s-1.9-5-4.3-5-4.3 2.2-4.3 5 1.9 5 4.3 5zm15.6 0c2.4 0 4.3-2.2 4.3-5s-1.9-5-4.3-5-4.3 2.2-4.3 5 1.9 5 4.3 5zM10 29.2c2.6 0 4.7-2.4 4.7-5.3S12.6 18.6 10 18.6s-4.7 2.4-4.7 5.3 2.1 5.3 4.7 5.3zm28 0c2.6 0 4.7-2.4 4.7-5.3s-2.1-5.3-4.7-5.3-4.7 2.4-4.7 5.3 2.1 5.3 4.7 5.3zM24 24.2c-5.8 0-10.4 4.4-10.4 8.4 0 4.6 4.2 9.2 10.4 9.2s10.4-4.6 10.4-9.2c0-4-4.6-8.4-10.4-8.4z"/></svg></span>
+        <span class="brand-txt"><b>JETGO.PET</b><i>Atakum'un Güvenilir Petshop'u</i></span>
+      </a>
+      <nav class="desk" aria-label="Ana menü">
+        <a href="/kedi-mamasi-market">KEDİ</a>
+        <a href="/kopek-mamasi">KÖPEK</a>
+        <a href="/kus">KUŞ</a>
+        <a href="/akvaryum-market">AKVARYUM</a>
+        <a href="/tum-kemirgen-yemleri">KÜÇÜK HAYVAN</a>
+        <a href="/kedi-tirmalama-ve-oyuncaklari">AKSESUAR</a>
+        <a href="/samsun-petshop-kampanya">KAMPANYALAR</a>
+        <a href="/#iletisim">İLETİŞİM</a>
+      </nav>
+      <div class="icons">
+        <a href="https://www.enuygunpetshop.com" target="_blank" rel="noopener noreferrer" aria-label="Hesap (enuygunpetshop.com)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 19.2c.8-3.2 3.4-5.2 7-5.2s6.2 2 7 5.2"/></svg></a>
+        <a href="https://www.enuygunpetshop.com" target="_blank" rel="noopener noreferrer" aria-label="Sepet (enuygunpetshop.com)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h15l-1.4 8.2a2 2 0 0 1-2 1.6H9.2a2 2 0 0 1-2-1.6L5 4H2"/><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg><span class="cart-badge">0</span></a>
+        <button type="button" class="burger" id="menuBtn" aria-label="Menü" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="lp-hero">
+      <div class="wrap">
+        <nav class="breadcrumb" aria-label="Konum" lang="tr">
+          <a class="bc-link" href="/">Ana Sayfa</a>
+          <span aria-hidden="true">›</span>
+          <a class="bc-link" href="/samsun-petshop-kampanya">Konum &amp; Ulaşım</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Konuma En Yakın Petshop</span>
+        </nav>
+        <span class="lp-kicker">Konum: 41.34991, 36.24213 · Atakum / Samsun</span>
+        <h1>Konuma En Yakın Petshop: Açık Adres, Harita Konumu ve Kapıya Sipariş</h1>
+        <div class="lp-ai-box">Konuma En Yakın Petshop sorgunuz için açık adresimiz: Yeni Mahalle, 3078. Sokak No:10, 55270 Atakum / Samsun (GPS: 41.34991, 36.24213). Sayfadaki tek dokunuşlu yol tarifi butonuyla doğrudan navigasyon başlatabilir veya mağazaya gelmeye vakit ayıramadığınızda her gün 12.00–18.00 arası Atakum içi 12 mahalleye minimum 600 TL WhatsApp siparişi verebilirsiniz.</div>
+        <div class="lp-actions" lang="tr">
+          <a class="lp-act lp-act-wa" href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%20%28Konuma%20En%20Yak%C4%B1n%20Petshop%29%20sayfas%C4%B1ndan%20ula%C5%9F%C4%B1yorum.%20Sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">WhatsApp Sipariş: 0 532 354 40 55</a>
+          <a class="lp-act lp-act-tel" href="tel:+905323544055">Hemen Ara: 0 532 354 40 55</a>
+          <a class="lp-act lp-act-map" href="https://www.google.com/maps/search/?api=1&amp;query=41.34991,36.24213" target="_blank" rel="noopener noreferrer">Haritada Yol Tarifi Aç</a>
+        </div>
+        <div class="lp-pills" lang="tr">
+          <span class="lp-pill">Her Gün: 12.00 / 18.00</span>
+          <span class="lp-pill">Bölge: Atakum İçi (12 Mahalle)</span>
+          <span class="lp-pill">Minimum Sipariş: 600 TL</span>
+          <span class="lp-pill">Kapıda Ödeme İmkanı</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="lp-body">
+      <div class="wrap lp-grid">
+        <div class="lp-col-main">
+          <section class="lp-card">
+            <h2>Konuma En Yakın Petshop — Hızlı Bilgi ve Hizmet Tablosu</h2>
+            <table class="spec-table">
+              <tbody>
+              <tr><th scope="row">WhatsApp Sipariş &amp; Danışma</th><td>0 532 354 40 55 (Tıkla-Yaz ve Telefon Desteği)</td></tr>
+              <tr><th scope="row">Aktif Hizmet Saatleri</th><td>Her gün 12.00 – 18.00 arası (Cumartesi &amp; Pazar dahil)</td></tr>
+              <tr><th scope="row">Kurye Teslimat Bölgesi</th><td>Samsun / Atakum içi 12 mahalle</td></tr>
+              <tr><th scope="row">Minimum Sipariş Tutarı</th><td>600 TL (Kapıda nakit veya kart ile ödeme)</td></tr>
+              <tr><th scope="row">Mağaza Açık Adresi</th><td>Yeni Mahalle, 3078. Sokak No:10, 55270 Atakum / Samsun</td></tr>
+              <tr><th scope="row">Örnek 600 TL+ Sepet Kurgusu</th><td>Hafta Sonu Acil Takviye Sepeti: Cumartesi veya Pazar günü biten ana kuru mama paketi + yedek kedi kumu + sevilen yaş mama çeşitleri.</td></tr>
+              <tr><th scope="row">Online Ürün Kataloğu</th><td>www.enuygunpetshop.com üzerinden kategori ve içerik inceleme</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="lp-card">
+            <h2>Konuma En Yakın Petshop: Yavru Kedi ve Köpeklerde İlk Aylar İçin Temel İhtiyaç Listesi</h2>
+            <p>Evcil dostunuzun mama veya kumu azaldığında <strong>konuma en yakın petshop</strong> sorgusuyla doğru adrese hızlıca erişebilmeniz için mağaza ve kurye kanallarımızı tek ekranda birleştirdik.</p>
+            <p>Eve yeni katılan yavru dostların bağışıklık ve kemik gelişimi için yüksek proteinli 'kitten' veya 'puppy' serisi mamalar kritik rol oynar. Beslenme kaplarının kaymaz tabanlı çelik ya da seramik olması hijyen açısından önerilir.</p>
+            <ul class="lp-list">
+              <li>Yavru kediler için düşük kenarlı kum kabı, ince taneli kokusuz kum ve güvenli tırmalama tahtası edinin.</li>
+              <li>Veteriner kontrolleri için sağlam kilitli taşıma çantası (box) ve çiş pedi bulundurun.</li>
+              <li>WhatsApp üzerinden yavrunuzun ayını yazarak uygun başlangıç ürünlerini hızlıca listeletebilirsiniz.</li>
+            </ul>
+            <div class="lp-spotlight">
+              <b>Denizevleri Bölgesi &amp; 600 TL Pratik Sepet Önerisi</b>
+              <p>Atakum&#x27;un doğu girişindeki Denizevleri hattına her gün 12.00 / 18.00 arasında minimum 600 TL sepet tutarıyla düzenli kurye çıkışı sağlanır. Örnek sepet planlaması olarak &#x27;Hafta Sonu Acil Takviye Sepeti&#x27; (Cumartesi veya Pazar günü biten ana kuru mama paketi + yedek kedi kumu + sevilen yaş mama çeşitleri.) ile minimum 600 TL teslimat tutarını verimli biçimde oluşturabilirsiniz.</p>
+            </div>
+          </section>
+          <section class="lp-card">
+            <h2>Hafta Sonu &amp; Gün İçi Hızlı Stok Kontrol Süreci</h2>
+            <div class="lp-steps">
+              <div class="lp-step"><span class="lp-step-num">1</span><b>Anlık Stok Sorun</b><span>Mağazaya gelmeden veya sipariş vermeden önce 0 532 354 40 55 üzerinden aradığınız markayı sorun.</span></div>
+              <div class="lp-step"><span class="lp-step-num">2</span><b>Sepetinizi Tamamlayın</b><span>Ana mamanızın yanına kum, ödül veya bakım ürünü ekleyerek 600 TL teslimat alt limitini tamamlayın.</span></div>
+              <div class="lp-step"><span class="lp-step-num">3</span><b>Kapıda Güvenli Ödeme</b><span>Kargo beklemeden, patlak paket riski olmadan kendi dağıtımımızla sağlam şekilde teslim alın.</span></div>
+            </div>
+          </section>
+          <section class="lp-card">
+            <h2>Konuma En Yakın Petshop — Sık Sorulan Sorular</h2>
+            <div class="faq-list">
+              <details class="faq-item">
+                <summary><span>Konuma En Yakın Petshop için çalışma ve teslimat saatleriniz nedir?</span><span class="faq-plus" aria-hidden="true">+</span></summary>
+                <div class="faq-ans"><p>JETGO.PET mağazası ve 0 532 354 40 55 numaralı WhatsApp sipariş hattımız Cumartesi ve Pazar dahil her gün 12.00 / 18.00 saatleri arasında hizmet vermektedir.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><span>Atakum içi siparişlerde minimum tutar ve teslimat mahalleleri nelerdir?</span><span class="faq-plus" aria-hidden="true">+</span></summary>
+                <div class="faq-ans"><p>Minimum sipariş tutarı 600 TL&#x27;dir (kapıda ödeme). Teslimat bölgemiz: Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><span>Ürünler açık mama mı yoksa orijinal kapalı paket mi?</span><span class="faq-plus" aria-hidden="true">+</span></summary>
+                <div class="faq-ans"><p>JETGO.PET&#x27;te tazelik, hijyen ve son kullanma tarihi güvencesi için kedi maması, köpek maması ve kuş yemleri orijinal kapalı ambalajlarında sunulmaktadır.</p></div>
+              </details>
+              <details class="faq-item">
+                <summary><span>Sipariş vermeden önce ürünün son kullanma tarihini öğrenebilir miyim?</span><span class="faq-plus" aria-hidden="true">+</span></summary>
+                <div class="faq-ans"><p>Elbette. 12.00 – 18.00 saatleri arasında 0 532 354 40 55 WhatsApp hattımıza yazdığınızda raftaki ürünün fotoğrafını ve güncel son kullanma tarihini anında paylaşırız.</p></div>
+              </details>
+            </div>
+          </section>
+        </div>
+
+        <aside class="lp-col-side">
+          <div class="wa-order-card" id="jetgo-wa-card" style="margin-top:0">
+            <div class="wa-order-head">
+              <div class="wa-order-title"><span>WhatsApp Sipariş Hattı: 0 532 354 40 55</span></div>
+              <a class="wa-order-btn" href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%20%28Konuma%20En%20Yak%C4%B1n%20Petshop%29%20sayfas%C4%B1ndan%20ula%C5%9F%C4%B1yorum.%20Sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span>0 532 354 40 55 — Sipariş Ver</span></a>
+            </div>
+            <div class="wa-order-badges">
+              <span class="wa-badge">Saatler: 12.00 / 18.00 arası her gün</span>
+              <span class="wa-badge">Bölge: Atakum içi</span>
+              <span class="wa-badge min">Minimum Sipariş: 600 TL</span>
+            </div>
+            <p class="wa-hoods"><b>Teslimat Mahalleleri:</b> Yenimahalle, Atakent, Güzelyalı, Mimarsinan, Denizevleri, Körfez, Kurupelit, Esenevler, Yeşilyurt, Cumhuriyet, Kamalı ve İncesu.</p>
+          </div>
+
+          <section class="lp-card">
+            <h2>Ürün Kategorilerimiz</h2>
+            <div class="lp-cats-mini">
+              <a class="lp-cat-link" href="/kedi-mamasi-market"><picture><source srcset="/img/cat.webp" type="image/webp" /><img src="/img/cat.jpg" alt="Kedi Maması &amp; Kum" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Kedi Maması &amp; Kum</span></a>
+              <a class="lp-cat-link" href="/kopek-mamasi"><picture><source srcset="/img/dog.webp" type="image/webp" /><img src="/img/dog.jpg" alt="Köpek Maması &amp; Ödül" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Köpek Maması &amp; Ödül</span></a>
+              <a class="lp-cat-link" href="/kus"><picture><source srcset="/img/bird.webp" type="image/webp" /><img src="/img/bird.jpg" alt="Kuş Yemi &amp; Kafes" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Kuş Yemi &amp; Kafes</span></a>
+              <a class="lp-cat-link" href="/akvaryum-market"><picture><source srcset="/img/fish.webp" type="image/webp" /><img src="/img/fish.jpg" alt="Akvaryum &amp; Kaplumbağa" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Akvaryum &amp; Kaplumbağa</span></a>
+              <a class="lp-cat-link" href="/tum-kemirgen-yemleri"><picture><source srcset="/img/hamster.webp" type="image/webp" /><img src="/img/hamster.jpg" alt="Tavşan &amp; Kemirgen" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Tavşan &amp; Kemirgen</span></a>
+              <a class="lp-cat-link" href="/kedi-tirmalama-ve-oyuncaklari"><picture><source srcset="/img/cat.webp" type="image/webp" /><img src="/img/cat.jpg" alt="Aksesuar &amp; Bakım" width="34" height="34" loading="lazy" decoding="async" /></picture><span>Aksesuar &amp; Bakım</span></a>
+            </div>
+            <p style="margin-top:12px;font-size:13px">Online katalog ve detaylı ürün inceleme: <a class="lp-ext-cat" href="https://www.enuygunpetshop.com" target="_blank" rel="noopener noreferrer">www.enuygunpetshop.com</a></p>
+          </section>
+
+          <section class="lp-card">
+            <h2>Atakum Teslimat Bölgeleri</h2>
+            <p>Yeni Mahalle, 3078. Sokak No:10 merkezimizden aynı gün sevkiyat yapılan 12 mahallemiz:</p>
+            <div class="lp-hood-chips"><a href="/yeni-mahalle-petshop">Yenimahalle</a><a href="/atakent-petshop">Atakent</a><a href="/guzelyali-online-petshop">Güzelyalı</a><a href="/mimarsinan-petshop">Mimarsinan</a><a href="/denizevleri">Denizevleri</a><a href="/atakum-korfez-pet-market">Körfez</a><a href="/kurupelit-acik-petshop">Kurupelit</a><a href="/esenevler-petshop-eve-teslim">Esenevler</a><a href="/atakum-petshop">Yeşilyurt</a><a href="/cumhuriyet-mahallesi-petshop">Cumhuriyet</a><a href="/samsun-atakum-petshop">Kamalı</a><a href="/atakum-incesu-petshop">İncesu</a></div>
+          </section>
+
+          <section class="lp-card">
+            <h2>İlgili Petshop Rehberleri</h2>
+            <div class="lp-rel-links"><a href="/samsun-petshop-kampanya">Konum &amp; Ulaşım</a><a href="/konuma-yakin-petshop">Konuma Yakın Petshop</a><a href="/kus-yemi-nerede-satilir">Kuş Yemi Nerede Satılır</a><a href="/pet-shop-en-yakin">Pet Shop En Yakın</a><a href="/petshop-atakum">Petshop Atakum</a><a href="/yakin-pet-shop">Yakın Pet Shop</a></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <section class="values">
+    <div class="wrap value-grid">
+      <div class="value"><span class="vico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4.5 6.5v5.2c0 4.6 3.3 8.7 7.5 9.8 4.2-1.1 7.5-5.2 7.5-9.8V6.5L12 3z"/><path d="m9 12 2 2 4-4"/></svg></span><div><b>%100 GÜVENLİ ALIŞVERİŞ</b><span>Orijinal ve kaliteli ürün garantisi</span></div></div>
+      <div class="value"><span class="vico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8H3l2 11h14l2-11z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg></span><div><b>GENİŞ ÜRÜN ÇEŞİDİ</b><span>Kedi, köpek, kuş ve küçük hayvan ürünleri</span></div></div>
+      <div class="value"><span class="vico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M8 7h5.5a3 3 0 0 1 0 6H9m3 0h4.5a3 3 0 0 1 0 6H8"/></svg></span><div><b>UYGUN FİYATLAR</b><span>Gross market fiyat avantajı</span></div></div>
+      <div class="value"><span class="vico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h3v5H4zM17 14h3v5h-3z"/></svg></span><div><b>WHATSAPP SİPARİŞ</b><span>Her gün 12.00 / 18.00 · Min. 600 TL</span></div></div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site">
+    <div class="wrap foot-inner">
+      <div class="foot-brand">
+        <span class="paw"><svg viewBox="0 0 48 48" fill="#001b39"><path d="M16.2 18.4c2.4 0 4.3-2.2 4.3-5s-1.9-5-4.3-5-4.3 2.2-4.3 5 1.9 5 4.3 5zm15.6 0c2.4 0 4.3-2.2 4.3-5s-1.9-5-4.3-5-4.3 2.2-4.3 5 1.9 5 4.3 5zM10 29.2c2.6 0 4.7-2.4 4.7-5.3S12.6 18.6 10 18.6s-4.7 2.4-4.7 5.3 2.1 5.3 4.7 5.3zm28 0c2.6 0 4.7-2.4 4.7-5.3s-2.1-5.3-4.7-5.3-4.7 2.4-4.7 5.3 2.1 5.3 4.7 5.3zM24 24.2c-5.8 0-10.4 4.4-10.4 8.4 0 4.6 4.2 9.2 10.4 9.2s10.4-4.6 10.4-9.2c0-4-4.6-8.4-10.4-8.4z"/></svg></span>
+        <div><b>JETGO.PET</b><span>Atakum'un Güvenilir Petshop'u</span></div>
+      </div>
+      <div class="foot-feats">
+        <span>HIZLI TESLİMAT</span>
+        <span>KAPIDA ÖDEME</span>
+        <span>GÜVENLİ ALIŞVERİŞ</span>
+        <span>ORİJİNAL ÜRÜN</span>
+      </div>
+      <div class="social">
+        <a href="https://www.instagram.com/enuygun.pet/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg></a>
+        <a href="https://www.facebook.com/enuygun.pet" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4V10c0-.6.4-1 1-1z"/></svg></a>
+        <a href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%27ten%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 11.9C2.16 6.45 6.6 2.01 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89z"/></svg></a>
+      </div>
+      <nav class="foot-nav" aria-label="Alt menü"><a href="/">Ana Sayfa</a><a href="/kedi-mamasi-market">Kedi Ürünleri</a><a href="/kopek-mamasi">Köpek Ürünleri</a><a href="/kus">Kuş Ürünleri</a><a href="/akvaryum-market">Akvaryum</a><a href="/tum-kemirgen-yemleri">Küçük Hayvan</a><a href="/kedi-tirmalama-ve-oyuncaklari">Aksesuar</a><a href="/samsun-petshop-kampanya">Kampanyalar</a><a href="/hakk%C4%B1mda">Hakkımızda</a><a href="/#sss">Sık Sorulan Sorular</a><a href="/#iletisim">İletişim</a></nav>
+    </div>
+  </footer>
+
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobil menü" aria-hidden="true">
+    <nav aria-label="Mobil menü bağlantıları">
+      <div class="drawer-head"><b>JETGO.PET MENÜ</b><button type="button" class="drawer-close" data-close-drawer aria-label="Menüyü kapat">✕</button></div>
+      <a href="/kedi-mamasi-market">KEDİ</a>
+      <a href="/kopek-mamasi">KÖPEK</a>
+      <a href="/kus">KUŞ</a>
+      <a href="/akvaryum-market">AKVARYUM</a>
+      <a href="/tum-kemirgen-yemleri">KÜÇÜK HAYVAN</a>
+      <a href="/kedi-tirmalama-ve-oyuncaklari">AKSESUAR</a>
+      <a href="/samsun-petshop-kampanya">KAMPANYALAR</a>
+      <a href="/#iletisim">İLETİŞİM</a>
+      <a href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%27ten%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer">WHATSAPP: 0 532 354 40 55</a>
+      <a href="tel:+905323544055">HEMEN ARA</a>
+    </nav>
+  </div>
+      <script>
+    (function () {
+      var menuBtn = document.getElementById("menuBtn");
+      var drawer = document.getElementById("drawer");
+      if (!menuBtn || !drawer) return;
+      var closeBtn = drawer.querySelector("[data-close-drawer]");
+      function openDrawer() {
+        drawer.classList.add("open");
+        drawer.setAttribute("aria-hidden", "false");
+        menuBtn.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+        if (closeBtn) closeBtn.focus();
+      }
+      function closeDrawer(restoreFocus) {
+        if (!drawer.classList.contains("open")) return;
+        drawer.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+        menuBtn.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+        if (restoreFocus) menuBtn.focus();
+      }
+      menuBtn.addEventListener("click", function () {
+        if (drawer.classList.contains("open")) closeDrawer(true);
+        else openDrawer();
+      });
+      if (closeBtn) {
+        closeBtn.addEventListener("click", function () { closeDrawer(true); });
+      }
+      drawer.addEventListener("click", function (e) {
+        if (e.target === drawer || e.target.tagName === "A") closeDrawer(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (!drawer.classList.contains("open")) return;
+        if (e.key === "Escape") {
+          e.preventDefault();
+          closeDrawer(true);
+          return;
+        }
+        if (e.key === "Tab") {
+          var focusables = drawer.querySelectorAll("button, a[href]");
+          if (!focusables.length) return;
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      });
+    })();
+  </script>
+  <a class="wa-float" id="jetgo-wa-float" href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%27ten%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Sipariş Hattı 0 532 354 40 55"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 11.9C2.16 6.45 6.6 2.01 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89z"/></svg><span>WhatsApp Sipariş: 0 532 354 40 55</span></a>
+  <div class="jetgo-mob-dock" id="jetgo-mob-dock" role="region" aria-label="Mobil Hızlı Erişim ve Bilgilendirme">
+    <div class="jetgo-dock-notice-row">
+      <div class="jetgo-pet-warn-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7.2" cy="8.2" r="2.1"/><circle cx="12" cy="6.5" r="2.1"/><circle cx="16.8" cy="8.2" r="2.1"/><circle cx="19.2" cy="12.6" r="1.9"/><circle cx="4.8" cy="12.6" r="1.9"/><path d="M12 11.2c-3.1 0-5.8 2.4-5.8 5.2 0 1.8 1.4 3.1 3.3 3.1 1 0 1.7-.4 2.5-.4s1.5.4 2.5.4c1.9 0 3.3-1.3 3.3-3.1 0-2.8-2.7-5.2-5.8-5.2z"/></svg>Herhangi bir evcil hayvan almak ya da satmak için bizi aramayın.</div>
+    </div>
+    <div class="jetgo-dock-btns">
+      <a class="jetgo-dock-btn jetgo-dock-call" href="tel:+905323544055" aria-label="Hemen Ara: 0 532 354 40 55"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z"/></svg><span>Hemen Ara</span></a>
+      <a class="jetgo-dock-btn jetgo-dock-wa" href="https://wa.me/905323544055?text=Merhaba%2C%20JETGO.PET%27ten%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Sipariş Hattı: 0 532 354 40 55"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37A9.86 9.86 0 0 1 2.16 11.9C2.16 6.45 6.6 2.01 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89z"/></svg><span>WhatsApp Sipariş</span></a>
+      <a class="jetgo-dock-btn jetgo-dock-map" href="https://www.google.com/maps/search/?api=1&amp;query=41.34991,36.24213" target="_blank" rel="noopener noreferrer" aria-label="Mağaza Yol Tarifi Aç"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>Yol Tarifi</span></a>
+    </div>
+  </div>
+</body>
+</html>
